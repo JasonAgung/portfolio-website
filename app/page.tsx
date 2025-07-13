@@ -88,14 +88,14 @@ export default function Home() {
                   
                   <div className="space-y-6">
                     <div>
-                      <p className="text-gray-600 dark:text-gray-400 text-sm mb-2">// Roles</p>
+                      <p className="text-gray-600 dark:text-gray-400 text-sm mb-2">{/* Roles */}</p>
                       <p className="text-gray-700 dark:text-gray-300">
                         IT Student • Web Developer • Marketing Communications
                       </p>
                     </div>
                     
                     <div>
-                      <p className="text-gray-600 dark:text-gray-400 text-sm mb-2">// Location & Education</p>
+                      <p className="text-gray-600 dark:text-gray-400 text-sm mb-2">{/* Location & Education */}</p>
                       <div className="text-gray-700 dark:text-gray-300">
                         <p>📍 Bandung, Indonesia</p>
                         <p>🎓 Universitas Katolik Parahyangan</p>
@@ -103,11 +103,11 @@ export default function Home() {
                     </div>
                     
                     <div>
-                      <p className="text-gray-600 dark:text-gray-400 text-sm mb-2">// About</p>
+                      <p className="text-gray-600 dark:text-gray-400 text-sm mb-2">{/* About */}</p>
                       <div className="text-gray-700 dark:text-gray-300 max-w-2xl">
-                        <p className="mb-2">Hiii 👋, sooo this is the page where you'll find everything about me (kinda).</p>
-                        <p className="mb-2">Think of it as a little digital museum of my life (don't worry i'm not dead yet)</p>
-                        <p>Feel free to click around 🖱️ and explore what I've been up to these past few years! 🚀</p>
+                        <p className="mb-2">Hiii 👋, sooo this is the page where you&apos;ll find everything about me (kinda).</p>
+                        <p className="mb-2">Think of it as a little digital museum of my life (don&apos;t worry i&apos;m not dead yet)</p>
+                        <p>Feel free to click around 🖱️ and explore what I&apos;ve been up to these past few years! 🚀</p>
                       </div>
                     </div>
                     
@@ -127,7 +127,7 @@ export default function Home() {
                     </div>
                     
                     <div>
-                      <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">// Connect</p>
+                      <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">{/* Connect */}</p>
                       <SocialLinks className="justify-start" />
                     </div>
                   </div>
@@ -154,11 +154,11 @@ export default function Home() {
                   <span className="text-gray-500"> /&gt;</span>
                 </div>
                 <p className="text-gray-700 dark:text-gray-300 font-mono text-sm">
-                  <span className="text-gray-500">// </span>Currently pursuing IT
+                  <span className="text-gray-500">{'//'}</span> Currently pursuing IT
                   <br />
-                  <span className="text-gray-500">// </span>@ Universitas Katolik Parahyangan
+                  <span className="text-gray-500">{'//'}</span> @ Universitas Katolik Parahyangan
                   <br />
-                  <span className="text-gray-500">// </span>Expected: 2026
+                  <span className="text-gray-500">{'//'}</span> Expected: 2026
                 </p>
               </div>
               
@@ -168,11 +168,11 @@ export default function Home() {
                   <span className="text-gray-500"> /&gt;</span>
                 </div>
                 <p className="text-gray-700 dark:text-gray-300 font-mono text-sm">
-                  <span className="text-gray-500">// </span>Marketing Communications
+                  <span className="text-gray-500">{'//'}</span> Marketing Communications
                   <br />
-                  <span className="text-gray-500">// </span>Social Media Management
+                  <span className="text-gray-500">{'//'}</span> Social Media Management
                   <br />
-                  <span className="text-gray-500">// </span>Intern @ 3 Companies
+                  <span className="text-gray-500">{'//'}</span> Intern @ 3 Companies
                 </p>
               </div>
               
@@ -182,11 +182,11 @@ export default function Home() {
                   <span className="text-gray-500"> /&gt;</span>
                 </div>
                 <p className="text-gray-700 dark:text-gray-300 font-mono text-sm">
-                  <span className="text-gray-500">// </span>IoT && Music
+                  <span className="text-gray-500">{'//'}</span> IoT && Music
                   <br />
-                  <span className="text-gray-500">// </span>Software && Technology
+                  <span className="text-gray-500">{'//'}</span> Software && Technology
                   <br />
-                  <span className="text-gray-500">// </span>Gaming.isAwesome()
+                  <span className="text-gray-500">{'//'}</span> Gaming.isAwesome()
                 </p>
               </div>
             </div>
