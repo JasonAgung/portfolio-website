@@ -23,9 +23,9 @@ export default function Navigation() {
     <nav className="sticky top-0 z-50 bg-white/80 dark:bg-gray-950/80 backdrop-blur-xl backdrop-saturate-150">
       <div className="max-width-container section-padding">
         <div className="flex items-center justify-between h-16">
-          <div className="font-mono text-sage-600 dark:text-sage-400 text-sm">
+          <Link href="/" className="font-mono text-sage-600 dark:text-sage-400 text-sm hover:text-sage-700 dark:hover:text-sage-300 transition-colors">
             <span className="text-sage-400 dark:text-sage-600">&lt;</span>JKA<span className="text-sage-400 dark:text-sage-600">/&gt;</span>
-          </div>
+          </Link>
 
           <div className="hidden md:flex items-center space-x-8">
             {navLinks.map((link) => (

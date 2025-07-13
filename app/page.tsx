@@ -185,8 +185,6 @@ export default function Home() {
                   <span className="text-gray-500">{'//'}</span> IoT && Music
                   <br />
                   <span className="text-gray-500">{'//'}</span> Software && Technology
-                  <br />
-                  <span className="text-gray-500">{'//'}</span> Gaming.isAwesome()
                 </p>
               </div>
             </div>
