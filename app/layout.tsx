@@ -6,8 +6,17 @@ import { ThemeProvider } from "@/contexts/ThemeContext";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Jason Kelvin Agung - Portfolio",
+  title: {
+    default: "Jason Kelvin Agung - Portfolio",
+    template: "%s | Jason Kelvin Agung"
+  },
   description: "IT Student at Universitas Katolik Parahyangan | Marketing Communications | Web Developer",
+  icons: {
+    icon: [
+      { url: '/icon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.ico' }
+    ],
+  },
 };
 
 export default function RootLayout({
