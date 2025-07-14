@@ -58,6 +58,7 @@ export default function ProjectsClient() {
       status: 'Completed',
       link: 'https://colab.research.google.com/drive/1cxumsTr8CsfzBDncoAzBVc03C334vAdU?usp=sharing',
       category: 'Data Science',
+      image: '/wine-quality.png',
     },
     {
       title: 'Information Retrieval',
