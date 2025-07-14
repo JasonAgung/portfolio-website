@@ -11,7 +11,7 @@ interface Project {
   technologies: string[];
   status: 'Completed' | 'In Progress' | 'Planning';
   link: string;
-  category: 'Web Development' | 'Marketing' | 'IoT' | 'Tools' | 'Security' | 'Games';
+  category: 'Web Development' | 'Marketing' | 'IoT' | 'Tools' | 'Security' | 'Games' | 'Data Science';
   image?: string;
 }
 
@@ -50,6 +50,14 @@ export default function ProjectsClient() {
       link: 'https://github.com/JasonAgung/chord-transposer',
       category: 'Tools',
       image: '/chord-transposer.png',
+    },
+    {
+      title: 'Machine Learning Wine Quality Analysis',
+      description: 'This project presents an end-to-end implementation of machine learning using the Wine Quality dataset from the UCI Machine Learning Repository. It involves acquiring data from a public source, performing exploratory data analysis and preprocessing, and evaluating their performance to gain insights into the factors that influence wine quality.',
+      technologies: ['Python', 'Machine Learning', 'Data Analysis', 'Scikit-learn', 'Pandas', 'NumPy'],
+      status: 'Completed',
+      link: 'https://colab.research.google.com/drive/1cxumsTr8CsfzBDncoAzBVc03C334vAdU?usp=sharing',
+      category: 'Data Science',
     },
     {
       title: 'Information Retrieval',
@@ -97,6 +105,8 @@ export default function ProjectsClient() {
         return '🔒';
       case 'Games':
         return '🎮';
+      case 'Data Science':
+        return '📊';
       default:
         return '💫';
     }
