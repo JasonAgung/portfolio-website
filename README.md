@@ -81,8 +81,8 @@ portfolio-website/
 ## Contact
 
 - Email: jason.kelvin.agung@gmail.com
-- LinkedIn: [jasonkelvinagung](https://linkedin.com/in/jasonkelvinagung)
-- Instagram: [@jasonkelvinagung](https://instagram.com/jasonkelvinagung)
+- LinkedIn: [Jason Agung](https://www.linkedin.com/in/j-agung/)
+- Instagram: [@jason_kelvin](https://instagram.com/jason_kelvin)
 
 ## License
 
