@@ -100,33 +100,31 @@ export default function SwipeNavigation() {
       )}
 
       {/* Navigation hints */}
-      {showIndicator && (
-        <>
-          {currentIndex > 0 && (
-            <div className={`fixed left-4 top-1/2 transform -translate-y-1/2 md:hidden z-40 transition-opacity duration-200 ${
-              swipeDirection === 'right' ? 'opacity-100' : 'opacity-30'
-            }`}>
-              <div className="bg-sage-100 dark:bg-sage-900/50 backdrop-blur-sm rounded-full p-3 shadow-lg">
-                <span className="text-sage-600 dark:text-sage-400 text-sm font-mono">
-                  ← {routeLabels[routes[currentIndex - 1] as keyof typeof routeLabels]}
-                </span>
-              </div>
+      <>
+        {currentIndex > 0 && (
+          <div className={`fixed left-4 top-1/2 transform -translate-y-1/2 md:hidden z-40 transition-all duration-300 ${
+            showIndicator ? (swipeDirection === 'right' ? 'opacity-100 scale-100' : 'opacity-30 scale-90') : 'opacity-0 scale-75 pointer-events-none'
+          }`}>
+            <div className="bg-sage-100 dark:bg-sage-900/50 backdrop-blur-sm rounded-full p-3 shadow-lg">
+              <span className="text-sage-600 dark:text-sage-400 text-sm font-mono">
+                ← {routeLabels[routes[currentIndex - 1] as keyof typeof routeLabels]}
+              </span>
             </div>
-          )}
-          
-          {currentIndex < routes.length - 1 && (
-            <div className={`fixed right-4 top-1/2 transform -translate-y-1/2 md:hidden z-40 transition-opacity duration-200 ${
-              swipeDirection === 'left' ? 'opacity-100' : 'opacity-30'
-            }`}>
-              <div className="bg-sage-100 dark:bg-sage-900/50 backdrop-blur-sm rounded-full p-3 shadow-lg">
-                <span className="text-sage-600 dark:text-sage-400 text-sm font-mono">
-                  {routeLabels[routes[currentIndex + 1] as keyof typeof routeLabels]} →
-                </span>
-              </div>
+          </div>
+        )}
+        
+        {currentIndex < routes.length - 1 && (
+          <div className={`fixed right-4 top-1/2 transform -translate-y-1/2 md:hidden z-40 transition-all duration-300 ${
+            showIndicator ? (swipeDirection === 'left' ? 'opacity-100 scale-100' : 'opacity-30 scale-90') : 'opacity-0 scale-75 pointer-events-none'
+          }`}>
+            <div className="bg-sage-100 dark:bg-sage-900/50 backdrop-blur-sm rounded-full p-3 shadow-lg">
+              <span className="text-sage-600 dark:text-sage-400 text-sm font-mono">
+                {routeLabels[routes[currentIndex + 1] as keyof typeof routeLabels]} →
+              </span>
             </div>
-          )}
-        </>
-      )}
+          </div>
+        )}
+      </>
     </>
   );
 }

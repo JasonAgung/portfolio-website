@@ -9,6 +9,7 @@ export default function Home() {
   const [text, setText] = useState('');
   const [showCursor, setShowCursor] = useState(true);
   const [mounted, setMounted] = useState(false);
+  const [showContent, setShowContent] = useState(false);
   const fullText = "Jason Kelvin Agung";
   
   const matrixElements = useMemo(() => 
@@ -22,6 +23,7 @@ export default function Home() {
   
   useEffect(() => {
     setMounted(true);
+    setShowContent(true);
     let index = 0;
     const typingInterval = setInterval(() => {
       if (index < fullText.length) {
@@ -68,7 +70,9 @@ export default function Home() {
 
         <section className="relative min-h-[calc(100vh-64px)] flex items-center justify-center section-padding z-10">
           <div className="max-width-container">
-            <div className="bg-white dark:bg-gray-900/90 backdrop-blur-sm border-2 border-sage-300 dark:border-sage-600/30 rounded-2xl p-8 md:p-12 shadow-lg dark:shadow-2xl dark:shadow-sage-600/20">
+            <div className={`bg-white dark:bg-gray-900/90 backdrop-blur-sm border-2 border-sage-300 dark:border-sage-600/30 rounded-2xl p-8 md:p-12 shadow-lg dark:shadow-2xl dark:shadow-sage-600/20 transition-all duration-700 ${
+              showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+            }`}>
               <div className="text-left mb-8">
                 <div className="flex items-center gap-2 mb-4">
                   <div className="flex gap-1.5">
@@ -111,7 +115,9 @@ export default function Home() {
                       </div>
                     </div>
                     
-                    <div className="flex flex-col sm:flex-row gap-4">
+                    <div className={`flex flex-col sm:flex-row gap-4 transition-all duration-700 delay-300 ${
+                      showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                    }`}>
                       <Link
                         href="/about"
                         className="inline-flex items-center gap-2 px-6 py-3 bg-sage-500/10 border-2 border-sage-400 text-sage-700 dark:text-sage-400 rounded-full font-mono hover:bg-sage-500/20 transition-all hover:scale-105"
@@ -126,7 +132,9 @@ export default function Home() {
                       </Link>
                     </div>
                     
-                    <div>
+                    <div className={`transition-all duration-700 delay-500 ${
+                      showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                    }`}>
                       <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">{/* Connect */}</p>
                       <SocialLinks className="justify-start" />
                     </div>
