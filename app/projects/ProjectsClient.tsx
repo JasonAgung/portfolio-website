@@ -5,6 +5,16 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 
+interface Project {
+  title: string;
+  description: string;
+  technologies: string[];
+  status: 'Completed' | 'In Progress' | 'Planning';
+  link: string;
+  category: 'Web Development' | 'Marketing' | 'IoT' | 'Tools' | 'Security' | 'Games';
+  image?: string;
+}
+
 export default function ProjectsClient() {
   const [showContent, setShowContent] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -14,7 +24,7 @@ export default function ProjectsClient() {
     setShowContent(true);
   }, []);
 
-  const projects = [
+  const projects: Project[] = [
     {
       title: 'Portfolio Website',
       description: 'This Website !!!, A modern, responsive portfolio website built with Next.js, TypeScript, and Tailwind CSS featuring dark/light mode toggle.',
@@ -114,13 +124,13 @@ export default function ProjectsClient() {
                     onMouseEnter={() => setHoveredIndex(index)}
                     onMouseLeave={() => setHoveredIndex(null)}
                   >
-                    {(project as any).image && (
+                    {project.image && (
                       <div 
                         className="relative h-48 w-full overflow-hidden bg-gray-100 dark:bg-gray-800 cursor-pointer"
-                        onClick={() => setModalImage((project as any).image)}
+                        onClick={() => setModalImage(project.image!)}
                       >
                         <Image
-                          src={(project as any).image}
+                          src={project.image}
                           alt={project.title}
                           fill
                           className="object-cover hover:scale-105 transition-transform duration-300"
