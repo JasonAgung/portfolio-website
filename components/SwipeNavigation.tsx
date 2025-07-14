@@ -64,7 +64,7 @@ export default function SwipeNavigation() {
     <>
       {/* Page dots indicator */}
       <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-2 md:hidden z-40">
-        {routes.map((route, index) => (
+        {routes.map((route) => (
           <div
             key={route}
             className={`w-2 h-2 rounded-full transition-all duration-300 ${
