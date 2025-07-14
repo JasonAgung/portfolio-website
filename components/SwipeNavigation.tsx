@@ -1,13 +1,15 @@
 'use client';
 
 import { useSwipeNavigation } from '@/hooks/useSwipeNavigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 export default function SwipeNavigation() {
   const { currentRoute, routes, currentIndex } = useSwipeNavigation();
   const [showIndicator, setShowIndicator] = useState(false);
   const [swipeDirection, setSwipeDirection] = useState<'left' | 'right' | null>(null);
   const [showSwipeHint, setShowSwipeHint] = useState(false);
+  const touchStartX = useRef<number | null>(null);
+  const touchStartY = useRef<number | null>(null);
 
   useEffect(() => {
     // Check if hint has been shown before
@@ -23,21 +25,35 @@ export default function SwipeNavigation() {
   }, []);
 
   useEffect(() => {
-    const handleTouchStart = () => {
-      setShowIndicator(true);
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartX.current = e.touches[0].clientX;
+      touchStartY.current = e.touches[0].clientY;
     };
 
     const handleTouchMove = (e: TouchEvent) => {
-      if (e.touches[0].clientX > window.innerWidth / 2) {
-        setSwipeDirection('right');
-      } else {
-        setSwipeDirection('left');
+      if (!touchStartX.current || !touchStartY.current) return;
+
+      const currentX = e.touches[0].clientX;
+      const currentY = e.touches[0].clientY;
+      const deltaX = currentX - touchStartX.current;
+      const deltaY = currentY - touchStartY.current;
+
+      // Only show indicators if horizontal movement is greater than vertical
+      if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 30) {
+        setShowIndicator(true);
+        if (deltaX > 0) {
+          setSwipeDirection('right');
+        } else {
+          setSwipeDirection('left');
+        }
       }
     };
 
     const handleTouchEnd = () => {
       setShowIndicator(false);
       setSwipeDirection(null);
+      touchStartX.current = null;
+      touchStartY.current = null;
     };
 
     if (window.innerWidth <= 768) {
