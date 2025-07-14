@@ -3,10 +3,12 @@
 import Navigation from '@/components/Navigation';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 
 export default function ProjectsClient() {
   const [showContent, setShowContent] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [modalImage, setModalImage] = useState<string | null>(null);
   
   useEffect(() => {
     setShowContent(true);
@@ -15,20 +17,49 @@ export default function ProjectsClient() {
   const projects = [
     {
       title: 'Portfolio Website',
-      description: 'A modern, responsive portfolio website built with Next.js, TypeScript, and Tailwind CSS featuring dark/light mode toggle.',
+      description: 'This Website !!!, A modern, responsive portfolio website built with Next.js, TypeScript, and Tailwind CSS featuring dark/light mode toggle.',
       technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'React'],
       status: 'In Progress',
-      link: '#',
+      link: 'https://github.com/JasonAgung/portfolio-website',
       category: 'Web Development',
     },
-    {
-      title: 'Social Media Campaign Manager',
-      description: 'Developed social media management strategies and created engaging content for Instagram, including posts, stories, and banners.',
-      technologies: ['Instagram', 'Canva', 'Content Strategy'],
-      status: 'Completed',
-      link: '#',
-      category: 'Marketing',
+       {
+      title: 'Tango Puzzle',
+      description: 'This repository contains a complete implementation of the Tango logic puzzle game with an intelligent solver using Constraint Satisfaction Problem (CSP) techniques.',
+      technologies: ['Python', 'CSP', 'Algorithms', 'PyGame'],
+      status: 'In Progress',
+      link: 'https://github.com/JasonAgung/tango-puzzle',
+      category: 'Games',
+      image: '/tango-puzzle.png',
     },
+    {
+      title: 'Chord Transposer',
+      description: 'A powerful tool for transposing musical chord charts to different keys. Available as a command-line tool, desktop GUI application, and web interface.',
+      technologies: ['Python', 'Tkinter', 'Flask', 'HTML/CSS'],
+      status: 'Completed',
+      link: 'https://github.com/JasonAgung/chord-transposer',
+      category: 'Tools',
+      image: '/chord-transposer.png',
+    },
+    {
+      title: 'Information Retrieval',
+      description: 'A simple web-based Information Retrieval system that demonstrates TF-IDF (Term Frequency-Inverse Document Frequency) algorithm for document ranking and search.',
+      technologies: ['JavaScript', 'HTML/CSS', 'TF-IDF', 'Search Algorithms'],
+      status: 'Completed',
+      link: 'https://github.com/JasonAgung/information-retrieval',
+      category: 'Web Development',
+      image: '/information-retrieval.png',
+    },
+    {
+      title: 'Rainbow Attack',
+      description: 'An educational web application that demonstrates how rainbow table attacks work on password hashes. This tool is designed for learning about cryptographic vulnerabilities and understanding why modern password storage methods are important.',
+      technologies: ['JavaScript', 'HTML/CSS', 'Cryptography'],
+      status: 'Completed',
+      link: 'https://github.com/JasonAgung/rainbow-attack',
+      category: 'Security',
+      image: '/rainbow-table.png',
+    },
+
   ];
 
   const getStatusColor = (status: string) => {
@@ -48,10 +79,14 @@ export default function ProjectsClient() {
     switch (category) {
       case 'Web Development':
         return '✨';
-      case 'Marketing':
-        return '🎨';
       case 'IoT':
         return '🌟';
+      case 'Tools':
+        return '🛠️';
+      case 'Security':
+        return '🔒';
+      case 'Games':
+        return '🎮';
       default:
         return '💫';
     }
@@ -79,6 +114,19 @@ export default function ProjectsClient() {
                     onMouseEnter={() => setHoveredIndex(index)}
                     onMouseLeave={() => setHoveredIndex(null)}
                   >
+                    {(project as any).image && (
+                      <div 
+                        className="relative h-48 w-full overflow-hidden bg-gray-100 dark:bg-gray-800 cursor-pointer"
+                        onClick={() => setModalImage((project as any).image)}
+                      >
+                        <Image
+                          src={(project as any).image}
+                          alt={project.title}
+                          fill
+                          className="object-cover hover:scale-105 transition-transform duration-300"
+                        />
+                      </div>
+                    )}
                     <div className="p-6">
                       <div className="flex items-center gap-2 mb-4">
                         <div className="flex gap-1.5">
@@ -152,6 +200,30 @@ export default function ProjectsClient() {
           </div>
         </div>
       </main>
+      
+      {modalImage && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
+          onClick={() => setModalImage(null)}
+        >
+          <div className="relative max-w-4xl max-h-[90vh] w-full h-full">
+            <Image
+              src={modalImage}
+              alt="Full size screenshot"
+              fill
+              className="object-contain"
+            />
+            <button
+              className="absolute top-4 right-4 text-white bg-black/50 rounded-full p-2 hover:bg-black/70 transition-colors"
+              onClick={() => setModalImage(null)}
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      )}
     </>
   );
 }
