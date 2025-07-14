@@ -44,34 +44,38 @@ export default function Navigation() {
             
             <button
               onClick={toggleTheme}
-              className="p-2 rounded-full border-2 border-sage-300 dark:border-sage-600/30 bg-sage-50 dark:bg-gray-900 hover:bg-sage-100 dark:hover:bg-sage-900/10 transition-all hover:scale-105 text-sage-700 dark:text-sage-400 font-mono text-xs"
+              className="p-2 rounded-full border-2 border-sage-300 dark:border-sage-600/30 bg-sage-50 dark:bg-gray-900 hover:bg-sage-100 dark:hover:bg-sage-900/10 transition-all hover:scale-105 flex items-center justify-center w-10 h-10"
               aria-label="Toggle theme"
             >
-              {theme === 'light' ? 'DARK_MODE' : 'LIGHT_MODE'}
+              {theme === 'light' ? '🌙' : '☀️'}
             </button>
           </div>
 
           <div className="flex md:hidden items-center space-x-4">
             <button
               onClick={toggleTheme}
-              className="p-2 rounded-full border-2 border-sage-300 dark:border-sage-600/30 bg-sage-50 dark:bg-gray-900 hover:bg-sage-100 dark:hover:bg-sage-900/10 transition-all hover:scale-105 text-sage-700 dark:text-sage-400 font-mono text-xs"
+              className="p-2 rounded-full border-2 border-sage-300 dark:border-sage-600/30 bg-sage-50 dark:bg-gray-900 hover:bg-sage-100 dark:hover:bg-sage-900/10 transition-all hover:scale-105 flex items-center justify-center w-10 h-10"
               aria-label="Toggle theme"
             >
-              {theme === 'light' ? 'DARK_MODE' : 'LIGHT_MODE'}
+              {theme === 'light' ? '🌙' : '☀️'}
             </button>
             
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2 rounded-full border-2 border-sage-300 dark:border-sage-600/30 bg-sage-50 dark:bg-gray-900 hover:bg-sage-100 dark:hover:bg-sage-900/10 transition-all hover:scale-105 text-sage-700 dark:text-sage-400 font-mono text-xs"
+              className="p-2 rounded-full border-2 border-sage-300 dark:border-sage-600/30 bg-sage-50 dark:bg-gray-900 hover:bg-sage-100 dark:hover:bg-sage-900/10 transition-all hover:scale-105 flex items-center justify-center w-10 h-10"
               aria-label="Toggle menu"
             >
-              {!isMenuOpen ? 'MENU' : 'CLOSE'}
+              <div className="relative w-5 h-4 flex flex-col justify-center">
+                <span className={`absolute block h-0.5 w-5 bg-sage-700 dark:bg-sage-400 transition-all duration-300 ${isMenuOpen ? 'rotate-45' : '-translate-y-1.5'}`}></span>
+                <span className={`absolute block h-0.5 w-5 bg-sage-700 dark:bg-sage-400 transition-opacity duration-300 ${isMenuOpen ? 'opacity-0' : ''}`}></span>
+                <span className={`absolute block h-0.5 w-5 bg-sage-700 dark:bg-sage-400 transition-all duration-300 ${isMenuOpen ? '-rotate-45' : 'translate-y-1.5'}`}></span>
+              </div>
             </button>
           </div>
         </div>
 
-        {isMenuOpen && (
-          <div className="md:hidden py-4">
+        <div className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${isMenuOpen ? 'max-h-64' : 'max-h-0'}`}>
+          <div className="py-4">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
@@ -87,7 +91,7 @@ export default function Navigation() {
               </Link>
             ))}
           </div>
-        )}
+        </div>
       </div>
     </nav>
   );
