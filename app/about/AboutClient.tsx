@@ -53,7 +53,7 @@ export default function AboutClient() {
                 <div className="space-y-6">
                   <div>
                     <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">About</h3>
-                    <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    <p className="text-gray-700 dark:text-gray-300 leading-relaxed font-mono">
                       High school graduate, currently majoring in IT at Universitas Katolik Parahyangan in Bandung. 
                       I have always had a great interest in IT and enjoy collaborating with others and 
                       communicating effectively in team environments.
@@ -62,7 +62,7 @@ export default function AboutClient() {
                   
                   <div>
                     <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Contact</h3>
-                    <div className="space-y-2 text-gray-700 dark:text-gray-300">
+                    <div className="space-y-2 text-gray-700 dark:text-gray-300 font-mono">
                       <p className="flex items-center gap-2 hover:text-sage-600 transition-colors">
                         <span className="text-sage-500">📱</span> 0895-0615-2580
                       </p>
@@ -116,7 +116,7 @@ export default function AboutClient() {
                           className="group flex items-center gap-3 p-3 bg-cream dark:bg-sage-900/20 rounded-xl hover:bg-sage-50 dark:hover:bg-sage-900/30 hover:scale-105 transition-all duration-200 cursor-pointer"
                         >
                           <span className="text-2xl">{interest.icon}</span>
-                          <span className="text-gray-700 dark:text-gray-300 group-hover:underline">{interest.name}</span>
+                          <span className="text-gray-700 dark:text-gray-300 group-hover:underline font-mono">{interest.name}</span>
                         </a>
                       ) : (
                         <div 
@@ -124,7 +124,7 @@ export default function AboutClient() {
                           className="flex items-center gap-3 p-3 bg-cream dark:bg-sage-900/20 rounded-xl hover:bg-sage-50 dark:hover:bg-sage-900/30 hover:scale-105 transition-all duration-200 cursor-pointer"
                         >
                           <span className="text-2xl">{interest.icon}</span>
-                          <span className="text-gray-700 dark:text-gray-300">{interest.name}</span>
+                          <span className="text-gray-700 dark:text-gray-300 font-mono">{interest.name}</span>
                         </div>
                       )
                     ))}
