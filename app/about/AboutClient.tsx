@@ -19,6 +19,7 @@ export default function AboutClient() {
   ];
 
   const interests = [
+    { name: 'Artificial Intelligence (AI)', icon: '🧠', link: null },
     { name: 'IoT (Internet Of Things)', icon: '🌐', link: null },
     { name: 'Music', icon: '🎵', link: 'https://open.spotify.com/user/jason.kelvin.agung?' },
     { name: 'Computer software', icon: '💻', link: null },
