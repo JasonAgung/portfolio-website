@@ -56,8 +56,8 @@ export default function AboutClient() {
                     <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">About</h3>
                     <p className="text-gray-700 dark:text-gray-300 leading-relaxed font-mono">
                       High school graduate, currently majoring in IT at Universitas Katolik Parahyangan in Bandung. 
-                      I have always had a great interest in IT and enjoy collaborating with others and 
-                      communicating effectively in team environments.
+                      I have always had a great interest in IT, particularly in artificial intelligence and its ongoing developments. 
+                      I enjoy collaborating with others and communicating effectively in team environments.
                     </p>
                   </div>
                   
