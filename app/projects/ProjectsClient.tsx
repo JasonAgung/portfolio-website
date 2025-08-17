@@ -11,7 +11,16 @@ interface Project {
   technologies: string[];
   status: 'Completed' | 'In Progress' | 'Planning';
   link: string;
-  category: 'Web Development' | 'Marketing' | 'IoT' | 'Tools' | 'Security' | 'Games' | 'Data Science';
+  category: 
+  | 'Web Development' 
+  | 'Marketing' 
+  | 'IoT' 
+  | 'Tools' 
+  | 'Security' 
+  | 'Games' 
+  | 'Data Science'
+  | 'AI / Machine Learning'
+  | 'Education / Training';
   image?: string;
 }
 
@@ -33,7 +42,32 @@ export default function ProjectsClient() {
       link: 'https://github.com/JasonAgung/portfolio-website',
       category: 'Web Development',
     },
-       {
+    {
+      title: 'GenAI Platforms for ML Algorithm Development',
+      description: 'Accelerating ML development using Generative AI platforms with a real-world case study on Black Soldier Fly (BSF) farming. The project explores data preparation, model building, and evaluation using three GenAI platforms.',
+      technologies: ['GenAI Platforms', 'Machine Learning', 'Data Analysis', 'AI-assisted Development'],
+      status: 'In Progress',
+      link: 'https://github.com/JasonAgung/portfolio-website',
+      category: 'AI / Machine Learning'
+    },
+    {
+      title: 'GenAI Prompt Engineering Workshop',
+      description: 'Designing and delivering an engaging workshop in Bahasa Indonesia to teach effective prompt engineering techniques. Includes workshop slides, practical exercises, testing, rehearsal, promotion, and live execution.',
+      technologies: ['GenAI Tools', 'Prompt Engineering', 'Education', 'Presentation Design'],
+      status: 'In Progress',
+      link: 'https://github.com/JasonAgung/portfolio-website',
+      category: 'Education / Training'
+    },
+
+    {
+      title: 'Overhauling and Updating TS Website',
+      description: 'Redesigning and modernizing the TalentSource website to be more attractive, stylish, and user-friendly using GenAI-powered web builders and design tools. Includes re-layouting, content updates, and final presentation.',
+      technologies: ['Wix (AI)', 'Jimdo', 'Framer AI', 'GenAI Design Tools'],
+      status: 'In Progress',
+      link: 'https://github.com/JasonAgung/tango-puzzle',
+      category: 'Web Development'
+    },
+    {
       title: 'Tango Puzzle',
       description: 'This repository contains a complete implementation of the Tango logic puzzle game with an intelligent solver using Constraint Satisfaction Problem (CSP) techniques.',
       technologies: ['Python', 'CSP', 'Algorithms', 'PyGame'],
@@ -94,7 +128,7 @@ export default function ProjectsClient() {
     }
   };
 
-  const getCategoryIcon = (category: string) => {
+    const getCategoryIcon = (category: string) => {
     switch (category) {
       case 'Web Development':
         return '✨';
@@ -108,6 +142,10 @@ export default function ProjectsClient() {
         return '🎮';
       case 'Data Science':
         return '📊';
+      case 'AI / Machine Learning':
+        return '🤖';
+      case 'Education / Training':
+        return '📚';
       default:
         return '💫';
     }
@@ -188,15 +226,17 @@ export default function ProjectsClient() {
                           </div>
                         </div>
                         
-                        <Link 
-                          href={project.link}
-                          className="inline-flex items-center gap-2 text-sage-600 dark:text-sage-400 hover:text-sage-700 dark:hover:text-sage-300 font-mono text-sm transition-colors group"
-                        >
-                          <span className="border-b border-transparent group-hover:border-sage-600 dark:group-hover:border-sage-300 transition-all">View Project</span>
-                          <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                          </svg>
-                        </Link>
+                        {!['GenAI Platforms for ML Algorithm Development', 'GenAI Prompt Engineering Workshop', 'Overhauling and Updating TS Website'].includes(project.title) && (
+                          <Link 
+                            href={project.link}
+                            className="inline-flex items-center gap-2 text-sage-600 dark:text-sage-400 hover:text-sage-700 dark:hover:text-sage-300 font-mono text-sm transition-colors group"
+                          >
+                            <span className="border-b border-transparent group-hover:border-sage-600 dark:group-hover:border-sage-300 transition-all">View Project</span>
+                            <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                            </svg>
+                          </Link>
+                        )}
                       </div>
                     </div>
                   </div>
