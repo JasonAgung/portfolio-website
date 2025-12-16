@@ -94,7 +94,7 @@ export default function Home() {
                     <div>
                       <p className="text-gray-600 dark:text-gray-400 text-sm mb-2">{/* Roles */}</p>
                       <p className="text-gray-700 dark:text-gray-300">
-                        IT Student • Web Developer • Marketing Communications
+                        Computer Science • AI & Algorithms • Software Engineering
                       </p>
                     </div>
                     

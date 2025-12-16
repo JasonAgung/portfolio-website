@@ -13,6 +13,18 @@ export default function ExperienceClient() {
 
   const workExperience = [
     {
+      company: 'TalentSource Bandung',
+      companyLink: 'https://talentsource.com/',
+      position: 'Software & AI Engineering Intern',
+      year: '2024',
+      description: [
+        "Machine Learning: Spearheaded the research and development of predictive models for Black Soldier Fly (BSF) farming and analyzed the efficacy of GenAI-accelerated workflows for data science.",
+        "GenAI Education: Designed and delivered a technical \"Prompt Engineering\" workshop in Bahasa Indonesia, teaching effective LLM context-setting to non-technical staff and students.",
+        "Web Development: Modernized the company’s digital presence by overhauling the TalentSource website, leveraging AI-powered design tools (Framer/Wix AI) to enhance user experience and responsiveness.",
+      ],
+    },
+
+    {
       company: 'GLAMIFY',
       companyLink: 'https://www.instagram.com/glamify.id/',
       position: 'Marketing Communications Intern',
@@ -112,9 +124,17 @@ export default function ExperienceClient() {
                         </span>
                       </div>
                       <div className="mt-4 pl-2 border-l-2 border-sage-400/30 dark:border-sage-400/50">
-                        <p className="text-gray-700 dark:text-gray-300">
-                          {job.description}
-                        </p>
+                        {Array.isArray(job.description) ? (
+                          <ul className="list-disc list-inside text-gray-700 dark:text-gray-300 space-y-1">
+                            {job.description.map((item, descIndex) => (
+                              <li key={descIndex}>{item}</li>
+                            ))}
+                          </ul>
+                        ) : (
+                          <p className="text-gray-700 dark:text-gray-300">
+                            {job.description}
+                          </p>
+                        )}
                       </div>
                     </div>
                   </div>
