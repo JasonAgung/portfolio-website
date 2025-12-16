@@ -20,7 +20,7 @@ export default function ExperienceClient() {
       description: [
         "Machine Learning: Spearheaded the research and development of predictive models for Black Soldier Fly (BSF) farming and analyzed the efficacy of GenAI-accelerated workflows for data science.",
         "GenAI Education: Designed and delivered a technical \"Prompt Engineering\" workshop in Bahasa Indonesia, teaching effective LLM context-setting to non-technical staff and students.",
-        "Web Development: Modernized the company’s digital presence by overhauling the TalentSource website, leveraging AI-powered design tools (Framer/Wix AI) to enhance user experience and responsiveness.",
+        "Web Development: Modernized the company’s digital presence by overhauling the TalentSource website, leveraging AI-powered design tools to enhance user experience and responsiveness.",
       ],
     },
 
