@@ -35,46 +35,53 @@ export default function ProjectsClient() {
 
   const projects: Project[] = [
     {
-      title: 'Portfolio Website',
-      description: 'This Website !!!, A modern, responsive portfolio website built with Next.js, TypeScript, and Tailwind CSS featuring dark/light mode toggle.',
-      technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'React'],
+      title: 'AI-Driven Personalized Reporting Engine',
+      description: 'Developed an AI-driven reporting engine for DEUS Human Capital Services that transforms raw data from 32 personality subtraits into highly personalized and unique behavioral narratives. Modernized assessment systems with dynamic Generative AI pipelines and advanced prompt frameworks.',
+      technologies: ['Generative AI', 'Prompt Engineering', 'Python', 'Pipeline Automation', 'Psychometric Analytics'],
+      status: 'Completed',
+      link: '',
+      category: 'AI / Machine Learning',
+    },
+    {
+      title: 'Tango Puzzle: Backtracking & Simulated Annealing Solver',
+      description: 'Bachelor Thesis Project: Developed an intelligent agent to solve the binary Constraint Satisfaction Problem (CSP) "Tango". Conducted a comparative performance analysis between Backtracking (CSP) and Simulated Annealing (Metaheuristic) algorithms.',
+      technologies: ['Python', 'CSP', 'Simulated Annealing', 'Backtracking', 'PyGame'],
+      status: 'Completed',
+      link: 'https://github.com/JasonAgung/tangogame',
+      category: 'Games',
+      image: '/tango-puzzle.png',
+    },
+    {
+      title: 'GenAI-Accelerated Machine Learning for BSF Farming',
+      description: 'Spearheaded R&D of Machine Learning models for Black Soldier Fly (BSF) farming optimization. Utilized ChatGPT & Google Vertex AI (AutoML) for synthetic data generation, predictive modeling, and evaluating AI-assisted development workflows.',
+      technologies: ['Google Vertex AI', 'ChatGPT', 'Machine Learning', 'Data Analysis', 'GenAI Platforms'],
+      status: 'Completed',
+      link: '',
+      category: 'AI / Machine Learning',
+    },
+    {
+      title: 'Generative AI & Prompt Engineering Workshop',
+      description: 'Designing and delivering technical workshops in Bahasa Indonesia to democratize access to AI tools. Teaching Prompt Engineering techniques to corporate clients and institutions including Telkom, TelkomMedika, TelkomMetra, ADPI, and KWI.',
+      technologies: ['GenAI Tools', 'Prompt Engineering', 'Education', 'Technical Communication'],
       status: 'In Progress',
+      link: '',
+      category: 'Education / Training',
+    },
+    {
+      title: 'Portfolio Website',
+      description: 'A modern, responsive portfolio website built with Next.js, TypeScript, and Tailwind CSS featuring dark/light mode toggle and interactive terminal layout.',
+      technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'React'],
+      status: 'Completed',
       link: 'https://github.com/JasonAgung/portfolio-website',
       category: 'Web Development',
     },
     {
-      title: 'GenAI Platforms for ML Algorithm Development',
-      description: 'Accelerating ML development using Generative AI platforms with a real-world case study on Black Soldier Fly (BSF) farming. The project explores data preparation, model building, and evaluation using three GenAI platforms.',
-      technologies: ['GenAI Platforms', 'Machine Learning', 'Data Analysis', 'AI-assisted Development'],
-      status: 'In Progress',
-      link: 'https://github.com/JasonAgung/portfolio-website',
-      category: 'AI / Machine Learning'
-    },
-    {
-      title: 'GenAI Prompt Engineering Workshop',
-      description: 'Designing and delivering an engaging workshop in Bahasa Indonesia to teach effective prompt engineering techniques. Includes workshop slides, practical exercises, testing, rehearsal, promotion, and live execution.',
-      technologies: ['GenAI Tools', 'Prompt Engineering', 'Education', 'Presentation Design'],
-      status: 'In Progress',
-      link: 'https://github.com/JasonAgung/portfolio-website',
-      category: 'Education / Training'
-    },
-
-    {
-      title: 'Overhauling and Updating TS Website',
-      description: 'Redesigning and modernizing the TalentSource website to be more attractive, stylish, and user-friendly using GenAI-powered web builders and design tools. Includes re-layouting, content updates, and final presentation.',
-      technologies: ['Wix (AI)', 'Jimdo', 'Framer AI', 'GenAI Design Tools'],
-      status: 'In Progress',
-      link: 'https://github.com/JasonAgung/tango-puzzle',
-      category: 'Web Development'
-    },
-    {
-      title: 'Tango Puzzle',
-      description: 'This repository contains a complete implementation of the Tango logic puzzle game with an intelligent solver using Constraint Satisfaction Problem (CSP) techniques.',
-      technologies: ['Python', 'CSP', 'Algorithms', 'PyGame'],
-      status: 'In Progress',
-      link: 'https://github.com/JasonAgung/tango-puzzle',
-      category: 'Games',
-      image: '/tango-puzzle.png',
+      title: 'Overhauling and Updating TalentSource Website',
+      description: 'Accelerated web development lifecycle by leveraging Generative AI tools (v0, Bolt.new, Gemini CLI) to overhaul and modernize the company website and digital presence.',
+      technologies: ['v0', 'Bolt.new', 'Gemini CLI', 'GenAI Design Tools'],
+      status: 'Completed',
+      link: '',
+      category: 'Web Development',
     },
     {
       title: 'Chord Transposer',
@@ -87,7 +94,7 @@ export default function ProjectsClient() {
     },
     {
       title: 'Machine Learning Wine Quality Analysis',
-      description: 'This project presents an end-to-end implementation of machine learning using the Wine Quality dataset from the UCI Machine Learning Repository. It involves acquiring data from a public source, performing exploratory data analysis and preprocessing, and evaluating their performance to gain insights into the factors that influence wine quality.',
+      description: 'An end-to-end implementation of machine learning using the Wine Quality dataset from UCI ML Repository. Performed exploratory data analysis, preprocessing, and model evaluation.',
       technologies: ['Python', 'Machine Learning', 'Data Analysis', 'Scikit-learn', 'Pandas', 'NumPy'],
       status: 'Completed',
       link: 'https://colab.research.google.com/drive/1cxumsTr8CsfzBDncoAzBVc03C334vAdU?usp=sharing',
@@ -96,7 +103,7 @@ export default function ProjectsClient() {
     },
     {
       title: 'Information Retrieval',
-      description: 'A simple web-based Information Retrieval system that demonstrates TF-IDF (Term Frequency-Inverse Document Frequency) algorithm for document ranking and search.',
+      description: 'A web-based Information Retrieval system demonstrating TF-IDF (Term Frequency-Inverse Document Frequency) algorithm for document ranking and search.',
       technologies: ['JavaScript', 'HTML/CSS', 'TF-IDF', 'Search Algorithms'],
       status: 'Completed',
       link: 'https://github.com/JasonAgung/information-retrieval',
@@ -105,14 +112,13 @@ export default function ProjectsClient() {
     },
     {
       title: 'Rainbow Attack',
-      description: 'An educational web application that demonstrates how rainbow table attacks work on password hashes. This tool is designed for learning about cryptographic vulnerabilities and understanding why modern password storage methods are important.',
+      description: 'An educational web application demonstrating rainbow table attacks on password hashes for learning cryptographic vulnerabilities and password security.',
       technologies: ['JavaScript', 'HTML/CSS', 'Cryptography'],
       status: 'Completed',
       link: 'https://github.com/JasonAgung/rainbow-attack',
       category: 'Security',
       image: '/rainbow-table.png',
     },
-
   ];
 
   const getStatusColor = (status: string) => {
@@ -226,9 +232,11 @@ export default function ProjectsClient() {
                           </div>
                         </div>
                         
-                        {!['GenAI Platforms for ML Algorithm Development', 'GenAI Prompt Engineering Workshop', 'Overhauling and Updating TS Website'].includes(project.title) && (
+                        {project.link && (
                           <Link 
                             href={project.link}
+                            target={project.link.startsWith('http') ? '_blank' : '_self'}
+                            rel={project.link.startsWith('http') ? 'noopener noreferrer' : undefined}
                             className="inline-flex items-center gap-2 text-sage-600 dark:text-sage-400 hover:text-sage-700 dark:hover:text-sage-300 font-mono text-sm transition-colors group"
                           >
                             <span className="border-b border-transparent group-hover:border-sage-600 dark:group-hover:border-sage-300 transition-all">View Project</span>

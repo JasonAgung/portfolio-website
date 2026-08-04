@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     default: "Jason Kelvin Agung - Portfolio",
     template: "%s | Jason Kelvin Agung"
   },
-  description: "IT Student at Universitas Katolik Parahyangan | Marketing Communications | Web Developer",
+  description: "Bachelor of Computer Science (UNPAR) | AI Implementation Specialist | Applied AI Researcher & Software Engineer",
 };
 
 export default function RootLayout({

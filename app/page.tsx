@@ -162,11 +162,11 @@ export default function Home() {
                   <span className="text-gray-500"> /&gt;</span>
                 </div>
                 <p className="text-gray-700 dark:text-gray-300 font-mono text-sm">
-                  <span className="text-gray-500">{'//'}</span> Currently pursuing IT
+                  <span className="text-gray-500">{'//'}</span> Bachelor of Computer Science
                   <br />
-                  <span className="text-gray-500">{'//'}</span> @ Universitas Katolik Parahyangan
+                  <span className="text-gray-500">{'//'}</span> @ UNPAR (GPA: 3.67)
                   <br />
-                  <span className="text-gray-500">{'//'}</span> Expected: 2026
+                  <span className="text-gray-500">{'//'}</span> Class of 2026
                 </p>
               </div>
               
@@ -176,11 +176,11 @@ export default function Home() {
                   <span className="text-gray-500"> /&gt;</span>
                 </div>
                 <p className="text-gray-700 dark:text-gray-300 font-mono text-sm">
-                  <span className="text-gray-500">{'//'}</span> Marketing Communications
+                  <span className="text-gray-500">{'//'}</span> AI Implementation Specialist @ DEUS
                   <br />
-                  <span className="text-gray-500">{'//'}</span> Social Media Management
+                  <span className="text-gray-500">{'//'}</span> Applied AI & Research Intern @ TalentSource
                   <br />
-                  <span className="text-gray-500">{'//'}</span> Intern @ 3 Companies
+                  <span className="text-gray-500">{'//'}</span> Academic Staff @ HMPSIF
                 </p>
               </div>
               
@@ -190,9 +190,11 @@ export default function Home() {
                   <span className="text-gray-500"> /&gt;</span>
                 </div>
                 <p className="text-gray-700 dark:text-gray-300 font-mono text-sm">
-                  <span className="text-gray-500">{'//'}</span> IoT && Music
+                  <span className="text-gray-500">{'//'}</span> Artificial Intelligence && ML
                   <br />
-                  <span className="text-gray-500">{'//'}</span> Software && Technology
+                  <span className="text-gray-500">{'//'}</span> Performance Optimization
+                  <br />
+                  <span className="text-gray-500">{'//'}</span> Software Engineering
                 </p>
               </div>
             </div>
