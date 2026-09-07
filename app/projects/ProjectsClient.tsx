@@ -36,7 +36,7 @@ export default function ProjectsClient() {
   const projects: Project[] = [
     {
       title: 'AI-Driven Personalized Reporting Engine',
-      description: 'Developed an AI-driven reporting engine for DEUS Human Capital Services transforming raw psychometric data from 32 personality subtraits into highly personalized behavioral narratives. Modernized assessment systems by replacing legacy predefined statements with a dynamic Generative AI pipeline and advanced prompt frameworks to ensure psychological validity and actionable insights.',
+      description: 'Developed an AI-driven reporting engine for DEUS Human Capital to make personality assessment reports more personal and engaging. Instead of using generic templates, I connected psychometrics with Generative AI to analyze 32 traits. I designed prompts and reliable workflows so the AI produces accurate, easy-to-read behavioral reports that truly help individuals understand their strengths.',
       technologies: ['Generative AI', 'Prompt Engineering', 'Python', 'Pipeline Automation', 'Psychometric Analytics'],
       status: 'Completed',
       link: '',
@@ -45,7 +45,7 @@ export default function ProjectsClient() {
     },
     {
       title: 'Tango Puzzle: Backtracking & Simulated Annealing Solver',
-      description: 'Bachelor Thesis Project: Developed an intelligent agent to solve the binary Constraint Satisfaction Problem (CSP) "Tango". Conducted an empirical comparative performance analysis between exact Backtracking (CSP with constraint propagation) and Simulated Annealing (Metaheuristic optimization) across diverse grid difficulties.',
+      description: "As someone who loves logic puzzles, I chose the puzzle game 'Tango' for my Bachelor Thesis. I wanted to see how different computer algorithms solve grid-based puzzles, so I built and compared two methods: Backtracking and Simulated Annealing. To make the concepts accessible, I also created an interactive web solver where users can play, test algorithms, and see how the computer finds solutions step by step.",
       technologies: ['Python', 'CSP', 'Simulated Annealing', 'Backtracking', 'PyGame'],
       status: 'Completed',
       link: 'https://tangogame.vercel.app/',
@@ -54,7 +54,7 @@ export default function ProjectsClient() {
     },
     {
       title: 'GenAI-Accelerated Machine Learning for BSF Farming',
-      description: 'Spearheaded R&D of Machine Learning models for Black Soldier Fly (BSF) farming optimization. Utilized ChatGPT & Google Vertex AI (AutoML) for synthetic dataset generation, automated feature engineering, and predictive modeling. Deployed the "BSF All-in-One Predictor" interactive web application.',
+      description: 'Interested in using technology for sustainability, I worked on machine learning models to help optimize Black Soldier Fly (BSF) farming for organic waste processing. Curious about modern AI tools, I experimented with ChatGPT and Google Vertex AI to prepare synthetic data and train predictive models. I also built a live web dashboard so users can easily test farming variables and see predicted outcomes.',
       technologies: ['Google Vertex AI', 'ChatGPT', 'Machine Learning', 'Data Analysis', 'GenAI Platforms'],
       status: 'Completed',
       link: 'https://huggingface.co/spaces/jasonagung/bsf-predictor',
@@ -87,7 +87,7 @@ export default function ProjectsClient() {
     },
     {
       title: 'Chord Chart Maker & Transposer',
-      description: 'A web-based musical utility designed to eliminate rehearsal friction by automating musical chord chart transposition and harmonic analysis. Features automatic key detection, accidental handling via the circle of fifths, and multi-notation support (Standard ABC, Roman Numerals, Nashville Number System).',
+      description: 'As a musician, I often experienced how inconvenient it is to change song keys on the fly during band rehearsals. To solve this, I built a web tool that automatically transposes chord charts and detects musical keys. I combined music theory, like the circle of fifths, with code to handle sharps and flats properly. It also supports multiple notation formats such as Roman numerals and Nashville numbers.',
       technologies: ['Python', 'Tkinter', 'Flask', 'HTML/CSS', 'TypeScript'],
       status: 'Completed',
       link: 'https://chord-transposer-web.vercel.app/',
