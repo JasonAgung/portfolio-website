@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# apple developer academy portfolio generator
+/academy-portfolio/
+*_Portofolio_Academy.pdf
+JasonKelvinAgung_Portofolio_Academy.pdf
+NamaLengkap_Portofolio_Academy.pdf
