@@ -260,14 +260,14 @@ export default function ExperienceClient() {
                                 {org.projects.map((project, pIndex) => (
                                   <div 
                                     key={pIndex}
-                                    className="flex items-center gap-3 p-3 bg-cream dark:bg-sage-950/40 rounded-xl border border-sage-200/50 dark:border-sage-800/40"
+                                    className="flex items-center gap-3 p-3 bg-sage-50/70 dark:bg-gray-800/60 hover:bg-sage-100/80 dark:hover:bg-gray-800/90 rounded-xl border border-sage-200/70 dark:border-sage-700/50 shadow-sm transition-colors"
                                   >
-                                    <span className="text-xl">{project.icon}</span>
+                                    <span className="text-xl shrink-0">{project.icon}</span>
                                     <div className="flex-1 min-w-0">
-                                      <h4 className="text-xs font-bold text-gray-900 dark:text-white truncate">
+                                      <h4 className="text-xs font-bold text-gray-900 dark:text-gray-100 truncate">
                                         {project.name}
                                       </h4>
-                                      <p className="text-[11px] text-sage-600 dark:text-sage-400 truncate">
+                                      <p className="text-[11px] font-medium text-sage-700 dark:text-sage-300 truncate">
                                         {project.role}
                                       </p>
                                     </div>
