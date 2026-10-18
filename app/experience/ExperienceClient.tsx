@@ -1,298 +1,210 @@
 'use client';
 
-import Navigation from '@/components/Navigation';
-import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { useState } from 'react';
+import PageHeader from '@/components/PageHeader';
+import { commits, type Commit, type Lane } from '@/content/experience';
+
+type Filter = 'all' | Lane;
+
+const filters: { id: Filter; label: string; dot?: string }[] = [
+  { id: 'all', label: '--all' },
+  { id: 'main', label: 'main (work)', dot: 'bg-sage' },
+  { id: 'org', label: 'org (community)', dot: 'bg-blush' },
+];
+
+// Lane centres inside the 56px gutter
+const X = { main: 14, org: 40 };
+const DOT_TOP = 10;
 
 export default function ExperienceClient() {
-  const [showContent, setShowContent] = useState(false);
-  const [expandedOrg, setExpandedOrg] = useState<number | null>(null);
-  
-  useEffect(() => {
-    setShowContent(true);
-  }, []);
-
-  const workExperience = [
-    {
-      company: 'DEUS Human Capital Services',
-      companyLink: 'https://deushcs.com/',
-      position: 'AI Implementation Specialist',
-      year: '06/01/2026 – Present',
-      location: 'Bandung, Indonesia',
-      description: [
-        'Lead the transition of a gamified assessment system from static, template-based reporting to a dynamic Generative AI model.',
-        'Engineered an automated pipeline to synthesize 32 personality subtraits into highly personalized, unique behavioral reports.',
-        'Optimized report quality by designing advanced prompt frameworks that transform raw psychometric data into nuanced, human-like insights.',
-      ],
-    },
-    {
-      company: 'TalentSource Bandung',
-      companyLink: 'https://www.bandungtalentsource.com/',
-      position: 'Applied AI & Research Intern',
-      year: '22/08/2025 – Present',
-      location: 'Bandung, Indonesia',
-      description: [
-        'Spearheaded R&D of Machine Learning models for BSF farming optimization, utilizing ChatGPT & Google Vertex AI (AutoML) for synthetic data generation, model training, and deployment.',
-        'Accelerated web development lifecycle by leveraging Generative AI tools (v0, Bolt.new, Gemini CLI) to overhaul and modernize the company website.',
-        'Developed and delivered "GenAI & Prompt Engineering" workshops tailored for leading institutions and corporate clients, including Telkom, TelkomMedika, TelkomMetra, Asosiasi Dana Pensiun Indonesia (ADPI), and KWI Komisi Komunikasi Sosial.',
-      ],
-    },
-    {
-      company: 'HMPSIF (Informatics Student Association)',
-      companyLink: 'https://www.instagram.com/hmpsif_unpar/',
-      position: 'Academic Division Staff',
-      year: '01/08/2023 – 01/08/2024',
-      location: 'Bandung, Indonesia',
-      description: [
-        'Organized academic tutorials and peer-mentoring sessions for core Computer Science subjects (Algorithms, Logic).',
-        'Acted as a liaison between students and faculty to improve academic resources.',
-        'Organized charity events and provided IT education for underprivileged individuals.',
-      ],
-    },
-    {
-      company: 'GLAMIFY',
-      companyLink: 'https://www.instagram.com/glamify.id/',
-      position: 'Marketing Communications Intern',
-      year: '2023',
-      location: 'Bandung, Indonesia',
-      description: 'Worked on marketing campaigns and communications strategies for beauty and fashion products.',
-    },
-    {
-      company: 'EXECUTIVE',
-      companyLink: 'https://www.instagram.com/id_executive/',
-      position: 'Marketing Communications Intern',
-      year: '2022',
-      location: 'Bandung, Indonesia',
-      description: 'Assisted in developing marketing materials and managing brand communications for retail operations.',
-    },
-    {
-      company: 'PORCAFE',
-      companyLink: 'https://www.instagram.com/porcafe.bandung/',
-      position: 'Social Media Management Team',
-      year: '2020',
-      location: 'Bandung, Indonesia',
-      description: 'Designing Instagram posts, stories, banners for food and beverage marketing campaigns.',
-    },
-  ];
-
-  const organizationExperience = [
-    {
-      organization: 'Departemen Remaja GII HOK IM TONG',
-      organizationLink: 'https://www.instagram.com/arisegeneration.gii/',
-      position: 'Church Youth Ministry Team',
-      period: '2024 - Present',
-      description: 'Active member in church youth ministry, organizing events and spiritual activities.',
-      projects: [
-        { name: 'Resfeber 2023', role: 'Event Team', icon: '🎪' },
-        { name: 'Jingle Wave 2023', role: 'Event Team', icon: '🎄' },
-        { name: 'Arise Teens Camp 2024', role: 'Event Team', icon: '⛺' },
-        { name: 'Retrouvailles 2024', role: 'Event and Worship Team', icon: '🎵' },
-      ],
-    },
-    {
-      organization: 'HMPSIF (Himpunan Mahasiswa Program Studi Informatika)',
-      organizationLink: 'https://www.instagram.com/hmpsif_unpar/',
-      position: 'Academic Division',
-      period: '2023 - 2024',
-      description: 'Contributed to academic activities and student development programs in the IT department.',
-      projects: [
-        { name: 'I-CARE 2023', role: 'Vice Chief Executive', icon: '💼' },
-        { name: 'SIAP IF 2023', role: 'Vice Head of Event Team', icon: '🎯' },
-        { name: 'THORMATICS 2023', role: 'Head of External Communication', icon: '📢' },
-        { name: 'WOMTICS 2023', role: 'Head of Event Team', icon: '👥' },
-      ],
-    },
-  ];
+  const [filter, setFilter] = useState<Filter>('all');
+  const shown = filter === 'all' ? commits : commits.filter((c) => c.lane === filter);
+  const branching = filter === 'all';
+  const lastOrg = branching ? shown.map((c) => c.lane).lastIndexOf('org') : -1;
 
   return (
-    <>
-      <Navigation />
-      <main className="min-h-screen bg-cream dark:bg-gray-950 py-16 section-padding">
-        <div className="max-width-container">
-          <div className={`transition-all duration-700 ${showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-            <div className="mb-12 text-center">
-              <h1 className="text-4xl font-bold font-mono text-gray-900 dark:text-white mb-2 relative inline-block">
-                Experience
-                <span className="absolute -top-6 -right-6 text-2xl animate-bounce">✨</span>
-              </h1>
-              <p className="text-gray-600 dark:text-gray-400 font-mono text-sm">~/experience</p>
-            </div>
+    <div className="container-page">
+      <PageHeader path="~/experience" command="git log --graph --all" title="Experience">
+        Every job and organisation I’ve been part of, as a git history. Work lives on <span className="font-semibold text-sage">main</span>;
+        organisations and community have their own <span className="font-semibold text-blush">org</span> branch.
+      </PageHeader>
 
-            <div className="mb-16">
-              <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white text-center flex items-center justify-center gap-3">
-                <span className="text-sage-400">💼</span>
-                Work Experience
-              </h2>
-              <div className="space-y-6">
-                {workExperience.map((job, index) => (
-                  <div 
-                    key={index}
-                    className="font-mono bg-white dark:bg-gray-900/90 border border-sage-200 dark:border-sage-500/30 rounded-2xl p-6 shadow-soft hover:shadow-lg transition-all duration-300 hover:scale-[1.01]"
-                  >
-                    <div className="flex items-center gap-2 mb-4">
-                      <div className="flex gap-1.5">
-                        <div className="w-3 h-3 rounded-full bg-blush-400"></div>
-                        <div className="w-3 h-3 rounded-full bg-sage-400"></div>
-                        <div className="w-3 h-3 rounded-full bg-sage-500"></div>
-                      </div>
-                      <span className="text-gray-500 text-xs font-mono">job_0{index + 1}.sh</span>
-                    </div>
+      <div role="group" aria-label="Filter history" className="mb-12 flex flex-wrap gap-2">
+        {filters.map((f) => (
+          <button
+            key={f.id}
+            type="button"
+            aria-pressed={filter === f.id}
+            onClick={() => setFilter(f.id)}
+            className={`inline-flex min-h-[40px] items-center gap-2 rounded-md border-2 border-ink px-3.5 text-[14px] font-semibold transition-[transform,box-shadow] duration-100 ${
+              filter === f.id ? 'bg-ink text-paper' : 'bg-raised shadow-hard-sm hover:-translate-y-px'
+            }`}
+          >
+            {f.dot && <span aria-hidden="true" className={`h-2.5 w-2.5 rounded-full ${f.dot}`} />}
+            {f.label}
+          </button>
+        ))}
+      </div>
 
-                    <div>
-                      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-4">
-                        <div>
-                          <h3 className="text-xl font-bold text-gray-900 dark:text-white">
-                            {job.position}
-                          </h3>
-                          <div className="flex flex-wrap items-center gap-2 mt-1">
-                            <a 
-                              href={job.companyLink}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-sage-600 dark:text-sage-400 hover:text-sage-700 dark:hover:text-sage-300 hover:underline transition-colors inline-flex items-center gap-1 font-semibold"
-                            >
-                              {job.company}
-                              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                              </svg>
-                            </a>
-                            {job.location && (
-                              <span className="text-xs text-gray-500 dark:text-gray-400 font-mono">
-                                📍 {job.location}
-                              </span>
-                            )}
-                          </div>
-                        </div>
-                        <span className="text-xs font-mono text-sage-600 dark:text-sage-400 bg-sage-400/10 dark:bg-sage-400/20 px-3 py-1 rounded-full whitespace-nowrap self-start border border-sage-300/30 dark:border-sage-500/20">
-                          {job.year}
-                        </span>
-                      </div>
-
-                      <div className="space-y-2.5 mt-4 pt-4 border-t border-sage-100 dark:border-sage-800/40">
-                        {Array.isArray(job.description) ? (
-                          job.description.map((item, descIndex) => (
-                            <div key={descIndex} className="flex items-start gap-3 font-mono">
-                              <span className="text-sage-600 dark:text-sage-400 shrink-0 font-bold">$</span>
-                              <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
-                                {item}
-                              </p>
-                            </div>
-                          ))
-                        ) : (
-                          <div className="flex items-start gap-3 font-mono">
-                            <span className="text-sage-600 dark:text-sage-400 shrink-0 font-bold">$</span>
-                            <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
-                              {job.description}
-                            </p>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                ))}
+      <ol aria-label="Experience, most recent first">
+        {shown.map((c, i) => {
+          const lane: Lane = branching ? c.lane : 'main';
+          const orgLine = branching && i <= lastOrg;
+          return (
+            <li key={c.hash}>
+              <div className="flex">
+                <Gutter
+                  first={i === 0}
+                  last={i === shown.length - 1 && !(i === lastOrg)}
+                  lane={lane}
+                  color={c.lane}
+                  orgLine={orgLine}
+                  orgEnds={i === lastOrg}
+                  milestone={c.milestone}
+                />
+                <CommitBody commit={c} />
               </div>
-            </div>
+              {i === lastOrg && <Fork />}
+            </li>
+          );
+        })}
+      </ol>
+    </div>
+  );
+}
 
-            <div>
-              <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white text-center flex items-center justify-center gap-3">
-                <span className="text-sage-400">🌟</span>
-                Organization Experience
-              </h2>
-              <div className="space-y-6 font-mono">
-                {organizationExperience.map((org, index) => (
-                  <div 
-                    key={index}
-                    className="bg-white dark:bg-gray-900/90 border border-sage-200 dark:border-sage-500/30 rounded-2xl p-6 shadow-soft hover:shadow-lg transition-all duration-300 hover:scale-[1.01]"
-                  >
-                    <div className="flex items-center gap-2 mb-4">
-                      <div className="flex gap-1.5">
-                        <div className="w-3 h-3 rounded-full bg-blush-400"></div>
-                        <div className="w-3 h-3 rounded-full bg-sage-400"></div>
-                        <div className="w-3 h-3 rounded-full bg-sage-500"></div>
-                      </div>
-                      <span className="text-gray-500 text-xs font-mono">org_0{index + 1}.sh</span>
-                    </div>
+function Gutter({
+  first,
+  last,
+  lane,
+  color,
+  orgLine,
+  orgEnds,
+  milestone,
+}: {
+  first: boolean;
+  last: boolean;
+  lane: Lane;
+  color: Lane;
+  orgLine: boolean;
+  orgEnds: boolean;
+  milestone?: boolean;
+}) {
+  const dotColor = milestone ? 'bg-paper' : color === 'org' ? 'bg-blush' : 'bg-sage';
+  return (
+    <div aria-hidden="true" className="relative w-14 shrink-0">
+      {/* main line */}
+      <span
+        className="absolute w-[2px] bg-sage"
+        style={{ left: X.main - 1, top: first ? DOT_TOP + 8 : 0, bottom: last ? 'auto' : 0, height: last ? DOT_TOP + 8 : undefined }}
+      />
+      {/* org line */}
+      {orgLine && (
+        <span
+          className="absolute w-[2px] bg-blush"
+          style={{ left: X.org - 1, top: 0, bottom: orgEnds ? 'auto' : 0, height: orgEnds ? DOT_TOP + 8 : undefined }}
+        />
+      )}
+      <span
+        className={`absolute h-4 w-4 rounded-full border-2 border-ink ${dotColor} ${milestone ? 'ring-4 ring-butter-soft' : ''}`}
+        style={{ left: X[lane] - 8, top: DOT_TOP }}
+      />
+    </div>
+  );
+}
 
-                    <div>
-                      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-4">
-                        <div className="flex-1">
-                          <h3 className="text-xl font-bold text-gray-900 dark:text-white">
-                            {org.position}
-                          </h3>
-                          <a 
-                            href={org.organizationLink}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-sage-600 dark:text-sage-400 hover:text-sage-700 dark:hover:text-sage-300 hover:underline transition-colors inline-flex items-center gap-1 font-semibold text-sm mt-1"
-                          >
-                            {org.organization}
-                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                            </svg>
-                          </a>
-                        </div>
-                        <span className="text-xs font-mono text-sage-600 dark:text-sage-400 bg-sage-400/10 dark:bg-sage-400/20 px-3 py-1 rounded-full whitespace-nowrap self-start border border-sage-300/30 dark:border-sage-500/20">
-                          {org.period}
-                        </span>
-                      </div>
+// The org branch splitting off main, drawn below its oldest commit.
+function Fork() {
+  return (
+    <div aria-hidden="true" className="relative h-10 w-14">
+      <span className="absolute inset-y-0 w-[2px] bg-sage" style={{ left: X.main - 1 }} />
+      <svg className="absolute inset-0" width="56" height="40" viewBox="0 0 56 40" fill="none">
+        <path d={`M${X.org} 0 C${X.org} 22, ${X.main} 18, ${X.main} 40`} stroke="rgb(var(--blush))" strokeWidth="2" />
+      </svg>
+    </div>
+  );
+}
 
-                      <div className="mt-4 pt-4 border-t border-sage-100 dark:border-sage-800/40">
-                        <div className="flex items-start gap-3 font-mono">
-                          <span className="text-sage-600 dark:text-sage-400 shrink-0 font-bold">$</span>
-                          <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
-                            {org.description}
-                          </p>
-                        </div>
-                        
-                        {org.projects && (
-                          <div className="mt-4 pt-2">
-                            <button
-                              onClick={() => setExpandedOrg(expandedOrg === index ? null : index)}
-                              className="inline-flex items-center gap-2 px-3 py-1.5 bg-sage-50 dark:bg-sage-900/30 hover:bg-sage-100 dark:hover:bg-sage-800/40 text-sage-700 dark:text-sage-300 rounded-lg text-xs font-mono border border-sage-200/60 dark:border-sage-700/40 transition-all"
-                            >
-                              <span className={`transform transition-transform duration-200 ${expandedOrg === index ? 'rotate-90' : ''}`}>
-                                ▶
-                              </span>
-                              View Key Initiatives ({org.projects.length})
-                            </button>
-                            
-                            {expandedOrg === index && (
-                              <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-3 animate-fadeIn font-mono">
-                                {org.projects.map((project, pIndex) => (
-                                  <div 
-                                    key={pIndex}
-                                    className="flex items-center gap-3 p-3 bg-sage-50/70 dark:bg-gray-800/60 hover:bg-sage-100/80 dark:hover:bg-gray-800/90 rounded-xl border border-sage-200/70 dark:border-sage-700/50 shadow-sm transition-colors"
-                                  >
-                                    <span className="text-xl shrink-0">{project.icon}</span>
-                                    <div className="flex-1 min-w-0">
-                                      <h4 className="text-xs font-bold text-gray-900 dark:text-gray-100 truncate">
-                                        {project.name}
-                                      </h4>
-                                      <p className="text-[11px] font-medium text-sage-700 dark:text-sage-300 truncate">
-                                        {project.role}
-                                      </p>
-                                    </div>
-                                  </div>
-                                ))}
-                              </div>
-                            )}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                ))}
+function CommitBody({ commit: c }: { commit: Commit }) {
+  return (
+    <article className="min-w-0 flex-1 pb-14">
+      <p className="text-[14px] leading-6">
+        <span className="text-butter">{c.hash}</span>{' '}
+        {c.refs?.map((r) => (
+          <span
+            key={r}
+            className={`mr-1.5 inline-block rounded px-1.5 text-[12px] font-semibold leading-5 ${
+              r.startsWith('HEAD') ? 'bg-sky-soft text-sky' : r.startsWith('tag') ? 'bg-butter-soft text-butter' : 'bg-blush-soft text-blush'
+            }`}
+          >
+            {r}
+          </span>
+        ))}
+        <span className="text-muted">
+          {c.type}({c.scope})
+        </span>
+      </p>
+      <h2 className="mt-2 font-display text-[clamp(1.25rem,2.6vw,1.6rem)] font-extrabold leading-tight [font-stretch:112.5%]">
+        {c.role}
+      </h2>
+      <p className="mt-1 text-[15px]">
+        {c.orgLink ? (
+          <a href={c.orgLink} target="_blank" rel="noopener noreferrer" className="link font-semibold">
+            {c.org}
+          </a>
+        ) : (
+          <span className="font-semibold">{c.org}</span>
+        )}
+        <span className="text-muted">
+          {'  '}
+          {c.period}
+          {c.location && `, ${c.location}`}
+        </span>
+      </p>
+
+      <ul className="mt-4 max-w-3xl space-y-1.5">
+        {c.bullets.map((b) => (
+          <li
+            key={b}
+            className={`flex gap-3 rounded px-3 py-1.5 text-[15px] leading-relaxed ${
+              c.lane === 'org' ? 'bg-blush-soft/45' : 'bg-sage-soft/45'
+            }`}
+          >
+            <span aria-hidden="true" className={`select-none font-bold ${c.lane === 'org' ? 'text-blush' : 'text-sage'}`}>
+              +
+            </span>
+            <span>{b}</span>
+          </li>
+        ))}
+      </ul>
+
+      {c.initiatives && (
+        <div className="mt-5 max-w-xl">
+          <p className="comment text-sm">{'// '}key initiatives</p>
+          <dl className="mt-2 grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 text-[14px]">
+            {c.initiatives.map((it) => (
+              <div key={it.name} className="contents">
+                <dt className="font-semibold">{it.name}</dt>
+                <dd className="text-muted">
+                  <span aria-hidden="true" className="mr-2 text-line">
+                    |
+                  </span>
+                  {it.role}
+                </dd>
               </div>
-              
-              <div className="mt-8 p-4 bg-sage-400/10 dark:bg-sage-400/5 rounded-2xl border border-sage-400/20 dark:border-sage-400/30 text-center transition-all hover:scale-[1.01] hover:shadow-soft">
-                <p className="font-mono text-gray-600 dark:text-gray-400 text-sm flex items-center justify-center gap-2">
-                  <span className="text-lg">📊</span>
-                  Total experience: {workExperience.length} work positions + {organizationExperience.length} organizations
-                </p>
-              </div>
-            </div>
-          </div>
+            ))}
+          </dl>
         </div>
-      </main>
-    </>
+      )}
+
+      {c.more && (
+        <p className="mt-4 text-[15px]">
+          <Link href={c.more.href} className="link">
+            {c.more.label}
+          </Link>
+        </p>
+      )}
+    </article>
   );
 }

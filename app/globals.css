@@ -2,92 +2,121 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Colour tokens as RGB channels so Tailwind opacity modifiers work.
+   sage = system & prompts, sky = links & files, blush = "you are here" & highlights,
+   butter = hashes, tags & work in progress. */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --paper: 253 246 236;
+  --raised: 255 251 245;
+  --ink: 34 40 31;
+  --muted: 94 106 90;
+  --line: 222 215 201;
+  --dot: 226 217 200;
+  --sage: 88 103 83;
+  --sage-soft: 214 222 209;
+  --blush: 168 72 79;
+  --blush-soft: 247 219 219;
+  --sky: 47 94 140;
+  --sky-soft: 216 229 242;
+  --butter: 133 100 8;
+  --butter-soft: 250 234 170;
+  --term: 31 36 29;
+  --term-ink: 230 235 221;
+  --term-dim: 155 170 150;
+  --term-line: 54 63 50;
+  --shadow: 34 40 31;
+  color-scheme: light;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-:root {
-  --background: #ffffff;
-  --foreground: #000000;
+.dark {
+  --paper: 20 24 18;
+  --raised: 28 33 26;
+  --ink: 232 236 226;
+  --muted: 163 174 158;
+  --line: 48 56 45;
+  --dot: 38 45 36;
+  --sage: 169 187 162;
+  --sage-soft: 44 56 41;
+  --blush: 240 191 191;
+  --blush-soft: 70 41 45;
+  --sky: 184 208 232;
+  --sky-soft: 31 46 62;
+  --butter: 245 222 138;
+  --butter-soft: 62 54 24;
+  --term: 11 14 10;
+  --term-line: 44 52 41;
+  --shadow: 62 74 58;
+  color-scheme: dark;
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
   }
-  
+
   body {
-    @apply antialiased;
+    @apply bg-paper text-ink font-mono antialiased;
+    font-size: 16px;
+    line-height: 1.65;
+    /* Notebook dot grid */
+    background-image: radial-gradient(rgb(var(--dot)) 1px, transparent 1.2px);
+    background-size: 22px 22px;
+  }
+
+  ::selection {
+    @apply bg-blush-soft text-ink;
+  }
+
+  :focus-visible {
+    outline: 2px solid rgb(var(--sky));
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  h1, h2, h3 {
+    text-wrap: balance;
   }
 }
 
 @layer components {
-  .section-padding {
-    @apply px-4 sm:px-6 lg:px-8;
+  .container-page {
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
   }
-  
-  .max-width-container {
-    @apply max-w-7xl mx-auto;
+
+  /* Code-comment asides, set in Victor Mono's cursive italic */
+  .comment {
+    @apply italic text-muted;
   }
-  
-  .shadow-soft {
-    @apply shadow-lg;
+
+  .link {
+    @apply text-sky underline decoration-sky/40 underline-offset-4 transition-colors hover:decoration-sky;
   }
-  
-  .shadow-soft-lg {
-    @apply shadow-xl;
+
+  /* Keyboard-key button: presses down when clicked */
+  .keycap {
+    @apply inline-flex min-h-[48px] items-center justify-center gap-2 rounded-md border-2 border-ink bg-raised px-5 font-mono text-[15px] font-semibold text-ink shadow-key transition-[transform,box-shadow] duration-100 hover:-translate-y-0.5 hover:shadow-[0_6px_0_0_rgb(var(--shadow))] active:translate-y-1 active:shadow-none;
+  }
+
+  .keycap-primary {
+    @apply bg-blush-soft;
+  }
+
+  .sticker {
+    @apply inline-block rounded-md border-2 border-[#22281F] px-3 py-1 font-mono text-[13px] font-semibold text-[#22281F] shadow-hard-sm;
+  }
+
+  .cursor-block {
+    @apply inline-block h-[0.9em] w-[0.5em] translate-y-[0.1em] animate-blink bg-blush;
   }
 }
 
-@keyframes fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-fade-in {
-  animation: fade-in 0.8s ease-out;
-}
-
-@keyframes matrix-fall {
-  from {
-    transform: translateY(-100vh);
-    opacity: 1;
-  }
-  to {
-    transform: translateY(100vh);
-    opacity: 0;
-  }
-}
-
-.animate-matrix-fall {
-  animation: matrix-fall linear infinite;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-fadeIn {
-  animation: fadeIn 0.3s ease-out;
 }

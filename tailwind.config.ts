@@ -1,41 +1,50 @@
 import type { Config } from "tailwindcss";
 
+const token = (name: string) => `rgb(var(--${name}) / <alpha-value>)`;
+
 const config: Config = {
   content: [
-    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./content/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   darkMode: 'class',
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
-        sage: {
-          50: '#F5F7F4',
-          100: '#E8ECE6',
-          200: '#D1D9CD',
-          300: '#B8C5B3',
-          400: '#9BAA96',
-          500: '#7E8F79',
-          600: '#6B7B66',
-          700: '#586753',
-          800: '#475442',
-          900: '#3A4436',
-          950: '#1a2219',
+        paper: token('paper'),
+        raised: token('raised'),
+        ink: token('ink'),
+        muted: token('muted'),
+        line: token('line'),
+        sage: { DEFAULT: token('sage'), soft: token('sage-soft') },
+        blush: { DEFAULT: token('blush'), soft: token('blush-soft') },
+        sky: { DEFAULT: token('sky'), soft: token('sky-soft') },
+        butter: { DEFAULT: token('butter'), soft: token('butter-soft') },
+        term: { DEFAULT: token('term'), ink: token('term-ink'), dim: token('term-dim'), line: token('term-line') },
+        // Pastels for text on the always-dark terminal surfaces.
+        pastel: {
+          sage: '#B8C5B3',
+          blush: '#F0BFBF',
+          sky: '#B8D0E8',
+          butter: '#F5DE8A',
         },
-        cream: '#FDF6EC',
-        blush: {
-          300: '#F5D5D5',
-          400: '#F0BFBF',
-          500: '#EAAAAA',
-        },
-        sky: {
-          300: '#D6E3F0',
-          400: '#B8D0E8',
-          500: '#9ABDE0',
-        }
+      },
+      fontFamily: {
+        display: ['var(--font-display)', 'ui-monospace', 'monospace'],
+        mono: ['var(--font-mono)', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
+        glyph: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Consolas', 'monospace'],
+      },
+      boxShadow: {
+        hard: '4px 4px 0 0 rgb(var(--shadow))',
+        'hard-sm': '2px 2px 0 0 rgb(var(--shadow))',
+        key: '0 4px 0 0 rgb(var(--shadow))',
+      },
+      keyframes: {
+        blink: { '50%': { opacity: '0' } },
+      },
+      animation: {
+        blink: 'blink 1.1s steps(1) infinite',
       },
     },
   },

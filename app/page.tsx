@@ -1,206 +1,187 @@
-'use client';
-
-import Navigation from '@/components/Navigation';
-import SocialLinks from '@/components/SocialLinks';
+import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useState, useMemo } from 'react';
+import Terminal from '@/components/Terminal';
+import { hasCv } from '@/lib/cv';
+import { now, profile } from '@/content/profile';
+import { projects } from '@/content/projects';
+import { commits } from '@/content/experience';
+
+const stickers = [
+  { text: 'made in bandung', className: 'bg-pastel-sky -rotate-3 lg:-top-5 lg:left-8' },
+  { text: 'unpar cs ’26', className: 'bg-pastel-butter rotate-2 lg:-top-3 lg:right-10' },
+  { text: 'plays in a band', className: 'bg-pastel-blush rotate-3 lg:top-[342px] lg:right-12' },
+  { text: 'logic puzzle nerd', className: 'bg-pastel-sage -rotate-2 lg:top-[344px] lg:-left-4' },
+];
+
+const tilt = ['-rotate-1', 'rotate-1', '-rotate-[0.6deg]'];
 
 export default function Home() {
-  const [text, setText] = useState('');
-  const [showCursor, setShowCursor] = useState(true);
-  const [mounted, setMounted] = useState(false);
-  const [showContent, setShowContent] = useState(false);
-  const fullText = "Jason Kelvin Agung";
-  
-  const matrixElements = useMemo(() => 
-    Array.from({ length: 50 }).map((_, i) => ({
-      id: i,
-      left: Math.random() * 100,
-      delay: Math.random() * 5,
-      duration: 5 + Math.random() * 10,
-      value: Math.random() > 0.5 ? '1' : '0'
-    })), []);
-  
-  useEffect(() => {
-    setMounted(true);
-    setShowContent(true);
-    let index = 0;
-    const typingInterval = setInterval(() => {
-      if (index < fullText.length) {
-        setText(fullText.slice(0, index + 1));
-        index++;
-      } else {
-        clearInterval(typingInterval);
-      }
-    }, 100);
-
-    const cursorInterval = setInterval(() => {
-      setShowCursor(prev => !prev);
-    }, 500);
-
-    return () => {
-      clearInterval(typingInterval);
-      clearInterval(cursorInterval);
-    };
-  }, []);
+  const cv = hasCv();
+  const featured = projects.filter((p) => p.featured);
+  const recent = commits.slice(0, 4);
 
   return (
-    <>
-      <Navigation />
-      <main className="min-h-screen bg-cream dark:bg-gray-950">
-        <div className="fixed inset-0 bg-cream dark:bg-gray-950">
-          {mounted && (
-            <div className="absolute inset-0 opacity-10">
-              {matrixElements.map((element) => (
-                <div
-                  key={element.id}
-                  className="absolute text-sage-400 dark:text-sage-500 text-xs font-mono animate-matrix-fall opacity-20"
-                  style={{
-                    left: `${element.left}%`,
-                    animationDelay: `${element.delay}s`,
-                    animationDuration: `${element.duration}s`
-                  }}
-                >
-                  {element.value}
-                </div>
-              ))}
-            </div>
-          )}
+    <div className="container-page">
+      {/* Hero */}
+      <section className="grid items-center gap-x-12 gap-y-14 pt-14 sm:pt-20 lg:grid-cols-12">
+        <div className="lg:col-span-5">
+          <p className="comment">{'// '}hello, world</p>
+          <h1 className="mt-2 font-display text-[clamp(2.9rem,8vw,5.4rem)] font-extrabold leading-[0.92] tracking-tight [font-stretch:112.5%]">
+            Jason
+            <br />
+            Kelvin
+            <br />
+            Agung<span aria-hidden="true" className="cursor-block ml-2" />
+          </h1>
+          <p className="mt-7 text-lg font-semibold leading-snug">
+            {profile.role} at{' '}
+            <a href="https://deushcs.com/" target="_blank" rel="noopener noreferrer" className="link">
+              {profile.company}
+            </a>
+            , Bandung.
+          </p>
+          <p className="mt-4 max-w-md text-muted">
+            Hiii 👋, sooo this is the page where you’ll find everything about me (kinda). Think of it as a little digital
+            museum of my life.
+          </p>
+          <p className="comment mt-1">{'// '}don’t worry, i’m not dead yet</p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            {cv ? (
+              <a href={profile.cvPath} className="keycap keycap-primary" download>
+                Download CV
+              </a>
+            ) : (
+              <a href={`mailto:${profile.email}`} className="keycap keycap-primary">
+                Email me
+              </a>
+            )}
+            <Link href="/projects" className="keycap">
+              See projects
+            </Link>
+          </div>
         </div>
 
-        <section className="relative min-h-[calc(100vh-64px)] flex items-center justify-center section-padding z-10">
-          <div className="max-width-container">
-            <div className={`bg-white dark:bg-gray-900/90 backdrop-blur-sm border-2 border-sage-300 dark:border-sage-600/30 rounded-2xl p-8 md:p-12 shadow-lg dark:shadow-2xl dark:shadow-sage-600/20 transition-all duration-700 ${
-              showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-            }`}>
-              <div className="text-left mb-8">
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="flex gap-1.5">
-                    <div className="w-3 h-3 rounded-full bg-blush-400"></div>
-                    <div className="w-3 h-3 rounded-full bg-yellow-300"></div>
-                    <div className="w-3 h-3 rounded-full bg-sage-400"></div>
-                  </div>
-                  <span className="text-gray-500 text-sm font-mono">terminal@jason-portfolio</span>
-                </div>
-                
-                <div className="font-mono">
-                  <p className="text-sage-600 dark:text-sage-400 mb-2">$ whoami</p>
-                  <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-                    {text}
-                    <span className={`${showCursor ? 'opacity-100' : 'opacity-0'} text-sage-500 dark:text-sage-400`}>_</span>
-                  </h1>
-                  
-                  <div className="space-y-6">
-                    <div>
-                      <p className="text-gray-600 dark:text-gray-400 text-sm mb-2">{/* Roles */}</p>
-                      <p className="text-gray-700 dark:text-gray-300">
-                        Computer Science • AI & Algorithms • Software Engineering
-                      </p>
-                    </div>
-                    
-                    <div>
-                      <p className="text-gray-600 dark:text-gray-400 text-sm mb-2">{/* Location & Education */}</p>
-                      <div className="text-gray-700 dark:text-gray-300">
-                        <p>📍 Bandung, Indonesia</p>
-                        <p>🎓 Universitas Katolik Parahyangan</p>
-                      </div>
-                    </div>
-                    
-                    <div>
-                      <p className="text-gray-600 dark:text-gray-400 text-sm mb-2">{/* About */}</p>
-                      <div className="text-gray-700 dark:text-gray-300 max-w-2xl">
-                        <p className="mb-2">Hiii 👋, sooo this is the page where you&apos;ll find everything about me (kinda).</p>
-                        <p className="mb-2">Think of it as a little digital museum of my life (don&apos;t worry i&apos;m not dead yet)</p>
-                        <p>Feel free to click around 🖱️ and explore what I&apos;ve been up to these past few years! 🚀</p>
-                      </div>
-                    </div>
-                    
-                    <div className={`flex flex-col sm:flex-row gap-4 transition-all duration-700 delay-300 ${
-                      showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-                    }`}>
-                      <Link
-                        href="/about"
-                        className="inline-flex items-center gap-2 px-6 py-3 bg-sage-500/10 border-2 border-sage-400 text-sage-700 dark:text-sage-400 rounded-full font-mono hover:bg-sage-500/20 transition-all hover:scale-105"
-                      >
-                        Learn More
-                      </Link>
-                      <Link
-                        href="/projects"
-                        className="inline-flex items-center gap-2 px-6 py-3 bg-sky-500/10 border-2 border-sky-400 text-sky-700 dark:text-sky-400 rounded-full font-mono hover:bg-sky-500/20 transition-all hover:scale-105"
-                      >
-                        View Projects
-                      </Link>
-                    </div>
-                    
-                    <div className={`transition-all duration-700 delay-500 ${
-                      showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-                    }`}>
-                      <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">{/* Connect */}</p>
-                      <SocialLinks className="justify-start" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-        </section>
+        <div className="relative lg:col-span-7">
+          <ul className="mb-6 flex flex-wrap gap-2.5 lg:mb-0" aria-label="A few facts">
+            {stickers.map((s) => (
+              <li key={s.text} className={`sticker z-10 lg:absolute ${s.className}`}>
+                {s.text}
+              </li>
+            ))}
+          </ul>
+          <Terminal hasCv={cv} />
+        </div>
+      </section>
 
-        <section className="relative py-24 section-padding bg-gradient-to-b from-cream to-white dark:from-gray-950 dark:to-gray-900 z-10">
-          <div className="max-width-container">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-gray-900 dark:text-white font-mono mb-2">
-                Quick Overview
-              </h2>
-              <p className="text-gray-600 dark:text-gray-400 text-sm font-mono">~/overview</p>
+      {/* Right now */}
+      <section className="mt-28" aria-labelledby="now-heading">
+        <h2 id="now-heading" className="font-display text-3xl font-extrabold tracking-tight [font-stretch:112.5%] sm:text-4xl">
+          Right now
+        </h2>
+        <p className="comment mt-1">{'// '}last updated october 2026</p>
+
+        <div className="mt-8 grid items-start gap-8 lg:grid-cols-12">
+          {/* now.md in an editor */}
+          <div className="overflow-hidden rounded-lg border-2 border-ink bg-raised shadow-hard lg:col-span-7">
+            <div className="flex border-b-2 border-ink bg-sage-soft/60 text-[13px]">
+              <span className="border-r-2 border-ink bg-raised px-4 py-2 font-semibold">now.md</span>
+              <span className="px-4 py-2 text-muted">README.md</span>
             </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="bg-white dark:bg-gray-900 border-2 border-sky-300 dark:border-sky-600/30 p-6 rounded-2xl hover:border-sky-400 dark:hover:border-sky-500/60 transition-all group hover:scale-105 hover:shadow-lg">
-                <div className="font-mono mb-4">
-                  <span className="text-sky-600 dark:text-sky-400">&lt;Education</span>
-                  <span className="text-gray-500"> /&gt;</span>
-                </div>
-                <p className="text-gray-700 dark:text-gray-300 font-mono text-sm">
-                  <span className="text-gray-500">{'//'}</span> Bachelor of Computer Science
-                  <br />
-                  <span className="text-gray-500">{'//'}</span> @ UNPAR (GPA: 3.67)
-                  <br />
-                  <span className="text-gray-500">{'//'}</span> Class of 2026
-                </p>
-              </div>
-              
-              <div className="bg-white dark:bg-gray-900 border-2 border-sage-300 dark:border-sage-600/30 p-6 rounded-2xl hover:border-sage-400 dark:hover:border-sage-500/60 transition-all group hover:scale-105 hover:shadow-lg">
-                <div className="font-mono mb-4">
-                  <span className="text-sage-600 dark:text-sage-400">&lt;Experience</span>
-                  <span className="text-gray-500"> /&gt;</span>
-                </div>
-                <p className="text-gray-700 dark:text-gray-300 font-mono text-sm">
-                  <span className="text-gray-500">{'//'}</span> AI Implementation Specialist @ DEUS
-                  <br />
-                  <span className="text-gray-500">{'//'}</span> Applied AI & Research Intern @ TalentSource
-                  <br />
-                  <span className="text-gray-500">{'//'}</span> Academic Staff @ HMPSIF
-                </p>
-              </div>
-              
-              <div className="bg-white dark:bg-gray-900 border-2 border-blush-300 dark:border-blush-500/30 p-6 rounded-2xl hover:border-blush-400 dark:hover:border-blush-400/60 transition-all group hover:scale-105 hover:shadow-lg">
-                <div className="font-mono mb-4">
-                  <span className="text-blush-500 dark:text-blush-400">&lt;Interests</span>
-                  <span className="text-gray-500"> /&gt;</span>
-                </div>
-                <p className="text-gray-700 dark:text-gray-300 font-mono text-sm">
-                  <span className="text-gray-500">{'//'}</span> Artificial Intelligence && ML
-                  <br />
-                  <span className="text-gray-500">{'//'}</span> Performance Optimization
-                  <br />
-                  <span className="text-gray-500">{'//'}</span> Software Engineering
-                </p>
-              </div>
-            </div>
+            <ol className="py-4 text-[15px]">
+              <EditorLine n={1}>
+                <span className="text-sage"># </span>
+                <span className="font-semibold">now</span>
+              </EditorLine>
+              <EditorLine n={2}>{' '}</EditorLine>
+              {now.map((item, i) => (
+                <EditorLine key={item.label} n={i + 3}>
+                  <span className="text-blush">- </span>
+                  <span className="font-semibold text-butter">**{item.label}:**</span> {item.text}
+                </EditorLine>
+              ))}
+            </ol>
           </div>
-        </section>
-      </main>
-    </>
+
+          {/* git log --oneline */}
+          <div className="flex flex-col overflow-hidden rounded-lg border-2 border-[#11140F] bg-term text-[14px] text-term-ink shadow-hard lg:col-span-5">
+            <p className="border-b border-term-line px-4 py-2.5 text-[13px] text-term-dim">
+              <span className="text-pastel-sage">~$</span> git log --oneline -4
+            </p>
+            <ul className="flex-1 space-y-2.5 px-4 py-4">
+              {recent.map((c) => (
+                <li key={c.hash} className="leading-snug">
+                  <span className="text-pastel-butter">{c.hash}</span>{' '}
+                  {c.refs && <span className="text-pastel-sky">({c.refs.join(', ')}) </span>}
+                  <span>
+                    {c.type}({c.scope}): {c.role}
+                  </span>
+                </li>
+              ))}
+            </ul>
+            <Link
+              href="/experience"
+              className="border-t border-term-line px-4 py-3 text-[13px] text-pastel-blush hover:bg-term-line"
+            >
+              git log --graph --all <span className="text-term-dim">(see the full history)</span>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Featured projects */}
+      <section className="mt-28" aria-labelledby="exhibits-heading">
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <h2 id="exhibits-heading" className="font-display text-3xl font-extrabold tracking-tight [font-stretch:112.5%] sm:text-4xl">
+              On display
+            </h2>
+            <p className="comment mt-1">{'// '}three favourites from the museum</p>
+          </div>
+          <Link href="/projects" className="keycap">
+            ls ~/projects
+          </Link>
+        </div>
+
+        <ul className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          {featured.map((p, i) => (
+            <li key={p.slug}>
+              <Link
+                href={`/projects#${p.slug}`}
+                className={`group block overflow-hidden rounded-lg border-2 border-ink bg-raised shadow-hard transition-transform duration-200 hover:rotate-0 hover:-translate-y-1 ${tilt[i % tilt.length]}`}
+              >
+                <p className="border-b-2 border-ink px-3 py-1.5 text-[13px] text-muted">{p.slug}/</p>
+                {p.image && (
+                  <div className="relative aspect-[16/10] border-b-2 border-ink bg-paper">
+                    <Image
+                      src={p.image}
+                      alt={p.imageAlt ?? ''}
+                      fill
+                      sizes="(min-width: 1024px) 360px, (min-width: 640px) 50vw, 100vw"
+                      className="object-cover object-top"
+                    />
+                  </div>
+                )}
+                <div className="p-4">
+                  {p.context && <p className="text-[13px] text-muted">{p.context}</p>}
+                  <h3 className="mt-1 font-display text-[17px] font-bold leading-snug group-hover:underline">{p.title}</h3>
+                  <p className="mt-2 text-[15px] text-muted">{p.summary}</p>
+                </div>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </section>
+    </div>
+  );
+}
+
+function EditorLine({ n, children }: { n: number; children: React.ReactNode }) {
+  return (
+    <li className="grid grid-cols-[3rem_1fr] pr-5">
+      <span aria-hidden="true" className="select-none pr-4 text-right text-muted/60">
+        {n}
+      </span>
+      <span className="min-w-0">{children}</span>
+    </li>
   );
 }

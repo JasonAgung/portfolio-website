@@ -1,7 +1,12 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  async redirects() {
+    return [
+      // Education now lives on the About page.
+      { source: "/education", destination: "/about#education", permanent: true },
+    ];
+  },
 };
 
 export default nextConfig;

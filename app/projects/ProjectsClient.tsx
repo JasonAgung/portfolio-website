@@ -1,300 +1,196 @@
 'use client';
 
-import Navigation from '@/components/Navigation';
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import PageHeader from '@/components/PageHeader';
+import { linkLabel, projects, type Project } from '@/content/projects';
 
-interface Project {
-  title: string;
-  description: string;
-  technologies: string[];
-  status: 'Completed' | 'In Progress' | 'Planning';
-  link: string;
-  category: 
-  | 'Web Development' 
-  | 'Marketing' 
-  | 'IoT' 
-  | 'Tools' 
-  | 'Security' 
-  | 'Games' 
-  | 'Data Science'
-  | 'AI / Machine Learning'
-  | 'Education / Training';
-  image?: string;
-}
+const posterColors = ['bg-pastel-sky', 'bg-pastel-butter', 'bg-pastel-blush', 'bg-pastel-sage'];
 
 export default function ProjectsClient() {
-  const [showContent, setShowContent] = useState(false);
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const [modalImage, setModalImage] = useState<string | null>(null);
-  
+  const [selected, setSelected] = useState(projects[0].slug);
+  const [zoomed, setZoomed] = useState<Project | null>(null);
+  const dialogRef = useRef<HTMLDialogElement>(null);
+
+  // Deep links like /projects#tango-solver open that project.
   useEffect(() => {
-    setShowContent(true);
+    const fromHash = () => {
+      const slug = decodeURIComponent(window.location.hash.slice(1));
+      if (projects.some((p) => p.slug === slug)) {
+        setSelected(slug);
+        requestAnimationFrame(() => document.getElementById(`row-${slug}`)?.scrollIntoView({ block: 'center' }));
+      }
+    };
+    fromHash();
+    window.addEventListener('hashchange', fromHash);
+    return () => window.removeEventListener('hashchange', fromHash);
   }, []);
 
-  const projects: Project[] = [
-    {
-      title: 'AI-Driven Personalized Reporting Engine',
-      description: 'Developed an AI-driven reporting engine for DEUS Human Capital to make personality assessment reports more personal and engaging. Instead of using generic templates, I connected psychometrics with Generative AI to analyze 32 traits. I designed prompts and reliable workflows so the AI produces accurate, easy-to-read behavioral reports that truly help individuals understand their strengths.',
-      technologies: ['Generative AI', 'Prompt Engineering', 'Python', 'Pipeline Automation', 'Psychometric Analytics'],
-      status: 'Completed',
-      link: '',
-      category: 'AI / Machine Learning',
-      image: '/AIreport1.png',
-    },
-    {
-      title: 'Tango Puzzle: Backtracking & Simulated Annealing Solver',
-      description: "As someone who loves logic puzzles, I chose the puzzle game 'Tango' for my Bachelor Thesis. I wanted to see how different computer algorithms solve grid-based puzzles, so I built and compared two methods: Backtracking and Simulated Annealing. To make the concepts accessible, I also created an interactive web solver where users can play, test algorithms, and see how the computer finds solutions step by step.",
-      technologies: ['Python', 'CSP', 'Simulated Annealing', 'Backtracking', 'PyGame'],
-      status: 'Completed',
-      link: 'https://tangogame.vercel.app/',
-      category: 'Games',
-      image: '/tango-puzzle.png',
-    },
-    {
-      title: 'GenAI-Accelerated Machine Learning for BSF Farming',
-      description: 'Interested in using technology for sustainability, I worked on machine learning models to help optimize Black Soldier Fly (BSF) farming for organic waste processing. Curious about modern AI tools, I experimented with ChatGPT and Google Vertex AI to prepare synthetic data and train predictive models. I also built a live web dashboard so users can easily test farming variables and see predicted outcomes.',
-      technologies: ['Google Vertex AI', 'ChatGPT', 'Machine Learning', 'Data Analysis', 'GenAI Platforms'],
-      status: 'Completed',
-      link: 'https://huggingface.co/spaces/jasonagung/bsf-predictor',
-      category: 'AI / Machine Learning',
-      image: '/BSF-Predictor.png',
-    },
-    {
-      title: 'Generative AI & Prompt Engineering Workshop',
-      description: 'Designing and delivering technical workshops in Bahasa Indonesia to democratize access to AI tools. Teaching Prompt Engineering techniques to corporate clients and institutions including Telkom, TelkomMedika, TelkomMetra, ADPI, and KWI.',
-      technologies: ['GenAI Tools', 'Prompt Engineering', 'Education', 'Technical Communication'],
-      status: 'In Progress',
-      link: '',
-      category: 'Education / Training',
-    },
-    {
-      title: 'Portfolio Website',
-      description: 'A modern, responsive portfolio website built with Next.js, TypeScript, and Tailwind CSS featuring dark/light mode toggle and interactive terminal layout.',
-      technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'React'],
-      status: 'Completed',
-      link: 'https://github.com/JasonAgung/portfolio-website',
-      category: 'Web Development',
-    },
-    {
-      title: 'Overhauling and Updating TalentSource Website',
-      description: 'Accelerated web development lifecycle by leveraging Generative AI tools (v0, Bolt.new, Gemini CLI) to overhaul and modernize the company website and digital presence.',
-      technologies: ['v0', 'Bolt.new', 'Gemini CLI', 'GenAI Design Tools'],
-      status: 'Completed',
-      link: '',
-      category: 'Web Development',
-    },
-    {
-      title: 'Chord Chart Maker & Transposer',
-      description: 'As a musician, I often experienced how inconvenient it is to change song keys on the fly during band rehearsals. To solve this, I built a web tool that automatically transposes chord charts and detects musical keys. I combined music theory, like the circle of fifths, with code to handle sharps and flats properly. It also supports multiple notation formats such as Roman numerals and Nashville numbers.',
-      technologies: ['Python', 'Tkinter', 'Flask', 'HTML/CSS', 'TypeScript'],
-      status: 'Completed',
-      link: 'https://chord-transposer-web.vercel.app/',
-      category: 'Tools',
-      image: '/chord-transposer.png',
-    },
-    {
-      title: 'Machine Learning Wine Quality Analysis',
-      description: 'An end-to-end implementation of machine learning using the Wine Quality dataset from UCI ML Repository. Performed exploratory data analysis, preprocessing, and model evaluation.',
-      technologies: ['Python', 'Machine Learning', 'Data Analysis', 'Scikit-learn', 'Pandas', 'NumPy'],
-      status: 'Completed',
-      link: 'https://colab.research.google.com/drive/1cxumsTr8CsfzBDncoAzBVc03C334vAdU?usp=sharing',
-      category: 'Data Science',
-      image: '/wine-quality.png',
-    },
-    {
-      title: 'Information Retrieval',
-      description: 'A web-based Information Retrieval system demonstrating TF-IDF (Term Frequency-Inverse Document Frequency) algorithm for document ranking and search.',
-      technologies: ['JavaScript', 'HTML/CSS', 'TF-IDF', 'Search Algorithms'],
-      status: 'Completed',
-      link: 'https://github.com/JasonAgung/information-retrieval',
-      category: 'Web Development',
-      image: '/information-retrieval.png',
-    },
-    {
-      title: 'Rainbow Attack',
-      description: 'An educational web application demonstrating rainbow table attacks on password hashes for learning cryptographic vulnerabilities and password security.',
-      technologies: ['JavaScript', 'HTML/CSS', 'Cryptography'],
-      status: 'Completed',
-      link: 'https://github.com/JasonAgung/rainbow-attack',
-      category: 'Security',
-      image: '/rainbow-table.png',
-    },
-  ];
+  const select = useCallback((slug: string) => {
+    setSelected(slug);
+    history.replaceState(null, '', `#${slug}`);
+  }, []);
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'Completed':
-        return 'text-sage-600 dark:text-sage-400';
-      case 'In Progress':
-        return 'text-amber-600 dark:text-amber-400';
-      case 'Planning':
-        return 'text-sky-600 dark:text-sky-400';
-      default:
-        return 'text-gray-600 dark:text-gray-400';
-    }
-  };
+  useEffect(() => {
+    const d = dialogRef.current;
+    if (!d) return;
+    if (zoomed && !d.open) d.showModal();
+    if (!zoomed && d.open) d.close();
+  }, [zoomed]);
 
-    const getCategoryIcon = (category: string) => {
-    switch (category) {
-      case 'Web Development':
-        return '✨';
-      case 'IoT':
-        return '🌟';
-      case 'Tools':
-        return '🛠️';
-      case 'Security':
-        return '🔒';
-      case 'Games':
-        return '🎮';
-      case 'Data Science':
-        return '📊';
-      case 'AI / Machine Learning':
-        return '🤖';
-      case 'Education / Training':
-        return '📚';
-      default:
-        return '💫';
-    }
-  };
+  const current = projects.find((p) => p.slug === selected) ?? projects[0];
 
   return (
-    <>
-      <Navigation />
-      <main className="min-h-screen bg-cream dark:bg-gray-950 py-16 section-padding">
-        <div className="max-width-container">
-          <div className={`transition-all duration-700 ${showContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-            <div className="mb-12 text-center">
-              <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-2 font-mono">
-                Projects
-              </h1>
-              <p className="text-gray-600 dark:text-gray-400 font-mono text-sm">~/projects</p>
-            </div>
+    <div className="container-page">
+      <PageHeader path="~/projects" command="ls -la" title="Projects">
+        Things I’ve built, researched and taught. Pick one to open its README.
+      </PageHeader>
 
-            <div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {projects.map((project, index) => (
-                  <div 
-                    key={index}
-                    className={`bg-white dark:bg-gray-900/90 border border-sage-200 dark:border-sage-500/30 rounded-2xl overflow-hidden shadow-soft transition-all duration-300 hover:shadow-soft-lg transform font-mono ${hoveredIndex === index ? 'scale-[1.02]' : ''}`}
-                    onMouseEnter={() => setHoveredIndex(index)}
-                    onMouseLeave={() => setHoveredIndex(null)}
+      <div className="grid items-start gap-10 lg:grid-cols-12">
+        <div className="lg:col-span-5">
+          <p className="mb-2 text-[14px] text-muted">total {projects.length}</p>
+          <ul className="space-y-1.5">
+            {projects.map((p) => {
+              const active = p.slug === selected;
+              return (
+                <li key={p.slug} id={`row-${p.slug}`} className="scroll-mt-6">
+                  <button
+                    type="button"
+                    onClick={() => select(p.slug)}
+                    aria-expanded={active}
+                    aria-controls={`readme-${p.slug}`}
+                    className={`group w-full rounded-md border-2 px-3 py-2.5 text-left transition-colors ${
+                      active ? 'border-ink bg-blush-soft shadow-hard-sm' : 'border-transparent hover:border-line hover:bg-raised'
+                    }`}
                   >
-                    {project.image && (
-                      <div 
-                        className="relative h-48 w-full overflow-hidden bg-gray-100 dark:bg-gray-800 cursor-pointer"
-                        onClick={() => setModalImage(project.image!)}
+                    <span className="flex items-baseline gap-3 text-[15px]">
+                      <span className="hidden shrink-0 text-[13px] text-muted sm:inline">{p.link ? 'drwxr-xr-x' : 'drwx------'}</span>
+                      <span
+                        className={`shrink-0 ${p.status === 'done' ? 'text-sage' : 'text-butter'}`}
+                        title={p.status === 'done' ? 'Done' : 'Ongoing'}
                       >
-                        <Image
-                          src={project.image}
-                          alt={project.title}
-                          fill
-                          className="object-cover hover:scale-105 transition-transform duration-300"
-                        />
-                      </div>
-                    )}
-                    <div className="p-6">
-                      <div className="flex items-center gap-2 mb-4">
-                        <div className="flex gap-1.5">
-                          <div className="w-3 h-3 rounded-full bg-blush-400"></div>
-                          <div className="w-3 h-3 rounded-full bg-sage-400"></div>
-                          <div className="w-3 h-3 rounded-full bg-sage-500"></div>
-                        </div>
-                        <span className="text-gray-500 text-sm font-mono">{project.title}</span>
-                      </div>
-                      
-                      <div>
-                        <div className="mb-4">
-                          <p className="text-lg font-semibold text-gray-900 dark:text-white mb-1">
-                            <span className="text-2xl mr-2">{getCategoryIcon(project.category)}</span> {project.title}
-                          </p>
-                          <p className={`text-sm ${getStatusColor(project.status)} font-medium`}>
-                            ⟨ {project.status} ⟩
-                          </p>
-                        </div>
-                        
-                        <div className="mb-4">
-                          <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
-                            {project.description}
-                          </p>
-                        </div>
-                        
-                        <div className="mb-4">
-                          <p className="text-gray-500 text-sm mb-2">✧ Technologies:</p>
-                          <div className="flex flex-wrap gap-2">
-                            {project.technologies.map((tech, techIndex) => (
-                              <span 
-                                key={techIndex}
-                                className="text-xs px-3 py-1.5 bg-sage-50 dark:bg-sage-900/30 text-sage-700 dark:text-sage-300 rounded-full font-mono border border-sage-200 dark:border-sage-500/20"
-                              >
-                                {tech}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                        
-                        {project.link && (
-                          <Link 
-                            href={project.link}
-                            target={project.link.startsWith('http') ? '_blank' : '_self'}
-                            rel={project.link.startsWith('http') ? 'noopener noreferrer' : undefined}
-                            className="inline-flex items-center gap-2 text-sage-600 dark:text-sage-400 hover:text-sage-700 dark:hover:text-sage-300 font-mono text-sm transition-colors group"
-                          >
-                            <span className="border-b border-transparent group-hover:border-sage-600 dark:group-hover:border-sage-300 transition-all">View Project</span>
-                            <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                            </svg>
-                          </Link>
-                        )}
-                      </div>
+                        {p.status === 'done' ? '●' : '◐'}
+                        <span className="sr-only">{p.status === 'done' ? ' done' : ' ongoing'}</span>
+                      </span>
+                      <span className="min-w-0 truncate font-semibold text-sky group-hover:underline">{p.slug}/</span>
+                      <span className="ml-auto shrink-0 text-[13px] text-muted">{p.kind}</span>
+                    </span>
+                    <span className="mt-0.5 block pl-6 text-[14px] leading-snug text-muted sm:pl-[7.4rem]">{p.summary}</span>
+                  </button>
+                  {active && (
+                    <div className="mt-3 mb-6 lg:hidden">
+                      <Readme id={`readme-${p.slug}`} project={p} onZoom={setZoomed} />
                     </div>
-                  </div>
-                ))}
-              </div>
-              
-              <div className="mt-12 p-8 bg-white dark:bg-gray-900/90 rounded-2xl border border-sage-200 dark:border-sage-500/30 text-center shadow-soft font-mono">
-                <div>
-                  <div className="mb-4">
-                    <span className="text-4xl">✨</span>
-                  </div>
-                  <p className="text-3xl font-bold text-gray-900 dark:text-white mb-2">{projects.length}</p>
-                  <p className="text-sage-600 dark:text-sage-400 text-sm">Total Projects</p>
-                  <div className="mt-4 flex justify-center gap-2">
-                    <div className="w-2 h-2 rounded-full bg-blush-400"></div>
-                    <div className="w-2 h-2 rounded-full bg-sage-400"></div>
-                    <div className="w-2 h-2 rounded-full bg-sage-500"></div>
-                  </div>
-                </div>
-              </div>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+          <p className="comment mt-5 text-sm">
+            {'// '}● done ◐ ongoing. <span className="hidden sm:inline">drwx------ means no public link yet.</span>
+          </p>
+        </div>
+
+        <div className="sticky top-6 hidden lg:col-span-7 lg:block">
+          <Readme project={current} onZoom={setZoomed} />
+        </div>
+      </div>
+
+      <dialog
+        ref={dialogRef}
+        onClose={() => setZoomed(null)}
+        onClick={(e) => {
+          if (e.target === e.currentTarget) setZoomed(null);
+        }}
+        aria-label={zoomed ? `Screenshot of ${zoomed.title}` : 'Screenshot'}
+        className="m-auto w-[min(94vw,1200px)] overflow-hidden rounded-lg border-2 border-ink bg-raised p-0 text-ink shadow-hard backdrop:bg-[#11140F]/80"
+      >
+        {zoomed?.image && (
+          <div>
+            <div className="flex items-center justify-between border-b-2 border-ink px-4 py-2 text-[13px]">
+              <span className="text-muted">{zoomed.image.slice(1)}</span>
+              <button type="button" onClick={() => setZoomed(null)} className="rounded px-2 py-1 font-semibold hover:bg-blush-soft" autoFocus>
+                close [esc]
+              </button>
+            </div>
+            <div className="relative h-[78vh] bg-paper">
+              <Image src={zoomed.image} alt={zoomed.imageAlt ?? ''} fill sizes="94vw" className="object-contain" />
             </div>
           </div>
-        </div>
-      </main>
-      
-      {modalImage && (
-        <div 
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
-          onClick={() => setModalImage(null)}
+        )}
+      </dialog>
+    </div>
+  );
+}
+
+function Readme({ id, project: p, onZoom }: { id?: string; project: Project; onZoom: (p: Project) => void }) {
+  const poster = posterColors[p.slug.length % posterColors.length];
+  return (
+    <article
+      id={id}
+      aria-live="polite"
+      className="overflow-hidden rounded-lg border-2 border-ink bg-raised shadow-hard"
+    >
+      <p className="border-b-2 border-ink px-4 py-2 text-[13px] text-muted">
+        <span className="text-sage">~$</span> cat {p.slug}/README.md
+      </p>
+
+      {p.image ? (
+        <button
+          type="button"
+          onClick={() => onZoom(p)}
+          className="group relative block aspect-[16/10] w-full border-b-2 border-ink bg-paper"
+          aria-label={`Enlarge screenshot of ${p.title}`}
         >
-          <div className="relative max-w-4xl max-h-[90vh] w-full h-full">
-            <Image
-              src={modalImage}
-              alt="Full size screenshot"
-              fill
-              className="object-contain"
-            />
-            <button
-              className="absolute top-4 right-4 text-white bg-black/50 rounded-full p-2 hover:bg-black/70 transition-colors"
-              onClick={() => setModalImage(null)}
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-          </div>
+          <Image
+            src={p.image}
+            alt={p.imageAlt ?? ''}
+            fill
+            sizes="(min-width: 1024px) 640px, 100vw"
+            className="object-cover object-top"
+          />
+          <span className="absolute bottom-3 right-3 rounded border-2 border-[#22281F] bg-pastel-butter px-2 py-0.5 text-[12px] font-semibold text-[#22281F] opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
+            click to zoom
+          </span>
+        </button>
+      ) : (
+        <div className={`flex aspect-[16/10] flex-col justify-end border-b-2 border-ink p-6 text-[#22281F] ${poster}`}>
+          <p className="font-display text-[clamp(1.4rem,3vw,2.2rem)] font-extrabold leading-tight [font-stretch:112.5%]">
+            {p.summary}
+          </p>
+          <p className="mt-3 text-[13px] italic opacity-80">{'// '}no screenshot for this one, so here’s the gist</p>
         </div>
       )}
-    </>
+
+      <div className="p-5 sm:p-6">
+        <p className="flex flex-wrap items-center gap-2 text-[13px]">
+          <span
+            className={`rounded px-1.5 font-semibold ${p.status === 'done' ? 'bg-sage-soft text-sage' : 'bg-butter-soft text-butter'}`}
+          >
+            {p.status}
+          </span>
+          {p.context && <span className="text-muted">{p.context}</span>}
+        </p>
+        <h2 className="mt-2 font-display text-[clamp(1.25rem,2.4vw,1.6rem)] font-extrabold leading-tight [font-stretch:112.5%]">
+          {p.title}
+        </h2>
+        <p className="mt-3 max-w-[65ch] text-[16px]">{p.description}</p>
+
+        <p className="comment mt-5 text-sm">{'// '}dependencies</p>
+        <ul className="mt-1.5 flex flex-wrap gap-1.5">
+          {p.technologies.map((t) => (
+            <li key={t} className="rounded bg-sage-soft/70 px-2 py-0.5 text-[13px]">
+              {t}
+            </li>
+          ))}
+        </ul>
+
+        {p.link && (
+          <a href={p.link} target="_blank" rel="noopener noreferrer" className="keycap keycap-primary mt-6">
+            {linkLabel(p.link)}
+          </a>
+        )}
+      </div>
+    </article>
   );
 }

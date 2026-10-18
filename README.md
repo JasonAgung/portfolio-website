@@ -4,11 +4,17 @@ A modern, responsive portfolio website built with Next.js, TypeScript, and Tailw
 
 ## Features
 
-- 🌓 Dark/Light mode toggle (defaults to light mode)
-- 📱 Fully responsive design for mobile and desktop
-- ⚡ Fast page loads with Next.js
-- 🎨 Clean and professional design
-- 📄 Multiple pages: Home, About, Experience, Education, Projects
+- A terminal on the home page you can actually type into (`help`, `ls`, `cd projects`, `open cv`, and a few secrets)
+- Experience drawn as a `git log --graph`: work on `main`, organisations on an `org` branch, with filters
+- A `neofetch`-style About page with skills, interests and education
+- Projects as an `ls -la` listing with a README preview, deep links (`/projects#tango-solver`) and a screenshot zoom
+- tmux-style status bar for navigation, with Bandung local time and a light/dark switch (no flash on load, follows the system setting)
+- Respects reduced-motion settings, keyboard friendly, responsive down to phones
+
+## Editing content
+
+All text lives in `content/`: `profile.ts` (bio, skills, education, now), `projects.ts` and `experience.ts`.
+To enable the CV download, put the PDF at `public/cv.pdf`; the buttons and the `open cv` command appear automatically.
 
 ## Getting Started
 
@@ -53,37 +59,11 @@ No environment variables are required for this portfolio website.
 
 ```
 portfolio-website/
-├── app/                    # Next.js app directory
-│   ├── about/             # About page
-│   ├── education/         # Education page
-│   ├── experience/        # Experience page
-│   ├── projects/          # Projects page
-│   ├── globals.css        # Global styles
-│   ├── layout.tsx         # Root layout
-│   └── page.tsx           # Home page
-├── components/            # React components
-│   ├── Navigation.tsx     # Navigation bar
-│   └── SocialLinks.tsx    # Social media links
-├── contexts/              # React contexts
-│   └── ThemeContext.tsx   # Theme provider
-├── public/                # Static assets
-├── package.json           # Dependencies
-└── tailwind.config.ts     # Tailwind configuration
+├── app/                 # Pages: home, about, experience, projects, 404
+├── components/          # Terminal, StatusBar, Footer, PageHeader
+├── content/             # All site text and data
+├── contexts/            # Theme provider
+├── lib/                 # Server helpers (CV detection)
+├── public/              # Screenshots and static files
+└── tailwind.config.ts   # Colour tokens, fonts, shadows
 ```
-
-## Technologies Used
-
-- **Next.js 15** - React framework
-- **TypeScript** - Type safety
-- **Tailwind CSS** - Styling
-- **React Context** - State management for theme
-
-## Contact
-
-- Email: jason.kelvin.agung@gmail.com
-- LinkedIn: [Jason Agung](https://www.linkedin.com/in/j-agung/)
-- Instagram: [@jason_kelvin](https://instagram.com/jason_kelvin)
-
-## License
-
-This project is open source and available under the MIT License.
