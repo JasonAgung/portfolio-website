@@ -20,36 +20,33 @@ export const socials = [
 ];
 
 export const now = [
-  { label: 'shipping', text: 'AI-written personality reports at DEUS, built from 32 personality subtraits.' },
-  { label: 'teaching', text: 'GenAI & prompt engineering workshops, in Bahasa Indonesia, through TalentSource.' },
-  { label: 'just finished', text: 'My computer science degree at UNPAR. Graduated July 2026.' },
+  { label: 'Working on', text: 'Personality reports written by generative AI at DEUS, built from 32 personality subtraits.' },
+  { label: 'Teaching', text: 'Generative AI and prompt engineering workshops in Bahasa Indonesia, through TalentSource.' },
+  { label: 'Recently', text: 'Graduated in computer science from UNPAR in July 2026.' },
 ];
 
 export const skills = [
   {
-    file: 'ai.txt',
     group: 'AI & data science',
     items: ['Python', 'scikit-learn', 'NumPy', 'pandas', 'Vertex AI', 'Generative AI frameworks'],
   },
   {
-    file: 'software.txt',
     group: 'Software engineering',
     items: ['Go', 'C / C++', 'JavaScript', 'SQL', 'Java', 'Next.js / React'],
   },
   {
-    file: 'people.txt',
     group: 'Communication',
     items: ['Technical communication', 'Public speaking', 'Academic mentoring', 'Project leadership'],
   },
 ];
 
 export const interests = [
-  { name: 'artificial-intelligence' },
-  { name: 'performance-optimization' },
-  { name: 'software-engineering' },
-  { name: 'music', href: 'https://open.spotify.com/user/jason.kelvin.agung' },
-  { name: 'tech-and-gadgets' },
-  { name: 'algorithmic-puzzles' },
+  { name: 'Artificial intelligence' },
+  { name: 'Performance optimisation' },
+  { name: 'Software engineering' },
+  { name: 'Music', href: 'https://open.spotify.com/user/jason.kelvin.agung' },
+  { name: 'Technology & gadgets' },
+  { name: 'Logic puzzles' },
 ];
 
 export const education = [
@@ -70,12 +67,10 @@ export const education = [
     school: 'SMA Santo Aloysius',
     degree: 'High school diploma',
     period: '2019 – 2022',
-    detail: 'Where maths and science started to click.',
   },
   {
     school: 'SD–SMP Yos Sudarso',
     degree: 'Elementary and middle school',
     period: '2011 – 2019',
-    detail: 'The very first commits.',
   },
 ];

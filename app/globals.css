@@ -11,7 +11,7 @@
   --ink: 34 40 31;
   --muted: 94 106 90;
   --line: 222 215 201;
-  --dot: 226 217 200;
+  --dot: 232 224 209;
   --sage: 88 103 83;
   --sage-soft: 214 222 209;
   --blush: 168 72 79;
@@ -34,7 +34,7 @@
   --ink: 232 236 226;
   --muted: 163 174 158;
   --line: 48 56 45;
-  --dot: 38 45 36;
+  --dot: 32 38 30;
   --sage: 169 187 162;
   --sage-soft: 44 56 41;
   --blush: 240 191 191;
@@ -55,9 +55,9 @@
   }
 
   body {
-    @apply bg-paper text-ink font-mono antialiased;
-    font-size: 16px;
-    line-height: 1.65;
+    @apply bg-paper text-ink font-sans antialiased;
+    font-size: 17px;
+    line-height: 1.6;
     /* Notebook dot grid */
     background-image: radial-gradient(rgb(var(--dot)) 1px, transparent 1.2px);
     background-size: 22px 22px;
@@ -83,9 +83,9 @@
     @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
   }
 
-  /* Code-comment asides, set in Victor Mono's cursive italic */
-  .comment {
-    @apply italic text-muted;
+  /* Small monospace label: the quiet IT accent used across the site */
+  .label {
+    @apply font-mono text-[12px] font-medium text-muted [font-stretch:87.5%];
   }
 
   .link {
@@ -94,15 +94,11 @@
 
   /* Keyboard-key button: presses down when clicked */
   .keycap {
-    @apply inline-flex min-h-[48px] items-center justify-center gap-2 rounded-md border-2 border-ink bg-raised px-5 font-mono text-[15px] font-semibold text-ink shadow-key transition-[transform,box-shadow] duration-100 hover:-translate-y-0.5 hover:shadow-[0_6px_0_0_rgb(var(--shadow))] active:translate-y-1 active:shadow-none;
+    @apply inline-flex min-h-[48px] items-center justify-center gap-2 rounded-md border-2 border-ink bg-raised px-5 font-mono text-[14px] font-semibold text-ink shadow-key [font-stretch:87.5%] transition-[transform,box-shadow] duration-100 hover:-translate-y-0.5 hover:shadow-[0_6px_0_0_rgb(var(--shadow))] active:translate-y-1 active:shadow-none;
   }
 
   .keycap-primary {
     @apply bg-blush-soft;
-  }
-
-  .sticker {
-    @apply inline-block rounded-md border-2 border-[#22281F] px-3 py-1 font-mono text-[13px] font-semibold text-[#22281F] shadow-hard-sm;
   }
 
   .cursor-block {

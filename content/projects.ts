@@ -23,7 +23,7 @@ export const projects: Project[] = [
       'Developed an AI-driven reporting engine for DEUS Human Capital to make personality assessment reports more personal and engaging. Instead of using generic templates, I connected psychometrics with Generative AI to analyze 32 traits. I designed prompts and reliable workflows so the AI produces accurate, easy-to-read behavioral reports that truly help individuals understand their strengths.',
     technologies: ['Generative AI', 'Prompt Engineering', 'Python', 'Pipeline Automation', 'Psychometric Analytics'],
     status: 'done',
-    kind: 'ai / ml',
+    kind: 'AI & ML',
     context: 'DEUS, 2026',
     image: '/AIreport1.png',
     imageAlt: 'A generated personality report showing an executive summary',
@@ -32,12 +32,12 @@ export const projects: Project[] = [
   {
     slug: 'tango-solver',
     title: 'Tango Puzzle: Backtracking & Simulated Annealing Solver',
-    summary: 'My thesis: two algorithms race to solve a sun-and-moon logic puzzle.',
+    summary: 'My thesis: comparing two algorithms that solve a logic puzzle.',
     description:
       "As someone who loves logic puzzles, I chose the puzzle game 'Tango' for my Bachelor Thesis. I wanted to see how different computer algorithms solve grid-based puzzles, so I built and compared two methods: Backtracking and Simulated Annealing. To make the concepts accessible, I also created an interactive web solver where users can play, test algorithms, and see how the computer finds solutions step by step.",
     technologies: ['Python', 'CSP', 'Simulated Annealing', 'Backtracking', 'PyGame'],
     status: 'done',
-    kind: 'algorithms',
+    kind: 'Algorithms',
     context: 'Thesis, 2026',
     link: 'https://tangogame.vercel.app/',
     image: '/tango-puzzle.png',
@@ -52,7 +52,7 @@ export const projects: Project[] = [
       'Interested in using technology for sustainability, I worked on machine learning models to help optimize Black Soldier Fly (BSF) farming for organic waste processing. Curious about modern AI tools, I experimented with ChatGPT and Google Vertex AI to prepare synthetic data and train predictive models. I also built a live web dashboard so users can easily test farming variables and see predicted outcomes.',
     technologies: ['Google Vertex AI', 'ChatGPT', 'Machine Learning', 'Data Analysis', 'GenAI Platforms'],
     status: 'done',
-    kind: 'ai / ml',
+    kind: 'AI & ML',
     context: 'TalentSource, 2025',
     link: 'https://huggingface.co/spaces/jasonagung/bsf-predictor',
     image: '/BSF-Predictor.png',
@@ -62,12 +62,12 @@ export const projects: Project[] = [
   {
     slug: 'genai-workshops',
     title: 'Generative AI & Prompt Engineering Workshop',
-    summary: 'Teaching companies to actually use AI tools, in Bahasa Indonesia.',
+    summary: 'Teaching companies to use AI tools well, in Bahasa Indonesia.',
     description:
       'Designing and delivering technical workshops in Bahasa Indonesia to democratize access to AI tools. Teaching Prompt Engineering techniques to corporate clients and institutions including Telkom, TelkomMedika, TelkomMetra, ADPI, and KWI.',
     technologies: ['GenAI Tools', 'Prompt Engineering', 'Education', 'Technical Communication'],
     status: 'ongoing',
-    kind: 'teaching',
+    kind: 'Teaching',
     context: 'TalentSource, 2025 – now',
   },
   {
@@ -78,7 +78,7 @@ export const projects: Project[] = [
       'As a musician, I often experienced how inconvenient it is to change song keys on the fly during band rehearsals. To solve this, I built a web tool that automatically transposes chord charts and detects musical keys. I combined music theory, like the circle of fifths, with code to handle sharps and flats properly. It also supports multiple notation formats such as Roman numerals and Nashville numbers.',
     technologies: ['Python', 'Tkinter', 'Flask', 'HTML/CSS', 'TypeScript'],
     status: 'done',
-    kind: 'tools',
+    kind: 'Tool',
     context: 'Side project',
     link: 'https://chord-transposer-web.vercel.app/',
     image: '/chord-transposer.png',
@@ -92,7 +92,7 @@ export const projects: Project[] = [
       'Accelerated web development lifecycle by leveraging Generative AI tools (v0, Bolt.new, Gemini CLI) to overhaul and modernize the company website and digital presence.',
     technologies: ['v0', 'Bolt.new', 'Gemini CLI', 'GenAI Design Tools'],
     status: 'done',
-    kind: 'web',
+    kind: 'Web',
     context: 'TalentSource, 2025',
   },
   {
@@ -103,7 +103,7 @@ export const projects: Project[] = [
       'An end-to-end implementation of machine learning using the Wine Quality dataset from UCI ML Repository. Performed exploratory data analysis, preprocessing, and model evaluation.',
     technologies: ['Python', 'Machine Learning', 'Data Analysis', 'Scikit-learn', 'Pandas', 'NumPy'],
     status: 'done',
-    kind: 'data',
+    kind: 'Data',
     link: 'https://colab.research.google.com/drive/1cxumsTr8CsfzBDncoAzBVc03C334vAdU?usp=sharing',
     image: '/wine-quality.png',
     imageAlt: 'Histograms of wine features from the exploratory data analysis',
@@ -116,7 +116,7 @@ export const projects: Project[] = [
       'A web-based Information Retrieval system demonstrating TF-IDF (Term Frequency-Inverse Document Frequency) algorithm for document ranking and search.',
     technologies: ['JavaScript', 'HTML/CSS', 'TF-IDF', 'Search Algorithms'],
     status: 'done',
-    kind: 'web',
+    kind: 'Web',
     link: 'https://github.com/JasonAgung/information-retrieval',
     image: '/information-retrieval.png',
     imageAlt: 'The information retrieval app showing ranked search results',
@@ -129,7 +129,7 @@ export const projects: Project[] = [
       'An educational web application demonstrating rainbow table attacks on password hashes for learning cryptographic vulnerabilities and password security.',
     technologies: ['JavaScript', 'HTML/CSS', 'Cryptography'],
     status: 'done',
-    kind: 'security',
+    kind: 'Security',
     link: 'https://github.com/JasonAgung/rainbow-attack',
     image: '/rainbow-table.png',
     imageAlt: 'The rainbow table demo showing hash chains',
@@ -137,15 +137,15 @@ export const projects: Project[] = [
   {
     slug: 'portfolio-website',
     title: 'Portfolio Website',
-    summary: 'This site. You are standing in it.',
+    summary: 'The website you’re on right now.',
     description:
-      'The site you are on: a terminal you can actually type into, a git log for a CV and a neofetch about page. Built with Next.js, TypeScript and Tailwind CSS.',
+      'The website you’re on right now, with a small terminal on the home page you can type into. Built with Next.js, TypeScript and Tailwind CSS.',
     technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'React'],
     status: 'ongoing',
-    kind: 'web',
+    kind: 'Web',
     link: 'https://github.com/JasonAgung/portfolio-website',
   },
 ];
 
 export const linkLabel = (link: string) =>
-  link.includes('github.com') ? 'view code' : link.includes('colab.research') ? 'open notebook' : 'open live';
+  link.includes('github.com') ? 'View on GitHub' : link.includes('colab.research') ? 'Open notebook' : 'Visit project';

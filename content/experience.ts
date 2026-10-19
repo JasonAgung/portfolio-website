@@ -1,53 +1,47 @@
-export type Lane = 'main' | 'org';
+export type Lane = 'work' | 'org';
 
-export interface Commit {
-  hash: string;
+export interface Entry {
+  id: string;
   lane: Lane;
-  type: string;
-  scope: string;
-  refs?: string[];
   role: string;
   org: string;
   orgLink?: string;
   period: string;
   location?: string;
+  current?: boolean;
   bullets: string[];
   initiatives?: { name: string; role: string }[];
-  /** A milestone rather than a job: drawn as a hollow tag dot */
+  /** A milestone rather than a job, drawn as a hollow dot */
   milestone?: boolean;
   more?: { label: string; href: string };
 }
 
-// Most recent activity first, like `git log`: ongoing roles, then the rest by end date.
-// main = work, org = organisations & community.
-export const commits: Commit[] = [
+// Most recent activity first: ongoing roles, then the rest by end date.
+export const experience: Entry[] = [
   {
-    hash: 'f19d2b4',
-    lane: 'main',
-    type: 'feat',
-    scope: 'deus',
-    refs: ['HEAD -> main'],
+    id: 'deus',
+    lane: 'work',
     role: 'AI Implementation Specialist',
     org: 'DEUS Human Capital Services',
     orgLink: 'https://deushcs.com/',
     period: 'Jan 2026 – now',
     location: 'Bandung',
+    current: true,
     bullets: [
       'Moving a gamified personality assessment from fixed templates to reports written by generative AI.',
       'Built the pipeline that turns 32 personality subtraits into a report that reads like it was written for one person.',
-      'Design the prompt frameworks that turn raw psychometric data into insights that feel human, not generic.',
+      'Design the prompts that turn raw psychometric data into insights that feel human, not generic.',
     ],
   },
   {
-    hash: '3e8a0c7',
-    lane: 'main',
-    type: 'feat',
-    scope: 'talentsource',
+    id: 'talentsource',
+    lane: 'work',
     role: 'Applied AI & Research Intern',
     org: 'TalentSource Bandung',
     orgLink: 'https://www.bandungtalentsource.com/',
     period: 'Aug 2025 – now',
     location: 'Bandung',
+    current: true,
     bullets: [
       'Researched machine learning for Black Soldier Fly farming, using ChatGPT and Google Vertex AI (AutoML) to generate synthetic data, train and deploy models.',
       'Rebuilt the company website much faster with AI tools like v0, Bolt.new and Gemini CLI.',
@@ -55,15 +49,13 @@ export const commits: Commit[] = [
     ],
   },
   {
-    hash: 'c42f7d1',
+    id: 'youth',
     lane: 'org',
-    type: 'feat',
-    scope: 'youth',
-    refs: ['org'],
-    role: 'Church Youth Ministry Team',
+    role: 'Youth Ministry Team',
     org: 'Departemen Remaja GII Hok Im Tong',
     orgLink: 'https://www.instagram.com/arisegeneration.gii/',
     period: '2024 – now',
+    current: true,
     bullets: ['Organising events and worship for the church youth ministry.'],
     initiatives: [
       { name: 'Resfeber 2023', role: 'Event team' },
@@ -73,33 +65,25 @@ export const commits: Commit[] = [
     ],
   },
   {
-    hash: 'a7c3e91',
-    lane: 'main',
-    type: 'merge',
-    scope: 'unpar',
-    refs: ['tag: graduated'],
-    role: 'Bachelor of Computer Science',
+    id: 'graduated',
+    lane: 'work',
+    role: 'Graduated: Bachelor of Computer Science',
     org: 'Universitas Katolik Parahyangan (UNPAR)',
     period: 'Jul 2026',
-    bullets: [
-      'Four years of computer science, merged. GPA 3.67.',
-      'Thesis: backtracking vs. simulated annealing on the Tango logic puzzle.',
-    ],
+    bullets: ['GPA 3.67. Thesis on solving the Tango logic puzzle with backtracking and simulated annealing.'],
     milestone: true,
-    more: { label: 'cat education', href: '/about#education' },
+    more: { label: 'More about my education', href: '/about#education' },
   },
   {
-    hash: '8b51e3a',
+    id: 'hmpsif',
     lane: 'org',
-    type: 'feat',
-    scope: 'hmpsif',
     role: 'Academic Division Staff',
     org: 'HMPSIF, UNPAR Informatics Student Association',
     orgLink: 'https://www.instagram.com/hmpsif_unpar/',
     period: 'Aug 2023 – Aug 2024',
     location: 'Bandung',
     bullets: [
-      'Ran tutorials and peer mentoring for core CS courses like Algorithms and Logic.',
+      'Ran tutorials and peer mentoring for core computer science courses like Algorithms and Logic.',
       'Worked between students and faculty to improve academic resources.',
       'Organised charity events and IT classes for underprivileged people.',
     ],
@@ -111,10 +95,8 @@ export const commits: Commit[] = [
     ],
   },
   {
-    hash: '5d0e6f2',
-    lane: 'main',
-    type: 'style',
-    scope: 'glamify',
+    id: 'glamify',
+    lane: 'work',
     role: 'Marketing Communications Intern',
     org: 'Glamify',
     orgLink: 'https://www.instagram.com/glamify.id/',
@@ -122,10 +104,8 @@ export const commits: Commit[] = [
     bullets: ['Marketing campaigns and communication strategy for beauty and fashion products.'],
   },
   {
-    hash: '1a9c4e8',
-    lane: 'main',
-    type: 'style',
-    scope: 'executive',
+    id: 'executive',
+    lane: 'work',
     role: 'Marketing Communications Intern',
     org: 'Executive',
     orgLink: 'https://www.instagram.com/id_executive/',
@@ -133,14 +113,12 @@ export const commits: Commit[] = [
     bullets: ['Helped make marketing materials and manage brand communication for retail stores.'],
   },
   {
-    hash: '0000001',
-    lane: 'main',
-    type: 'init',
-    scope: 'porcafe',
+    id: 'porcafe',
+    lane: 'work',
     role: 'Social Media Management Team',
     org: 'Porcafe',
     orgLink: 'https://www.instagram.com/porcafe.bandung/',
     period: '2020',
-    bullets: ['My first commit: designing Instagram posts, stories and banners for food and drink campaigns.'],
+    bullets: ['Designed Instagram posts, stories and banners for food and drink campaigns.'],
   },
 ];

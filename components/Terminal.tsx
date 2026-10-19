@@ -14,46 +14,46 @@ interface Line {
 }
 
 const PAGES = ['about', 'experience', 'projects'] as const;
-const COMMANDS = [
-  'help', 'whoami', 'ls', 'cd', 'cat', 'open', 'contact', 'theme',
-  'date', 'echo', 'neofetch', 'history', 'clear', 'sudo', 'exit',
-];
-const CHIPS = ['help', 'ls', 'cat now.txt', 'cd projects', 'open cv', 'sudo hire jason'];
+const COMMANDS = ['help', 'whoami', 'ls', 'cd', 'cat', 'open', 'contact', 'theme', 'date', 'echo', 'clear'];
 
 const Prompt = () => (
   <span className="select-none">
-    <span className="text-pastel-sage">jason@bandung</span>
-    <span className="text-term-dim">:</span>
-    <span className="text-pastel-sky">~</span>
-    <span className="text-term-dim">{'$\u00a0'}</span>
+    <span className="text-pastel-sage">jason</span>
+    <span className="text-term-dim">{'@bandung:~$ '}</span>
   </span>
 );
 
+const linkClass = 'text-pastel-sky underline decoration-pastel-sky/40 underline-offset-4 hover:decoration-pastel-sky';
+
 const Dir = ({ href, children }: { href: string; children: React.ReactNode }) => (
-  <Link href={href} className="text-pastel-sky underline decoration-pastel-sky/40 underline-offset-4 hover:decoration-pastel-sky">
+  <Link href={href} className={linkClass}>
     {children}
   </Link>
 );
 
 const Ext = ({ href, children }: { href: string; children: React.ReactNode }) => (
-  <a
-    href={href}
-    className="text-pastel-sky underline decoration-pastel-sky/40 underline-offset-4 hover:decoration-pastel-sky"
-    {...(href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-  >
+  <a href={href} className={linkClass} {...(href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
     {children}
   </a>
 );
 
 const Whoami = () => (
   <div>
-    <p className="font-semibold text-pastel-blush">{profile.name.toLowerCase()}</p>
-    <p>{profile.role.toLowerCase()} @ {profile.companyShort.toLowerCase()}, bandung</p>
-    <p>computer science graduate, unpar ’26</p>
-    <p className="mt-2 italic text-term-dim">
-      {'// '}hiii, welcome to my little digital museum. type <span className="not-italic text-pastel-butter">help</span>, or tap a
-      command below.
-    </p>
+    <p className="font-semibold text-pastel-blush">Jason Kelvin Agung</p>
+    <p>AI Implementation Specialist at DEUS, Bandung</p>
+    <p>Computer science graduate, UNPAR 2026</p>
+    <p className="mt-2 text-term-dim">Type a command, or use the buttons below.</p>
+  </div>
+);
+
+const Contact = () => (
+  <div className="grid grid-cols-[auto_1fr] gap-x-5">
+    {socials.map((s) => (
+      <div key={s.name} className="contents">
+        <span className="text-pastel-sage">{s.name}</span>
+        <Ext href={s.href}>{s.href.replace(/^mailto:|^https:\/\/(www\.)?/, '')}</Ext>
+      </div>
+    ))}
   </div>
 );
 
@@ -70,17 +70,28 @@ export default function Terminal({ hasCv }: { hasCv: boolean }) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  const buttons = [
+    { label: 'Who is Jason?', cmd: 'whoami' },
+    { label: 'What he’s doing now', cmd: 'cat now.txt' },
+    { label: hasCv ? 'Get the CV' : 'Ask for the CV', cmd: 'open cv' },
+    { label: 'Contact', cmd: 'contact' },
+    { label: 'All commands', cmd: 'help' },
+  ];
+
   const push = useCallback((kind: Line['kind'], content: React.ReactNode) => {
     setLines((prev) => [...prev, { id: nextId.current++, kind, content }]);
   }, []);
 
   // Boot: type `whoami` once, then hand the prompt to the visitor.
   useEffect(() => {
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduce) {
+    const finish = () => {
+      setTyping('');
       push('cmd', 'whoami');
       push('out', <Whoami />);
       setBooted(true);
+    };
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      finish();
       return;
     }
     const word = 'whoami';
@@ -89,20 +100,9 @@ export default function Terminal({ hasCv }: { hasCv: boolean }) {
     const tick = () => {
       i++;
       setTyping(word.slice(0, i));
-      if (i < word.length) {
-        timers.push(setTimeout(tick, 90 + Math.random() * 70));
-      } else {
-        timers.push(
-          setTimeout(() => {
-            setTyping('');
-            push('cmd', word);
-            push('out', <Whoami />);
-            setBooted(true);
-          }, 350),
-        );
-      }
+      timers.push(i < word.length ? setTimeout(tick, 90 + Math.random() * 60) : setTimeout(finish, 300));
     };
-    timers.push(setTimeout(tick, 700));
+    timers.push(setTimeout(tick, 600));
     return () => timers.forEach(clearTimeout);
   }, [push]);
 
@@ -112,9 +112,9 @@ export default function Terminal({ hasCv }: { hasCv: boolean }) {
   }, [lines, typing]);
 
   const go = useCallback(
-    (page: string) => {
-      push('out', <p className="text-term-dim">opening ~/{page} …</p>);
-      setTimeout(() => router.push(`/${page}`), 450);
+    (href: string, label: string) => {
+      push('out', <p className="text-term-dim">Opening {label}…</p>);
+      setTimeout(() => router.push(href), 400);
     },
     [push, router],
   );
@@ -133,25 +133,22 @@ export default function Terminal({ hasCv }: { hasCv: boolean }) {
         case 'help':
           push(
             'out',
-            <div className="grid grid-cols-[auto_1fr] gap-x-6">
+            <div className="grid grid-cols-[auto_1fr] gap-x-6 gap-y-0.5">
               {[
-                ['whoami', 'who is this guy'],
-                ['ls [projects]', 'what’s in here'],
-                ['cd <page>', 'go to about, experience or projects'],
-                ['cat now.txt', 'what I’m doing right now'],
-                ['cat contact.txt', 'how to reach me'],
-                ['open cv', hasCv ? 'download my CV' : 'get my CV'],
-                ['open <project>', 'open a project, e.g. open tango-solver'],
-                ['theme dark|light', 'lights off, lights on'],
-                ['neofetch', 'system info, but it’s me'],
-                ['clear', 'clean the screen'],
+                ['whoami', 'A short introduction'],
+                ['cat now.txt', 'What I’m working on'],
+                ['ls', 'List the pages on this site'],
+                ['cd projects', 'Go to a page (about, experience, projects)'],
+                ['open cv', hasCv ? 'Download my CV' : 'How to get my CV'],
+                ['contact', 'Email and social links'],
+                ['theme dark', 'Switch to dark or light'],
+                ['clear', 'Clear the screen'],
               ].map(([c, d]) => (
                 <div key={c} className="contents">
                   <span className="text-pastel-butter">{c}</span>
                   <span className="text-term-dim">{d}</span>
                 </div>
               ))}
-              <p className="col-span-2 mt-2 italic text-term-dim">{'// '}there are a few secret commands too.</p>
             </div>,
           );
           break;
@@ -161,14 +158,13 @@ export default function Terminal({ hasCv }: { hasCv: boolean }) {
           break;
 
         case 'ls':
-        case 'dir':
           if (arg === 'projects') {
             push(
               'out',
               <div className="flex flex-wrap gap-x-5">
                 {projects.map((p) => (
                   <Dir key={p.slug} href={`/projects#${p.slug}`}>
-                    {p.slug}/
+                    {p.slug}
                   </Dir>
                 ))}
               </div>,
@@ -179,12 +175,11 @@ export default function Terminal({ hasCv }: { hasCv: boolean }) {
               <div className="flex flex-wrap gap-x-5">
                 {PAGES.map((p) => (
                   <Dir key={p} href={`/${p}`}>
-                    {p}/
+                    {p}
                   </Dir>
                 ))}
                 <span>now.txt</span>
-                <span>contact.txt</span>
-                {hasCv && <span className="text-pastel-blush">cv.pdf</span>}
+                {hasCv && <span>cv.pdf</span>}
               </div>,
             );
           }
@@ -192,21 +187,20 @@ export default function Terminal({ hasCv }: { hasCv: boolean }) {
 
         case 'cd':
           if (!arg || arg === '..' || arg === '.') {
-            push('out', <p className="text-term-dim">you’re already home.</p>);
-          } else if ((PAGES as readonly string[]).includes(arg) || arg === 'work') {
-            go(arg === 'work' ? 'experience' : arg);
+            push('out', <p className="text-term-dim">You’re already on the home page.</p>);
+          } else if ((PAGES as readonly string[]).includes(arg)) {
+            go(`/${arg}`, arg);
           } else if (projects.some((p) => p.slug === arg)) {
-            push('out', <p className="text-term-dim">opening ~/projects/{arg} …</p>);
-            setTimeout(() => router.push(`/projects#${arg}`), 450);
+            go(`/projects#${arg}`, arg);
           } else {
-            push('out', <p>cd: no such file or directory: {arg}</p>);
+            push('out', <p>No page called “{arg}”. Try about, experience or projects.</p>);
           }
           break;
 
         case 'about':
         case 'experience':
         case 'projects':
-          go(cmd.toLowerCase());
+          go(`/${cmd.toLowerCase()}`, cmd.toLowerCase());
           break;
 
         case 'cat':
@@ -221,44 +215,31 @@ export default function Terminal({ hasCv }: { hasCv: boolean }) {
                 ))}
               </div>,
             );
-          } else if (arg === 'contact.txt' || arg === 'contact') {
-            push('out', <Contact />);
-          } else if (arg === 'cv.pdf' || arg === 'cv') {
-            push('out', <p>cat: cv.pdf is a binary file. try <span className="text-pastel-butter">open cv</span> instead.</p>);
-          } else if (!arg) {
-            push('out', <p>cat: which file? try <span className="text-pastel-butter">cat now.txt</span></p>);
           } else {
-            push('out', <p>cat: {arg}: no such file or directory</p>);
+            push('out', <p>Try <span className="text-pastel-butter">cat now.txt</span></p>);
           }
           break;
 
         case 'open':
-        case 'xdg-open': {
           if (arg === 'cv' || arg === 'cv.pdf' || arg === 'resume') {
             if (hasCv) {
               window.open(profile.cvPath, '_blank', 'noopener');
-              push('out', <p>opening cv.pdf in a new tab …</p>);
+              push('out', <p>Opening the CV in a new tab…</p>);
             } else {
-              push(
-                'out',
-                <p>
-                  the CV is getting a fresh coat of paint. ask for it at <Ext href={`mailto:${profile.email}`}>{profile.email}</Ext>
-                </p>,
-              );
+              push('out', <p>Email me and I’ll send my CV: <Ext href={`mailto:${profile.email}`}>{profile.email}</Ext></p>);
             }
-            break;
-          }
-          const project = projects.find((p) => p.slug === arg);
-          if (project?.link) {
-            window.open(project.link, '_blank', 'noopener');
-            push('out', <p>opening {project.slug} in a new tab …</p>);
-          } else if (project) {
-            push('out', <p>{project.slug} has no public link, but here’s the write-up: <Dir href={`/projects#${project.slug}`}>~/projects/{project.slug}</Dir></p>);
           } else {
-            push('out', <p>open: try <span className="text-pastel-butter">open cv</span> or <span className="text-pastel-butter">open tango-solver</span></p>);
+            const project = projects.find((p) => p.slug === arg);
+            if (project?.link) {
+              window.open(project.link, '_blank', 'noopener');
+              push('out', <p>Opening {project.title} in a new tab…</p>);
+            } else if (project) {
+              go(`/projects#${project.slug}`, project.title);
+            } else {
+              push('out', <p>Try <span className="text-pastel-butter">open cv</span></p>);
+            }
           }
           break;
-        }
 
         case 'contact':
         case 'email':
@@ -268,9 +249,9 @@ export default function Terminal({ hasCv }: { hasCv: boolean }) {
         case 'theme':
           if (arg === 'dark' || arg === 'light') {
             setTheme(arg);
-            push('out', <p>theme set to {arg}.</p>);
+            push('out', <p>Switched to {arg} mode.</p>);
           } else {
-            push('out', <p>usage: theme dark | theme light</p>);
+            push('out', <p>Use <span className="text-pastel-butter">theme dark</span> or <span className="text-pastel-butter">theme light</span></p>);
           }
           break;
 
@@ -278,12 +259,8 @@ export default function Terminal({ hasCv }: { hasCv: boolean }) {
           push(
             'out',
             <p>
-              {new Intl.DateTimeFormat('en-GB', {
-                timeZone: 'Asia/Jakarta',
-                dateStyle: 'full',
-                timeStyle: 'short',
-              }).format(new Date())}{' '}
-              <span className="text-term-dim">(bandung, WIB)</span>
+              {new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Jakarta', dateStyle: 'full', timeStyle: 'short' }).format(new Date())}{' '}
+              <span className="text-term-dim">in Bandung</span>
             </p>,
           );
           break;
@@ -292,78 +269,31 @@ export default function Terminal({ hasCv }: { hasCv: boolean }) {
           push('out', <p>{args.join(' ')}</p>);
           break;
 
-        case 'neofetch':
-          push(
-            'out',
-            <div>
-              <p><span className="text-pastel-sage">os:</span> human, bandung edition</p>
-              <p><span className="text-pastel-sage">role:</span> {profile.role.toLowerCase()}</p>
-              <p><span className="text-pastel-sage">shell:</span> python, go, javascript</p>
-              <p><span className="text-pastel-sage">degree:</span> b.sc. computer science, unpar</p>
-              <p className="mt-1">full readout: <Dir href="/about">~/about</Dir></p>
-            </div>,
-          );
-          break;
-
-        case 'history':
-          push('out', <ol className="list-inside list-decimal">{[...past, cmdline].map((h, i) => <li key={i}>{h}</li>)}</ol>);
-          break;
-
         case 'clear':
           setLines([]);
           break;
 
         case 'sudo':
-          if (/hire/.test(arg)) {
-            push(
-              'out',
-              <div>
-                <p className="text-pastel-blush">[sudo] password for recruiter: ********</p>
-                <p>access granted. jason is open to good conversations.</p>
-                <p>
-                  next step: <Ext href={`mailto:${profile.email}?subject=Let%E2%80%99s%20talk`}>{profile.email}</Ext>
-                </p>
-              </div>,
-            );
-          } else {
-            push('out', <p>jason is not in the sudoers file. this incident will be reported (to nobody).</p>);
-          }
-          break;
-
-        case 'rm':
-          push('out', <p>rm: permission denied. the museum stays open.</p>);
-          break;
-
-        case 'exit':
-        case 'logout':
-          push('out', <p>there’s no escape. but the menu at the bottom works.</p>);
-          break;
-
-        case 'vim':
-        case 'nano':
-        case 'emacs':
-          push('out', <p>{cmd}: let’s not start that debate here.</p>);
-          break;
-
-        case 'music':
-        case 'spotify':
-          push('out', <p>now playing: whatever’s on <Ext href={socials.find((s) => s.name === 'Spotify')!.href}>my spotify</Ext></p>);
-          break;
-
-        case 'ping':
-          push('out', <p>pong. say hi at <Ext href={`mailto:${profile.email}`}>{profile.email}</Ext></p>);
+          push(
+            'out',
+            /hire/.test(arg) ? (
+              <p>Happy to talk. Email me at <Ext href={`mailto:${profile.email}`}>{profile.email}</Ext></p>
+            ) : (
+              <p>Permission denied.</p>
+            ),
+          );
           break;
 
         default:
           push(
             'out',
             <p>
-              command not found: {cmd}. type <span className="text-pastel-butter">help</span> to see what works.
+              Command not found: {cmd}. Type <span className="text-pastel-butter">help</span> to see what you can do.
             </p>,
           );
       }
     },
-    [go, hasCv, past, push, router, setTheme],
+    [go, hasCv, push, setTheme],
   );
 
   const complete = () => {
@@ -376,7 +306,7 @@ export default function Terminal({ hasCv }: { hasCv: boolean }) {
     const [cmd, partial = ''] = parts;
     const pool =
       cmd === 'cd' ? [...PAGES] :
-      cmd === 'cat' ? ['now.txt', 'contact.txt'] :
+      cmd === 'cat' ? ['now.txt'] :
       cmd === 'open' ? ['cv', ...projects.map((p) => p.slug)] :
       cmd === 'theme' ? ['dark', 'light'] : [];
     const hit = pool.filter((o) => o.startsWith(partial.toLowerCase()));
@@ -395,34 +325,26 @@ export default function Terminal({ hasCv }: { hasCv: boolean }) {
     } else if (e.key === 'ArrowDown' && cursor !== null) {
       e.preventDefault();
       const i = cursor + 1;
-      if (i >= past.length) {
-        setCursor(null);
-        setInput('');
-      } else {
-        setCursor(i);
-        setInput(past[i]);
-      }
-    } else if (e.key === 'l' && e.ctrlKey) {
-      e.preventDefault();
-      setLines([]);
+      setCursor(i >= past.length ? null : i);
+      setInput(i >= past.length ? '' : past[i]);
     }
   };
 
   return (
     <div>
       <div
-        className="overflow-hidden rounded-lg border-2 border-[#11140F] bg-term text-[15px] leading-relaxed text-term-ink shadow-hard"
+        className="overflow-hidden rounded-xl border-2 border-[#11140F] bg-term font-mono text-[13.5px] leading-relaxed text-term-ink shadow-hard [font-stretch:87.5%]"
         onMouseUp={() => {
           if (!window.getSelection()?.toString()) inputRef.current?.focus({ preventScroll: true });
         }}
       >
         <div className="flex items-center gap-2 border-b border-term-line px-4 py-2.5">
-          <span aria-hidden="true" className="h-3 w-3 rounded-full bg-pastel-blush" />
-          <span aria-hidden="true" className="h-3 w-3 rounded-full bg-pastel-butter" />
-          <span aria-hidden="true" className="h-3 w-3 rounded-full bg-pastel-sage" />
-          <span className="ml-2 text-[13px] text-term-dim">jason@bandung: ~ (zsh)</span>
+          <span aria-hidden="true" className="h-2.5 w-2.5 rounded-full bg-pastel-blush" />
+          <span aria-hidden="true" className="h-2.5 w-2.5 rounded-full bg-pastel-butter" />
+          <span aria-hidden="true" className="h-2.5 w-2.5 rounded-full bg-pastel-sage" />
+          <span className="ml-2 text-[12px] text-term-dim">Try typing here</span>
         </div>
-        <div ref={scrollRef} className="h-[300px] overflow-y-auto px-4 py-4 sm:h-[320px] sm:px-5">
+        <div ref={scrollRef} className="h-[280px] overflow-y-auto px-4 py-4 sm:h-[300px] sm:px-5">
           <div role="log" aria-live="polite" aria-label="Terminal output" className="space-y-1.5">
             {lines.map((l) =>
               l.kind === 'cmd' ? (
@@ -468,7 +390,7 @@ export default function Terminal({ hasCv }: { hasCv: boolean }) {
                 autoCorrect="off"
                 spellCheck={false}
                 enterKeyHint="send"
-                className="min-w-0 flex-1 bg-transparent text-term-ink caret-pastel-blush outline-none placeholder:text-term-dim/70 focus-visible:outline-none"
+                className="min-w-0 flex-1 bg-transparent text-term-ink caret-pastel-blush outline-none placeholder:text-term-dim/60 focus-visible:outline-none"
                 placeholder="type help"
               />
             </form>
@@ -476,33 +398,19 @@ export default function Terminal({ hasCv }: { hasCv: boolean }) {
         </div>
       </div>
 
-      <div role="group" className="mt-5 flex flex-wrap items-center gap-2" aria-label="Try a command">
-        <span className="comment mr-1 text-sm">{'// '}or tap:</span>
-        {CHIPS.map((c) => (
+      <div role="group" aria-label="Quick commands" className="mt-4 flex flex-wrap gap-2">
+        {buttons.map((b) => (
           <button
-            key={c}
+            key={b.cmd}
             type="button"
             disabled={!booted}
-            onClick={() => run(c)}
-            className="min-h-[36px] rounded-md border-2 border-ink bg-raised px-3 text-[13px] font-semibold shadow-hard-sm transition-[transform,box-shadow] duration-100 hover:-translate-y-px active:translate-x-0.5 active:translate-y-0.5 active:shadow-none disabled:opacity-50"
+            onClick={() => run(b.cmd)}
+            className="min-h-[38px] rounded-full border border-line bg-raised px-3.5 text-[14px] text-ink transition-colors hover:border-ink disabled:opacity-50"
           >
-            {c}
+            {b.label}
           </button>
         ))}
       </div>
-    </div>
-  );
-}
-
-function Contact() {
-  return (
-    <div className="grid grid-cols-[auto_1fr] gap-x-5">
-      {socials.map((s) => (
-        <div key={s.name} className="contents">
-          <span className="text-pastel-sage">{s.handle}</span>
-          <Ext href={s.href}>{s.href.replace(/^mailto:|^https:\/\/(www\.)?/, '')}</Ext>
-        </div>
-      ))}
     </div>
   );
 }

@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     'Jason Kelvin Agung: computer science graduate from UNPAR and AI Implementation Specialist in Bandung. Skills, interests, education and how to get in touch.',
 };
 
-// "JKA" as pixel art, one pastel per row like `neofetch | lolcat`
+// "JKA" as pixel art, one pastel per row
 const pixels = [
   '  ### #   #  ### ',
   '    # #  #  #   #',
@@ -19,36 +19,27 @@ const pixels = [
 ];
 const pixelRows = ['bg-pastel-sage', 'bg-pastel-sage', 'bg-pastel-sky', 'bg-pastel-sky', 'bg-pastel-blush', 'bg-pastel-butter'];
 
-const packageCount = skills.reduce((n, s) => n + s.items.length, 0);
-
-const readout: [string, string][] = [
-  ['Name', profile.name],
-  ['Role', `${profile.role} @ ${profile.companyShort}`],
-  ['Host', `${profile.location} (UTC+7)`],
-  ['Degree', 'B.Sc. Computer Science, UNPAR ’26'],
-  ['GPA', '3.67'],
-  ['Thesis', 'Backtracking vs. simulated annealing on Tango'],
-  ['Shell', 'python, go, javascript'],
-  ['Packages', `${packageCount} (ai, software, people)`],
-  ['Hobbies', 'music, logic puzzles, gadgets'],
-  ['Font', 'Martian Mono, Victor Mono'],
+const glance: [string, string][] = [
+  ['Role', profile.role],
+  ['Company', profile.company],
+  ['Based in', profile.location],
+  ['Degree', 'Computer Science, UNPAR 2026'],
+  ['Focus', 'AI, algorithms, software engineering'],
 ];
-
-const palette = ['bg-[#1F241D]', 'bg-[#586753]', 'bg-pastel-sage', 'bg-pastel-sky', 'bg-pastel-blush', 'bg-pastel-butter', 'bg-[#FDF6EC]'];
 
 export default function AboutPage() {
   return (
     <div className="container-page">
-      <PageHeader path="~/about" command="neofetch" title="About">
-        The short version of who I am, what I know and where I studied.
+      <PageHeader path="about" title="About">
+        Who I am, what I know, and where I studied.
       </PageHeader>
 
-      {/* neofetch */}
+      {/* Profile at a glance */}
       <section
-        aria-label="Profile summary"
-        className="overflow-hidden rounded-lg border-2 border-[#11140F] bg-term p-6 text-[15px] text-term-ink shadow-hard sm:p-8"
+        aria-label="Profile at a glance"
+        className="rounded-xl border-2 border-[#11140F] bg-term p-6 text-term-ink shadow-hard sm:p-8"
       >
-        <div className="grid items-start gap-8 md:grid-cols-[auto_1fr] md:gap-12">
+        <div className="grid items-center gap-8 md:grid-cols-[auto_1fr] md:gap-14">
           <div
             aria-hidden="true"
             className="grid w-max gap-[3px] sm:gap-1"
@@ -56,49 +47,27 @@ export default function AboutPage() {
           >
             {pixels.flatMap((row, r) =>
               [...row].map((cell, c) => (
-                <span
-                  key={`${r}-${c}`}
-                  className={`h-3 w-3 rounded-[2px] sm:h-4 sm:w-4 ${cell === '#' ? pixelRows[r] : ''}`}
-                />
+                <span key={`${r}-${c}`} className={`h-3 w-3 rounded-[2px] sm:h-4 sm:w-4 ${cell === '#' ? pixelRows[r] : ''}`} />
               )),
             )}
           </div>
-          <div className="min-w-0">
-            <p className="font-semibold">
-              <span className="text-pastel-sage">jason</span>
-              <span className="text-term-dim">@</span>
-              <span className="text-pastel-sage">bandung</span>
-            </p>
-            <p aria-hidden="true" className="text-term-dim">
-              -------------
-            </p>
-            <dl className="mt-1 space-y-0.5">
-              {readout.map(([k, v]) => (
-                <div key={k} className="flex flex-wrap gap-x-2">
-                  <dt className="font-semibold text-pastel-butter">{k}:</dt>
-                  <dd>{v}</dd>
-                </div>
-              ))}
-            </dl>
-            <div aria-hidden="true" className="mt-4 flex">
-              {palette.map((c) => (
-                <span key={c} className={`h-5 w-7 ${c}`} />
-              ))}
-            </div>
-          </div>
+          <dl className="grid gap-x-6 gap-y-1.5 text-[16px] sm:grid-cols-[auto_1fr]">
+            {glance.map(([k, v]) => (
+              <div key={k} className="contents">
+                <dt className="font-mono text-[13px] leading-7 text-pastel-butter [font-stretch:87.5%]">{k}</dt>
+                <dd className="mb-2 sm:mb-0">{v}</dd>
+              </div>
+            ))}
+          </dl>
         </div>
       </section>
 
       <div className="mt-20 grid gap-14 lg:grid-cols-12">
-        {/* about.md */}
         <section className="lg:col-span-7" aria-labelledby="about-me">
-          <p className="text-[15px] text-muted">
-            <span className="text-sage">~$</span> cat about.md
-          </p>
-          <h2 id="about-me" className="mt-2 font-display text-2xl font-extrabold [font-stretch:112.5%] sm:text-3xl">
-            Hi, I’m Jason.
+          <h2 id="about-me" className="font-mono text-[clamp(1.5rem,3vw,2rem)] font-extrabold tracking-tight [font-stretch:112.5%]">
+            Hi, I’m Jason<span className="text-blush">.</span>
           </h2>
-          <div className="mt-5 max-w-[62ch] space-y-4 text-[17px]">
+          <div className="mt-5 max-w-[60ch] space-y-4 text-[18px] leading-relaxed">
             <p>
               I’m a computer science graduate from UNPAR who gets excited about artificial intelligence, making code
               fast, and building software properly. These days I’m putting generative AI to work at DEUS.
@@ -109,17 +78,15 @@ export default function AboutPage() {
             </p>
           </div>
 
-          <h3 className="mt-12 font-display text-lg font-bold [font-stretch:112.5%]">Get in touch</h3>
-          <dl className="mt-4 grid grid-cols-[auto_1fr] gap-x-6 gap-y-2 text-[16px]">
-            <dt className="text-muted">where</dt>
-            <dd>{profile.location}</dd>
-            <dt className="text-muted">email</dt>
+          <h3 className="label mt-12">Contact</h3>
+          <dl className="mt-3 grid grid-cols-[auto_1fr] gap-x-6 gap-y-2">
+            <dt className="text-muted">Email</dt>
             <dd>
               <a href={`mailto:${profile.email}`} className="link break-all">
                 {profile.email}
               </a>
             </dd>
-            <dt className="text-muted">phone</dt>
+            <dt className="text-muted">Phone</dt>
             <dd>
               <a href={profile.phoneHref} className="link">
                 {profile.phone}
@@ -128,59 +95,55 @@ export default function AboutPage() {
           </dl>
         </section>
 
-        {/* skills + interests */}
         <section className="lg:col-span-5" aria-labelledby="skills-heading">
-          <p className="text-[15px] text-muted">
-            <span className="text-sage">~$</span> cat skills/*
-          </p>
-          <h2 id="skills-heading" className="sr-only">
+          <h2 id="skills-heading" className="label">
             Skills
           </h2>
-          <div className="mt-4 space-y-5">
+          <div className="mt-4 space-y-6">
             {skills.map((s) => (
-              <div key={s.file} className="rounded-lg border-2 border-ink bg-raised shadow-hard-sm">
-                <p className="flex justify-between border-b-2 border-ink px-4 py-1.5 text-[13px]">
-                  <span className="font-semibold">{s.file}</span>
-                  <span className="text-muted">{s.group}</span>
-                </p>
-                <ul className="flex flex-wrap gap-x-4 gap-y-1 px-4 py-3 text-[15px]">
+              <div key={s.group}>
+                <h3 className="text-[16px] font-bold">{s.group}</h3>
+                <ul className="mt-2 flex flex-wrap gap-1.5">
                   {s.items.map((item) => (
-                    <li key={item}>{item}</li>
+                    <li key={item} className="rounded-full bg-sage-soft/70 px-3 py-1 text-[14px]">
+                      {item}
+                    </li>
                   ))}
                 </ul>
               </div>
             ))}
           </div>
 
-          <p className="mt-10 text-[15px] text-muted">
-            <span className="text-sage">~$</span> ls ~/interests
-          </p>
-          <h2 className="sr-only">Interests</h2>
-          <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-1.5 text-[16px]">
+          <h2 className="label mt-10">Interests</h2>
+          <ul className="mt-3 flex flex-wrap gap-1.5">
             {interests.map((i) => (
               <li key={i.name}>
                 {i.href ? (
-                  <a href={i.href} target="_blank" rel="noopener noreferrer" className="link font-semibold">
-                    {i.name}/
+                  <a
+                    href={i.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block rounded-full bg-blush-soft px-3 py-1 text-[14px] underline decoration-blush/40 underline-offset-4 hover:decoration-blush"
+                    title="Opens my Spotify"
+                  >
+                    {i.name}
                   </a>
                 ) : (
-                  <span className="font-semibold text-sky">{i.name}/</span>
+                  <span className="inline-block rounded-full bg-sky-soft/80 px-3 py-1 text-[14px]">{i.name}</span>
                 )}
               </li>
             ))}
           </ul>
-          <p className="comment mt-2 text-sm">{'// '}music/ opens my spotify</p>
         </section>
       </div>
 
       {/* Education */}
-      <section id="education" className="mt-24 scroll-mt-10" aria-labelledby="education-heading">
-        <h2 id="education-heading" className="font-display text-3xl font-extrabold tracking-tight [font-stretch:112.5%] sm:text-4xl">
-          Education
+      <section id="education" className="mt-24 scroll-mt-24" aria-labelledby="education-heading">
+        <h2 id="education-heading" className="font-mono text-[clamp(1.5rem,3vw,2rem)] font-extrabold tracking-tight [font-stretch:112.5%]">
+          Education<span className="text-blush">.</span>
         </h2>
-        <p className="comment mt-1">{'// '}history | grep school</p>
 
-        <ol className="relative mt-10 border-l-2 border-dashed border-sage pl-8 sm:pl-10">
+        <ol className="relative mt-10 border-l-2 border-sage/50 pl-8 sm:pl-10">
           {education.map((e, i) => (
             <li key={e.school} className="relative pb-12 last:pb-0">
               <span
@@ -189,21 +152,21 @@ export default function AboutPage() {
                   i === 0 ? 'bg-pastel-butter' : 'bg-paper'
                 }`}
               />
-              <p className="text-[15px] text-muted">{e.period}</p>
-              <h3 className="mt-1 font-display text-xl font-bold leading-snug [font-stretch:112.5%] sm:text-2xl">{e.school}</h3>
-              <p className="mt-1 font-semibold text-sky">{e.degree}</p>
-              <p className="mt-2 max-w-[62ch]">{e.detail}</p>
+              <p className="label">{e.period}</p>
+              <h3 className="mt-1 text-[clamp(1.2rem,2.4vw,1.5rem)] font-bold leading-snug">{e.school}</h3>
+              <p className="mt-0.5 text-sky">{e.degree}</p>
+              {e.detail && <p className="mt-2 max-w-[62ch]">{e.detail}</p>}
               {e.thesis && (
-                <p className="mt-3 max-w-[62ch]">
-                  <span className="rounded bg-butter-soft px-1.5 py-0.5 text-[14px] font-semibold">thesis</span> {e.thesis}
+                <p className="mt-2 max-w-[62ch] text-muted">
+                  <span className="font-semibold text-ink">Thesis:</span> {e.thesis}
                 </p>
               )}
               {e.focus && (
-                <dl className="mt-6 grid max-w-3xl gap-4 sm:grid-cols-3">
+                <dl className="mt-6 grid max-w-3xl gap-5 sm:grid-cols-3">
                   {e.focus.map((f) => (
-                    <div key={f.area} className="rounded-lg border-2 border-dashed border-line p-4">
-                      <dt className="text-[14px] font-semibold text-sage">{f.area}</dt>
-                      <dd className="mt-1 text-[14px] text-muted">{f.subjects}</dd>
+                    <div key={f.area}>
+                      <dt className="text-[15px] font-bold">{f.area}</dt>
+                      <dd className="mt-1 text-[15px] text-muted">{f.subjects}</dd>
                     </div>
                   ))}
                 </dl>

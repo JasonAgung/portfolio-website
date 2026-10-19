@@ -1,29 +1,21 @@
-'use client';
-
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 
 export default function NotFound() {
-  const pathname = usePathname();
   return (
     <div className="container-page pt-20">
-      <p className="text-[15px] text-muted">
-        <span className="text-sage">jason@bandung</span>:<span className="text-sky">~</span>$ cd {pathname}
+      <p className="label">
+        <span className="text-blush">error</span> 404
       </p>
-      <p className="mt-1 text-blush">cd: no such file or directory: {pathname}</p>
-      <h1 className="mt-8 font-display text-[clamp(4rem,16vw,10rem)] font-extrabold leading-none [font-stretch:112.5%]">
-        404<span aria-hidden="true" className="cursor-block ml-3" />
+      <h1 className="mt-3 font-mono text-[clamp(2.2rem,6vw,4.25rem)] font-extrabold leading-[1] tracking-tight [font-stretch:112.5%]">
+        Page not found<span className="text-blush">.</span>
       </h1>
-      <p className="mt-6 max-w-lg text-[17px]">This room of the museum doesn’t exist (yet). Try one of these instead:</p>
+      <p className="mt-5 max-w-lg text-[18px] text-muted">This page doesn’t exist, or it has moved. Try one of these instead.</p>
       <div className="mt-8 flex flex-wrap gap-3">
         <Link href="/" className="keycap keycap-primary">
-          cd ~
+          Go home
         </Link>
         <Link href="/projects" className="keycap">
-          cd projects
-        </Link>
-        <Link href="/experience" className="keycap">
-          cd experience
+          See projects
         </Link>
       </div>
     </div>

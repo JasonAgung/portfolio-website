@@ -1,34 +1,35 @@
-import { socials } from '@/content/profile';
+import { profile, socials } from '@/content/profile';
 
 export default function Footer() {
   return (
-    <footer className="mt-24 border-t-2 border-dashed border-line">
-      <div className="container-page py-12">
-        <p className="text-muted">
-          <span className="text-sage">~$</span> exit
-        </p>
-        <p className="text-muted">logout</p>
-        <p className="mt-4 max-w-xl font-display text-xl font-bold leading-snug sm:text-2xl">
-          Thanks for stopping by the museum.
-          <br />
-          <span className="text-muted">Connection to jason closed.</span>
-        </p>
-        <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-2">
-          {socials.map((s) => (
-            <li key={s.name}>
-              <a
-                href={s.href}
-                className="link"
-                {...(s.href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-              >
-                {s.handle}
-              </a>
-            </li>
-          ))}
-        </ul>
-        <p className="comment mt-10 text-sm">
-          {'// '}© 2026 Jason Kelvin Agung. Built with Next.js, set in Martian Mono and Victor Mono.
-        </p>
+    <footer className="mt-28 border-t border-line">
+      <div className="container-page grid gap-10 py-14 md:grid-cols-2 md:items-end">
+        <div>
+          <p className="label">Get in touch</p>
+          <p className="mt-3 font-mono text-[clamp(1.3rem,2.6vw,1.75rem)] font-extrabold leading-snug [font-stretch:112.5%]">
+            Thanks for visiting<span className="text-blush">.</span>
+          </p>
+          <p className="mt-2 text-[18px]">
+            Say hi at{' '}
+            <a href={`mailto:${profile.email}`} className="link break-words">
+              {profile.email}
+            </a>
+          </p>
+        </div>
+        <div className="md:text-right">
+          <ul className="flex flex-wrap gap-x-6 gap-y-2 md:justify-end">
+            {socials
+              .filter((s) => s.name !== 'Email')
+              .map((s) => (
+                <li key={s.name}>
+                  <a href={s.href} target="_blank" rel="noopener noreferrer" className="link">
+                    {s.name}
+                  </a>
+                </li>
+              ))}
+          </ul>
+          <p className="label mt-6">© 2026 Jason Kelvin Agung</p>
+        </div>
       </div>
     </footer>
   );

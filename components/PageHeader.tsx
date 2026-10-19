@@ -1,21 +1,21 @@
 interface PageHeaderProps {
   path: string;
-  command: string;
   title: string;
   children?: React.ReactNode;
 }
 
-// Every page opens with the command that "produced" it, then a big title.
-export default function PageHeader({ path, command, title, children }: PageHeaderProps) {
+// A small path label (the quiet terminal nod), a big title and a plain intro.
+export default function PageHeader({ path, title, children }: PageHeaderProps) {
   return (
-    <header className="pb-10 pt-14 sm:pt-20">
-      <p className="text-[15px] text-muted">
-        <span className="text-sage">jason@bandung</span>:<span className="text-sky">{path}</span>$ <span className="text-ink">{command}</span>
+    <header className="pb-12 pt-14 sm:pt-20">
+      <p className="label">
+        <span className="text-sage">~</span>/{path}
       </p>
-      <h1 className="mt-3 font-display text-[clamp(2.4rem,7vw,5rem)] font-extrabold leading-[0.95] tracking-tight [font-stretch:112.5%]">
+      <h1 className="mt-3 font-mono text-[clamp(2.2rem,6vw,4.25rem)] font-extrabold leading-[1] tracking-tight [font-stretch:112.5%]">
         {title}
+        <span className="text-blush">.</span>
       </h1>
-      {children && <div className="mt-5 max-w-2xl text-[17px] text-muted">{children}</div>}
+      {children && <div className="mt-5 max-w-[56ch] text-[18px] text-muted">{children}</div>}
     </header>
   );
 }

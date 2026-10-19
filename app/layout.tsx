@@ -1,21 +1,20 @@
 import type { Metadata } from "next";
-import { Martian_Mono, Victor_Mono } from "next/font/google";
+import { Hanken_Grotesk, Martian_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider, themeScript } from "@/contexts/ThemeContext";
-import StatusBar from "@/components/StatusBar";
+import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 
-const display = Martian_Mono({
+const mono = Martian_Mono({
   subsets: ["latin"],
   axes: ["wdth"],
-  variable: "--font-display",
+  variable: "--font-mono",
   display: "swap",
 });
 
-const mono = Victor_Mono({
+const sans = Hanken_Grotesk({
   subsets: ["latin"],
-  style: ["normal", "italic"],
-  variable: "--font-mono",
+  variable: "--font-sans",
   display: "swap",
 });
 
@@ -34,11 +33,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${display.variable} ${mono.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${mono.variable} ${sans.variable}`}>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
-      <body className="pb-[calc(2.75rem+env(safe-area-inset-bottom))]">
+      <body>
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:border-2 focus:border-ink focus:bg-butter-soft focus:px-4 focus:py-2"
@@ -46,9 +45,9 @@ export default function RootLayout({
           Skip to content
         </a>
         <ThemeProvider>
+          <Nav />
           <main id="main">{children}</main>
           <Footer />
-          <StatusBar />
         </ThemeProvider>
       </body>
     </html>
