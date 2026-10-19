@@ -12,8 +12,9 @@ export default function Home() {
 
   return (
     <div className="container-page">
-      {/* The sleeve */}
-      <section className="grid items-center gap-12 pt-6 sm:pt-10 lg:grid-cols-12 lg:gap-16">
+      {/* The sleeve — fills most of the first screen, content centred, so only the
+          "tracklist" heading below peeks as a scroll cue (100svh − nav − peek). */}
+      <section className="grid items-center gap-12 pt-6 sm:pt-10 lg:grid-cols-12 lg:gap-16 lg:min-h-[calc(100svh-13rem)] lg:pt-0">
         <div className="mx-auto w-full max-w-[460px] lg:col-span-5 lg:max-w-none">
           <Cover title="jka" topRight={<KeyLabel />} bottomLeft="ai, code & music" bottomRight="bandung, 2026" intro interactive />
           <div className="enter" style={{ '--d': '470ms' } as React.CSSProperties}>
@@ -64,7 +65,7 @@ export default function Home() {
       </section>
 
       {/* Tracklist */}
-      <section className="mt-32" aria-labelledby="tracklist-heading">
+      <section className="mt-20 scroll-mt-24 sm:mt-24 lg:mt-10" aria-labelledby="tracklist-heading">
         <div className="flex flex-wrap items-end justify-between gap-4 border-b border-line pb-4">
           <h2 id="tracklist-heading" className="font-serif text-[clamp(2rem,4vw,2.75rem)] italic leading-none">
             tracklist
