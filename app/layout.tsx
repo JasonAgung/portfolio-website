@@ -29,6 +29,11 @@ export const metadata: Metadata = {
   },
   description:
     "AI Implementation Specialist at DEUS Human Capital Services and computer science graduate from UNPAR, Bandung. Generative AI, algorithms, software and music.",
+  appleWebApp: {
+    capable: true,
+    title: "Jason Agung",
+    statusBarStyle: "black-translucent",
+  },
 };
 
 export default function RootLayout({

@@ -24,7 +24,7 @@ export default function Home() {
         </div>
 
         <div className="min-w-0 lg:col-span-7">
-          <h1 className="enter pl-[0.12em] font-serif text-[clamp(1.7rem,7.6vw,3.4rem)] font-light italic leading-[0.98] tracking-tight lg:pl-0 lg:leading-[0.95] lg:text-[clamp(3rem,6.2vw,5.4rem)]" style={{ '--d': '120ms' } as React.CSSProperties}>
+          <h1 className="enter pl-[0.22em] font-serif text-[clamp(1.7rem,7.6vw,3.4rem)] font-light italic leading-[0.98] tracking-tight lg:pl-0 lg:leading-[0.95] lg:text-[clamp(3rem,6.2vw,5.4rem)]" style={{ '--d': '120ms' } as React.CSSProperties}>
             jason kelvin agung
           </h1>
           <p className="enter mt-5 max-w-[34ch] text-[clamp(1.2rem,2.2vw,1.5rem)] leading-snug sm:mt-7" style={{ '--d': '190ms' } as React.CSSProperties}>
