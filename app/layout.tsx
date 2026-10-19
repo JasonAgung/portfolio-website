@@ -39,6 +39,8 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className={`${serif.variable} ${mono.variable}`}>
       <head>
+        {/* Baseline for iOS Safari's toolbars; the theme script updates it per theme before paint. */}
+        <meta name="theme-color" content="#17110F" />
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body>

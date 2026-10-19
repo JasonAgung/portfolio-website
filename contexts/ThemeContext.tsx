@@ -16,8 +16,18 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-// Runs in <head> before paint: dark by default (it's a late-night record), plus the saved colour key.
-export const themeScript = `(function(){try{var d=document.documentElement;var t=localStorage.getItem('theme')||'dark';if(t==='dark'){d.classList.add('dark')}var k=localStorage.getItem('key');if(k&&'CDEFGAB'.indexOf(k)>-1&&k.length===1){d.dataset.key=k}}catch(e){}})()`;
+// Page background per theme, also used for the browser chrome (iOS Safari tints its
+// toolbars with theme-color; matching it removes the darker band at the screen edges).
+const BG = { dark: '#17110F', light: '#E9DED6' };
+
+// Runs in <head> before paint: dark by default (it's a late-night record), the saved
+// colour key, and the theme-color meta so Safari's bars match the page.
+export const themeScript = `(function(){try{var d=document.documentElement;var t=localStorage.getItem('theme')||'dark';var dark=t==='dark';if(dark){d.classList.add('dark')}var k=localStorage.getItem('key');if(k&&'CDEFGAB'.indexOf(k)>-1&&k.length===1){d.dataset.key=k}var m=document.querySelector('meta[name=\\'theme-color\\']');if(!m){m=document.createElement('meta');m.setAttribute('name','theme-color');document.head.appendChild(m)}m.setAttribute('content',dark?'${BG.dark}':'${BG.light}')}catch(e){}})()`;
+
+function setThemeColor(theme: Theme) {
+  const m = document.querySelector('meta[name="theme-color"]');
+  if (m) m.setAttribute('content', BG[theme]);
+}
 
 function save(name: string, value: string) {
   try {
@@ -54,6 +64,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       document.documentElement.classList.toggle('dark', next === 'dark');
       setTheme(next);
     });
+    setThemeColor(next);
     save('theme', next);
   }, []);
 
