@@ -28,8 +28,7 @@ export default function Home() {
             jason kelvin agung
           </h1>
           <p className="enter mt-7 max-w-[34ch] text-[clamp(1.25rem,2.2vw,1.5rem)] leading-snug" style={{ '--d': '190ms' } as React.CSSProperties}>
-            AI Implementation Specialist based in Bandung. I turn generative AI into things people actually use, and play
-            music when I’m not coding.
+            I build generative AI that people actually use, and make music for the hours in between.
           </p>
           <p className="enter mt-4 max-w-[46ch] text-muted" style={{ '--d': '260ms' } as React.CSSProperties}>
             Hiii, sooo this is the page where you’ll find everything about me (kinda).
