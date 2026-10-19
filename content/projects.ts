@@ -18,6 +18,22 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    slug: 'mondo-creation',
+    side: 'a',
+    title: 'MONDO Creation — brand & catalog site',
+    summary: 'A storefront for a gender-neutral outerwear label, built end to end.',
+    description:
+      'I designed and built the website for MONDO Creation, a gender-neutral outerwear label from Bandung. It tells the brand story and shows the collection, with a product catalog the owner updates herself through a headless CMS. Buying happens on Shopee and sizing questions go to WhatsApp, so there is no checkout to maintain — the site’s job is to make the clothes look good and load fast. It is statically built and rebuilds on its own a couple of minutes after a product is published.',
+    technologies: ['Astro', 'Sanity CMS', 'TypeScript', 'Cloudflare Pages'],
+    status: 'ongoing',
+    kind: 'Web',
+    context: 'MONDO Creation, 2026',
+    link: 'https://mcreation.id/',
+    image: '/mondo-site.png',
+    imageAlt: 'The MONDO Creation homepage: a model in a caramel jacket beside the words “Wear your direction.”',
+    featured: true,
+  },
+  {
     slug: 'ai-report-engine',
     side: 'a',
     title: 'AI-Driven Personalized Reporting Engine',
