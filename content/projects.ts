@@ -131,7 +131,7 @@ export const projects: Project[] = [
     kind: 'Web',
     link: 'https://github.com/JasonAgung/information-retrieval',
     image: '/information-retrieval.png',
-    imageAlt: 'The information retrieval app showing ranked search results',
+    imageAlt: 'The redesigned TF-IDF search app, a paper-toned reading room with ranked results',
   },
   {
     slug: 'rainbow-attack',
@@ -145,7 +145,7 @@ export const projects: Project[] = [
     kind: 'Security',
     link: 'https://github.com/JasonAgung/rainbow-attack',
     image: '/rainbow-table.png',
-    imageAlt: 'The rainbow table demo showing hash chains',
+    imageAlt: 'The redesigned rainbow table lab, a dark crypto page with a hash-chain diagram',
   },
   {
     slug: 'portfolio-website',
