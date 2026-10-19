@@ -31,3 +31,13 @@ export default function KeyPicker({ className = '' }: { className?: string }) {
     </div>
   );
 }
+
+// Small label that follows the current key, e.g. on the album sleeve.
+export function KeyLabel() {
+  const { musicalKey } = useTheme();
+  return (
+    <span aria-live="polite">
+      key of <span className="normal-case">{musicalKey}</span>
+    </span>
+  );
+}

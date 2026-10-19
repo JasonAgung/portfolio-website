@@ -5,9 +5,9 @@ import { usePathname } from 'next/navigation';
 import { useTheme } from '@/contexts/ThemeContext';
 
 const links = [
-  { href: '/projects', label: 'projects' },
-  { href: '/experience', label: 'experience' },
   { href: '/about', label: 'about' },
+  { href: '/experience', label: 'experience' },
+  { href: '/projects', label: 'projects' },
 ];
 
 export default function Nav() {

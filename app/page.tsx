@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Cover from '@/components/Cover';
-import KeyPicker from '@/components/KeyPicker';
+import KeyPicker, { KeyLabel } from '@/components/KeyPicker';
 import TrackRow from '@/components/TrackRow';
 import { hasCv } from '@/lib/cv';
 import { profile } from '@/content/profile';
@@ -15,13 +15,13 @@ export default function Home() {
       {/* The sleeve */}
       <section className="grid items-center gap-12 pt-6 sm:pt-10 lg:grid-cols-12 lg:gap-16">
         <div className="mx-auto w-full max-w-[460px] lg:col-span-5 lg:max-w-none">
-          <Cover title="jka" topRight="vol. 1" bottomLeft="ai, code & music" bottomRight="bandung, 2026" />
+          <Cover title="jka" topRight={<KeyLabel />} bottomLeft="ai, code & music" bottomRight="bandung, 2026" />
           <KeyPicker className="mt-5 flex justify-center lg:justify-start" />
           <p className="credit mt-1 text-center lg:text-left">change the key, change the colours</p>
         </div>
 
         <div className="lg:col-span-7">
-          <h1 className="font-serif text-[clamp(3rem,7.5vw,5.75rem)] font-light italic leading-[0.92] tracking-tight">
+          <h1 className="whitespace-nowrap font-serif text-[clamp(2.4rem,13vw,3.4rem)] font-light italic leading-[0.95] tracking-tight lg:text-[clamp(3rem,6.2vw,5.4rem)]">
             jason kelvin agung
           </h1>
           <p className="mt-7 max-w-[34ch] text-[clamp(1.25rem,2.2vw,1.5rem)] leading-snug">

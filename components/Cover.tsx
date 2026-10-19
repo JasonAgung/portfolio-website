@@ -8,7 +8,7 @@ export default function Cover({
   className = '',
 }: {
   title: string;
-  topRight?: string;
+  topRight?: React.ReactNode;
   bottomLeft?: string;
   bottomRight?: string;
   className?: string;
