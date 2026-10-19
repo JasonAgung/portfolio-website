@@ -56,23 +56,6 @@ export default function Nav() {
           )}
         </button>
       </nav>
-      {/* Phones: links in their own row */}
-      <ul className="fixed inset-x-0 bottom-0 z-50 flex justify-around border-t border-line bg-bg/90 pb-[env(safe-area-inset-bottom)] backdrop-blur-md sm:hidden">
-        {[{ href: '/', label: 'home' }, ...links].map((l) => {
-          const active = l.href === '/' ? pathname === '/' : pathname.startsWith(l.href);
-          return (
-            <li key={l.href}>
-              <Link
-                href={l.href}
-                aria-current={active ? 'page' : undefined}
-                className={`flex min-h-[52px] items-center px-3 font-mono text-[13px] ${active ? 'text-accent' : 'text-muted'}`}
-              >
-                {l.label}
-              </Link>
-            </li>
-          );
-        })}
-      </ul>
     </header>
   );
 }

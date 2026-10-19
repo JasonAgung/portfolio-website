@@ -5,6 +5,7 @@ import { ThemeProvider, themeScript } from "@/contexts/ThemeContext";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import ScrollTrack from "@/components/ScrollTrack";
+import MiniPlayer from "@/components/MiniPlayer";
 
 const serif = Newsreader({
   subsets: ["latin"],
@@ -53,6 +54,7 @@ export default function RootLayout({
           <Nav />
           <main id="main">{children}</main>
           <Footer />
+          <MiniPlayer />
         </ThemeProvider>
       </body>
     </html>

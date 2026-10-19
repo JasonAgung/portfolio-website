@@ -3,7 +3,7 @@ import { profile, socials } from '@/content/profile';
 
 export default function Footer() {
   return (
-    <footer className="mt-32 border-t border-line pb-24 sm:pb-0">
+    <footer className="mt-32 border-t border-line pb-24">
       <div className="container-page grid gap-12 py-16 md:grid-cols-2">
         <div>
           <p className="font-serif text-[clamp(2rem,4.5vw,3rem)] italic leading-none">thanks for listening.</p>
