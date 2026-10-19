@@ -3,41 +3,55 @@
 import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
 
 type Theme = 'light' | 'dark';
+export const KEYS = ['C', 'D', 'E', 'F', 'G', 'A', 'B'] as const;
+export type MusicalKey = (typeof KEYS)[number];
 
 interface ThemeContextType {
   theme: Theme;
   toggleTheme: () => void;
-  setTheme: (theme: Theme) => void;
+  musicalKey: MusicalKey;
+  setMusicalKey: (key: MusicalKey) => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-// Runs in <head> before paint so a saved or system dark theme never flashes light.
-export const themeScript = `(function(){try{var t=localStorage.getItem('theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}if(t==='dark'){document.documentElement.classList.add('dark')}}catch(e){}})()`;
+// Runs in <head> before paint: dark by default (it's a late-night record), plus the saved colour key.
+export const themeScript = `(function(){try{var d=document.documentElement;var t=localStorage.getItem('theme')||'dark';if(t==='dark'){d.classList.add('dark')}var k=localStorage.getItem('key');if(k&&'CDEFGAB'.indexOf(k)>-1&&k.length===1){d.dataset.key=k}}catch(e){}})()`;
+
+function save(name: string, value: string) {
+  try {
+    localStorage.setItem(name, value);
+  } catch {
+    // Storage can be blocked; the choice still applies for this visit.
+  }
+}
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>('light');
+  const [theme, setTheme] = useState<Theme>('dark');
+  const [musicalKey, setKeyState] = useState<MusicalKey>('C');
 
   useEffect(() => {
-    setThemeState(document.documentElement.classList.contains('dark') ? 'dark' : 'light');
-  }, []);
-
-  const setTheme = useCallback((next: Theme) => {
-    setThemeState(next);
-    document.documentElement.classList.toggle('dark', next === 'dark');
-    try {
-      localStorage.setItem('theme', next);
-    } catch {
-      // Storage can be blocked; the theme still applies for this visit.
-    }
+    const root = document.documentElement;
+    setTheme(root.classList.contains('dark') ? 'dark' : 'light');
+    const k = root.dataset.key as MusicalKey | undefined;
+    if (k && KEYS.includes(k)) setKeyState(k);
   }, []);
 
   const toggleTheme = useCallback(() => {
-    setTheme(document.documentElement.classList.contains('dark') ? 'light' : 'dark');
-  }, [setTheme]);
+    const next: Theme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
+    document.documentElement.classList.toggle('dark', next === 'dark');
+    setTheme(next);
+    save('theme', next);
+  }, []);
+
+  const setMusicalKey = useCallback((key: MusicalKey) => {
+    document.documentElement.dataset.key = key;
+    setKeyState(key);
+    save('key', key);
+  }, []);
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme, setTheme }}>
+    <ThemeContext.Provider value={{ theme, toggleTheme, musicalKey, setMusicalKey }}>
       {children}
     </ThemeContext.Provider>
   );

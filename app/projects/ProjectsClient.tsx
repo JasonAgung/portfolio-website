@@ -2,23 +2,28 @@
 
 import Image from 'next/image';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import Cover from '@/components/Cover';
 import PageHeader from '@/components/PageHeader';
+import TrackRow from '@/components/TrackRow';
 import { linkLabel, projects, type Project } from '@/content/projects';
 
-const posterColors = ['bg-pastel-sky', 'bg-pastel-butter', 'bg-pastel-blush', 'bg-pastel-sage'];
+const sides = [
+  { id: 'a' as const, label: 'side a', note: 'work and research' },
+  { id: 'b' as const, label: 'side b', note: 'made for fun, or for class' },
+];
 
 export default function ProjectsClient() {
-  const [selected, setSelected] = useState(projects[0].slug);
+  const [open, setOpen] = useState<string | null>(null);
   const [zoomed, setZoomed] = useState<Project | null>(null);
   const dialogRef = useRef<HTMLDialogElement>(null);
 
-  // Deep links like /projects#tango-solver open that project.
+  // Deep links like /projects#tango-solver open that track.
   useEffect(() => {
     const fromHash = () => {
       const slug = decodeURIComponent(window.location.hash.slice(1));
       if (projects.some((p) => p.slug === slug)) {
-        setSelected(slug);
-        requestAnimationFrame(() => document.getElementById(`row-${slug}`)?.scrollIntoView({ block: 'center' }));
+        setOpen(slug);
+        requestAnimationFrame(() => document.getElementById(`track-${slug}`)?.scrollIntoView({ block: 'start' }));
       }
     };
     fromHash();
@@ -26,9 +31,12 @@ export default function ProjectsClient() {
     return () => window.removeEventListener('hashchange', fromHash);
   }, []);
 
-  const select = useCallback((slug: string) => {
-    setSelected(slug);
-    history.replaceState(null, '', `#${slug}`);
+  const toggle = useCallback((slug: string) => {
+    setOpen((cur) => {
+      const next = cur === slug ? null : slug;
+      history.replaceState(null, '', next ? `#${next}` : window.location.pathname);
+      return next;
+    });
   }, []);
 
   useEffect(() => {
@@ -38,52 +46,39 @@ export default function ProjectsClient() {
     if (!zoomed && d.open) d.close();
   }, [zoomed]);
 
-  const current = projects.find((p) => p.slug === selected) ?? projects[0];
-
   return (
     <div className="container-page">
-      <PageHeader path="projects" title="Projects">
-        Things I’ve built, researched and taught. Pick one to see the details.
+      <PageHeader title="projects">
+        The full tracklist. Side A is work and research, side B is what I made for fun or for class. Open any track for the
+        details.
       </PageHeader>
 
-      <div className="grid items-start gap-10 lg:grid-cols-12">
-        <ul className="space-y-1 lg:col-span-5">
-          {projects.map((p) => {
-            const active = p.slug === selected;
-            return (
-              <li key={p.slug} id={`row-${p.slug}`} className="scroll-mt-24">
-                <button
-                  type="button"
-                  onClick={() => select(p.slug)}
-                  aria-expanded={active}
-                  aria-controls={`details-${p.slug}`}
-                  className={`group w-full rounded-lg border-2 px-4 py-3 text-left transition-colors ${
-                    active ? 'border-ink bg-blush-soft' : 'border-transparent hover:bg-raised'
-                  }`}
-                >
-                  <span className="flex items-baseline justify-between gap-3">
-                    <span className="text-[17px] font-semibold leading-snug">{p.title}</span>
-                    <span className="label shrink-0">{p.kind}</span>
-                  </span>
-                  <span className="mt-1 block text-[15px] leading-snug text-muted">
-                    {p.status === 'ongoing' && <span className="mr-2 font-semibold text-butter">Ongoing</span>}
-                    {p.summary}
-                  </span>
-                </button>
-                {active && (
-                  <div className="mb-6 mt-3 lg:hidden">
-                    <Details id={`details-${p.slug}`} project={p} onZoom={setZoomed} />
-                  </div>
-                )}
-              </li>
-            );
-          })}
-        </ul>
-
-        <div className="sticky top-24 hidden lg:col-span-7 lg:block">
-          <Details project={current} onZoom={setZoomed} />
-        </div>
-      </div>
+      {sides.map((side) => (
+        <section key={side.id} className="mb-20" aria-labelledby={`side-${side.id}`}>
+          <h2 id={`side-${side.id}`} className="flex items-baseline gap-3 border-b border-line pb-3">
+            <span className="font-serif text-[clamp(1.6rem,3vw,2.1rem)] italic">{side.label}</span>
+            <span className="credit">{side.note}</span>
+          </h2>
+          <ol>
+            {projects.map((p, i) =>
+              p.side !== side.id ? null : (
+                <li key={p.slug} id={`track-${p.slug}`} className="scroll-mt-6 border-b border-line">
+                  <button
+                    type="button"
+                    onClick={() => toggle(p.slug)}
+                    aria-expanded={open === p.slug}
+                    aria-controls={`details-${p.slug}`}
+                    className="group block w-full py-6 text-left"
+                  >
+                    <TrackRow project={p} number={i + 1} />
+                  </button>
+                  {open === p.slug && <Details project={p} onZoom={setZoomed} />}
+                </li>
+              ),
+            )}
+          </ol>
+        </section>
+      ))}
 
       <dialog
         ref={dialogRef}
@@ -92,17 +87,17 @@ export default function ProjectsClient() {
           if (e.target === e.currentTarget) setZoomed(null);
         }}
         aria-label={zoomed ? `Screenshot of ${zoomed.title}` : 'Screenshot'}
-        className="m-auto w-[min(94vw,1200px)] overflow-hidden rounded-xl border-2 border-ink bg-raised p-0 text-ink shadow-hard backdrop:bg-[#11140F]/80"
+        className="m-auto w-[min(94vw,1200px)] overflow-hidden rounded-[4px] bg-surface p-0 text-ink backdrop:bg-black/80"
       >
         {zoomed?.image && (
           <div>
-            <div className="flex items-center justify-between gap-4 border-b-2 border-ink px-4 py-2">
-              <span className="truncate text-[15px] font-semibold">{zoomed.title}</span>
-              <button type="button" onClick={() => setZoomed(null)} className="rounded-md px-3 py-1.5 font-mono text-[13px] hover:bg-blush-soft" autoFocus>
-                Close
+            <div className="flex items-center justify-between gap-4 px-5 py-3">
+              <span className="truncate font-serif text-[18px] lowercase italic">{zoomed.title}</span>
+              <button type="button" onClick={() => setZoomed(null)} className="btn min-h-[38px] px-4" autoFocus>
+                close
               </button>
             </div>
-            <div className="relative h-[78vh] bg-paper">
+            <div className="relative h-[78vh] bg-bg">
               <Image src={zoomed.image} alt={zoomed.imageAlt ?? ''} fill sizes="94vw" className="object-contain" />
             </div>
           </div>
@@ -112,51 +107,40 @@ export default function ProjectsClient() {
   );
 }
 
-function Details({ id, project: p, onZoom }: { id?: string; project: Project; onZoom: (p: Project) => void }) {
-  const poster = posterColors[p.slug.length % posterColors.length];
+function Details({ project: p, onZoom }: { project: Project; onZoom: (p: Project) => void }) {
   return (
-    <article id={id} aria-live="polite" className="overflow-hidden rounded-xl border-2 border-ink bg-raised shadow-hard">
+    <div id={`details-${p.slug}`} className="grid gap-8 pb-10 sm:pl-[4rem] md:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] md:gap-12">
       {p.image ? (
         <button
           type="button"
           onClick={() => onZoom(p)}
-          className="group relative block aspect-[16/10] w-full border-b-2 border-ink bg-paper"
+          className="group relative block aspect-[16/10] w-full self-start overflow-hidden rounded-[3px] bg-surface shadow-[0_24px_50px_-28px_rgba(0,0,0,0.6)]"
           aria-label={`Enlarge screenshot of ${p.title}`}
         >
-          <Image src={p.image} alt={p.imageAlt ?? ''} fill sizes="(min-width: 1024px) 640px, 100vw" className="object-cover object-top" />
-          <span className="absolute bottom-3 right-3 rounded-md bg-[#11140F]/80 px-2.5 py-1 font-mono text-[12px] text-white opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
-            Click to enlarge
-          </span>
+          <Image src={p.image} alt={p.imageAlt ?? ''} fill sizes="(min-width: 768px) 480px, 100vw" className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]" />
         </button>
       ) : (
-        <div className={`flex aspect-[16/10] items-end border-b-2 border-ink p-6 text-[#22281F] sm:p-8 ${poster}`}>
-          <p className="font-mono text-[clamp(1.2rem,2.6vw,1.9rem)] font-extrabold leading-tight [font-stretch:100%]">{p.summary}</p>
+        <div className="max-w-[320px] self-start">
+          <Cover title={p.title.toLowerCase()} bottomLeft={p.kind.toLowerCase()} bottomRight={p.context?.toLowerCase()} />
         </div>
       )}
 
-      <div className="p-5 sm:p-7">
-        <p className="label flex flex-wrap gap-x-3">
-          {p.context && <span>{p.context}</span>}
-          <span className={p.status === 'ongoing' ? 'text-butter' : 'text-sage'}>{p.status === 'ongoing' ? 'Ongoing' : 'Completed'}</span>
-        </p>
-        <h2 className="mt-2 text-[clamp(1.3rem,2.4vw,1.6rem)] font-bold leading-tight">{p.title}</h2>
-        <p className="mt-3 max-w-[65ch] text-[17px] leading-relaxed">{p.description}</p>
-
-        <p className="label mt-6">Built with</p>
-        <ul className="mt-2 flex flex-wrap gap-1.5">
-          {p.technologies.map((t) => (
-            <li key={t} className="rounded-full bg-sage-soft/70 px-3 py-1 text-[14px]">
-              {t}
-            </li>
-          ))}
-        </ul>
-
+      <div>
+        <p className="max-w-[60ch] text-[18px] leading-relaxed">{p.description}</p>
+        <dl className="mt-6 grid grid-cols-[7.5rem_1fr] gap-x-4 gap-y-2 text-[16px]">
+          <dt className="credit pt-0.5">recorded at</dt>
+          <dd>{p.context ?? 'On my own'}</dd>
+          <dt className="credit pt-0.5">instruments</dt>
+          <dd>{p.technologies.join(', ')}</dd>
+          <dt className="credit pt-0.5">status</dt>
+          <dd>{p.status === 'ongoing' ? 'Ongoing' : 'Completed'}</dd>
+        </dl>
         {p.link && (
-          <a href={p.link} target="_blank" rel="noopener noreferrer" className="keycap keycap-primary mt-7">
+          <a href={p.link} target="_blank" rel="noopener noreferrer" className="btn btn-solid mt-7">
             {linkLabel(p.link)}
           </a>
         )}
       </div>
-    </article>
+    </div>
   );
 }

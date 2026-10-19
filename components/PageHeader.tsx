@@ -1,21 +1,8 @@
-interface PageHeaderProps {
-  path: string;
-  title: string;
-  children?: React.ReactNode;
-}
-
-// A small path label (the quiet terminal nod), a big title and a plain intro.
-export default function PageHeader({ path, title, children }: PageHeaderProps) {
+export default function PageHeader({ title, children }: { title: string; children?: React.ReactNode }) {
   return (
-    <header className="pb-12 pt-14 sm:pt-20">
-      <p className="label">
-        <span className="text-sage">~</span>/{path}
-      </p>
-      <h1 className="mt-3 font-mono text-[clamp(2.2rem,6vw,4.25rem)] font-extrabold leading-[1] tracking-tight [font-stretch:112.5%]">
-        {title}
-        <span className="text-blush">.</span>
-      </h1>
-      {children && <div className="mt-5 max-w-[56ch] text-[18px] text-muted">{children}</div>}
+    <header className="pb-14 pt-12 sm:pt-20">
+      <h1 className="font-serif text-[clamp(3rem,9vw,6.5rem)] font-light italic leading-[0.9] tracking-tight">{title}</h1>
+      {children && <div className="mt-6 max-w-[52ch] text-[19px] text-muted">{children}</div>}
     </header>
   );
 }

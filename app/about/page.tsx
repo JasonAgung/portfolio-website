@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Cover from '@/components/Cover';
 import PageHeader from '@/components/PageHeader';
 import { education, interests, profile, skills } from '@/content/profile';
 
@@ -8,173 +9,117 @@ export const metadata: Metadata = {
     'Jason Kelvin Agung: computer science graduate from UNPAR and AI Implementation Specialist in Bandung. Skills, interests, education and how to get in touch.',
 };
 
-// "JKA" as pixel art, one pastel per row
-const pixels = [
-  '  ### #   #  ### ',
-  '    # #  #  #   #',
-  '    # ###   #   #',
-  '#   # # #   #####',
-  '#   # #  #  #   #',
-  ' ###  #   # #   #',
-];
-const pixelRows = ['bg-pastel-sage', 'bg-pastel-sage', 'bg-pastel-sky', 'bg-pastel-sky', 'bg-pastel-blush', 'bg-pastel-butter'];
-
-const glance: [string, string][] = [
-  ['Role', profile.role],
-  ['Company', profile.company],
-  ['Based in', profile.location],
-  ['Degree', 'Computer Science, UNPAR 2026'],
-  ['Focus', 'AI, algorithms, software engineering'],
-];
-
 export default function AboutPage() {
   return (
     <div className="container-page">
-      <PageHeader path="about" title="About">
-        Who I am, what I know, and where I studied.
-      </PageHeader>
+      <PageHeader title="about">The liner notes: who I am, what I play, and where I learned it.</PageHeader>
 
-      {/* Profile at a glance */}
-      <section
-        aria-label="Profile at a glance"
-        className="rounded-xl border-2 border-[#11140F] bg-term p-6 text-term-ink shadow-hard sm:p-8"
-      >
-        <div className="grid items-center gap-8 md:grid-cols-[auto_1fr] md:gap-14">
-          <div
-            aria-hidden="true"
-            className="grid w-max gap-[3px] sm:gap-1"
-            style={{ gridTemplateColumns: `repeat(${pixels[0].length}, minmax(0, 1fr))` }}
-          >
-            {pixels.flatMap((row, r) =>
-              [...row].map((cell, c) => (
-                <span key={`${r}-${c}`} className={`h-3 w-3 rounded-[2px] sm:h-4 sm:w-4 ${cell === '#' ? pixelRows[r] : ''}`} />
-              )),
-            )}
+      <div className="grid gap-14 lg:grid-cols-12 lg:gap-16">
+        <div className="lg:col-span-4">
+          <div className="mx-auto max-w-[340px] lg:sticky lg:top-10">
+            <Cover title="liner notes" topRight="jka" bottomLeft="written in bandung" bottomRight="2026" />
           </div>
-          <dl className="grid gap-x-6 gap-y-1.5 text-[16px] sm:grid-cols-[auto_1fr]">
-            {glance.map(([k, v]) => (
-              <div key={k} className="contents">
-                <dt className="font-mono text-[13px] leading-7 text-pastel-butter [font-stretch:87.5%]">{k}</dt>
-                <dd className="mb-2 sm:mb-0">{v}</dd>
-              </div>
-            ))}
-          </dl>
         </div>
-      </section>
 
-      <div className="mt-20 grid gap-14 lg:grid-cols-12">
-        <section className="lg:col-span-7" aria-labelledby="about-me">
-          <h2 id="about-me" className="font-mono text-[clamp(1.5rem,3vw,2rem)] font-extrabold tracking-tight [font-stretch:112.5%]">
-            Hi, I’m Jason<span className="text-blush">.</span>
-          </h2>
-          <div className="mt-5 max-w-[60ch] space-y-4 text-[18px] leading-relaxed">
-            <p>
-              I’m a computer science graduate from UNPAR who gets excited about artificial intelligence, making code
-              fast, and building software properly. These days I’m putting generative AI to work at DEUS.
-            </p>
-            <p>
-              I also like the people side of tech. I’ve organised workshops, mentored students, and I enjoy explaining
-              complicated things until they make sense to anyone in the room.
-            </p>
-          </div>
+        <div className="lg:col-span-8">
+          <section aria-labelledby="hello">
+            <h2 id="hello" className="font-serif text-[clamp(1.8rem,3.5vw,2.5rem)] italic leading-tight">
+              Hi, I’m Jason.
+            </h2>
+            <div className="mt-6 max-w-[58ch] space-y-5 text-[20px] leading-[1.7]">
+              <p>
+                I’m a computer science graduate from UNPAR who gets excited about artificial intelligence, making code
+                fast, and building software properly. These days I’m putting generative AI to work at DEUS, turning
+                personality data into reports that feel written for one person.
+              </p>
+              <p>
+                I also like the people side of tech. I’ve organised workshops, mentored students, and I enjoy explaining
+                complicated things until they make sense to anyone in the room. Outside of work you’ll usually find me
+                playing music, or stuck on a logic puzzle.
+              </p>
+            </div>
+            <p className="mt-6 font-serif text-[22px] italic text-accent">jason</p>
+          </section>
 
-          <h3 className="label mt-12">Contact</h3>
-          <dl className="mt-3 grid grid-cols-[auto_1fr] gap-x-6 gap-y-2">
-            <dt className="text-muted">Email</dt>
-            <dd>
-              <a href={`mailto:${profile.email}`} className="link break-all">
-                {profile.email}
-              </a>
-            </dd>
-            <dt className="text-muted">Phone</dt>
-            <dd>
-              <a href={profile.phoneHref} className="link">
-                {profile.phone}
-              </a>
-            </dd>
-          </dl>
-        </section>
+          <section className="mt-20" aria-labelledby="credits">
+            <h2 id="credits" className="border-b border-line pb-3 font-serif text-[clamp(1.6rem,3vw,2.1rem)] italic">
+              credits
+            </h2>
+            <dl className="divide-y divide-line">
+              {skills.map((s) => (
+                <Credit key={s.group} label={s.group}>
+                  {s.items.join(', ')}
+                </Credit>
+              ))}
+              <Credit label="on repeat">
+                {interests.map((i, idx) => (
+                  <span key={i.name}>
+                    {i.href ? (
+                      <a href={i.href} target="_blank" rel="noopener noreferrer" className="link">
+                        {i.name}
+                      </a>
+                    ) : (
+                      i.name
+                    )}
+                    {idx < interests.length - 1 && ', '}
+                  </span>
+                ))}
+              </Credit>
+              <Credit label="contact">
+                <a href={`mailto:${profile.email}`} className="link break-words">
+                  {profile.email}
+                </a>
+                <br />
+                <a href={profile.phoneHref} className="link">
+                  {profile.phone}
+                </a>
+              </Credit>
+            </dl>
+          </section>
 
-        <section className="lg:col-span-5" aria-labelledby="skills-heading">
-          <h2 id="skills-heading" className="label">
-            Skills
-          </h2>
-          <div className="mt-4 space-y-6">
-            {skills.map((s) => (
-              <div key={s.group}>
-                <h3 className="text-[16px] font-bold">{s.group}</h3>
-                <ul className="mt-2 flex flex-wrap gap-1.5">
-                  {s.items.map((item) => (
-                    <li key={item} className="rounded-full bg-sage-soft/70 px-3 py-1 text-[14px]">
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-
-          <h2 className="label mt-10">Interests</h2>
-          <ul className="mt-3 flex flex-wrap gap-1.5">
-            {interests.map((i) => (
-              <li key={i.name}>
-                {i.href ? (
-                  <a
-                    href={i.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-block rounded-full bg-blush-soft px-3 py-1 text-[14px] underline decoration-blush/40 underline-offset-4 hover:decoration-blush"
-                    title="Opens my Spotify"
-                  >
-                    {i.name}
-                  </a>
-                ) : (
-                  <span className="inline-block rounded-full bg-sky-soft/80 px-3 py-1 text-[14px]">{i.name}</span>
-                )}
-              </li>
-            ))}
-          </ul>
-        </section>
+          <section id="education" className="mt-20 scroll-mt-10" aria-labelledby="education-heading">
+            <h2 id="education-heading" className="border-b border-line pb-3 font-serif text-[clamp(1.6rem,3vw,2.1rem)] italic">
+              education
+            </h2>
+            <ol className="divide-y divide-line">
+              {education.map((e) => (
+                <li key={e.school} className="grid gap-x-6 gap-y-1 py-6 sm:grid-cols-[10rem_1fr]">
+                  <p className="font-mono text-[13px] text-muted">{e.period.toLowerCase()}</p>
+                  <div>
+                    <h3 className="font-serif text-[clamp(1.2rem,2.2vw,1.5rem)] leading-snug">{e.school}</h3>
+                    <p className="text-[17px] text-muted">{e.degree}</p>
+                    {e.detail && <p className="mt-3 text-[18px]">{e.detail}</p>}
+                    {e.thesis && (
+                      <p className="mt-2 max-w-[60ch] text-[18px]">
+                        <span className="italic">Thesis:</span> {e.thesis}
+                      </p>
+                    )}
+                    {e.focus && (
+                      <dl className="mt-5 grid gap-x-6 gap-y-3 sm:grid-cols-[9rem_1fr]">
+                        {e.focus.map((f) => (
+                          <div key={f.area} className="contents">
+                            <dt className="credit pt-0.5">{f.area}</dt>
+                            <dd className="text-[16px] text-muted">{f.subjects}</dd>
+                          </div>
+                        ))}
+                      </dl>
+                    )}
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </section>
+        </div>
       </div>
+    </div>
+  );
+}
 
-      {/* Education */}
-      <section id="education" className="mt-24 scroll-mt-24" aria-labelledby="education-heading">
-        <h2 id="education-heading" className="font-mono text-[clamp(1.5rem,3vw,2rem)] font-extrabold tracking-tight [font-stretch:112.5%]">
-          Education<span className="text-blush">.</span>
-        </h2>
-
-        <ol className="relative mt-10 border-l-2 border-sage/50 pl-8 sm:pl-10">
-          {education.map((e, i) => (
-            <li key={e.school} className="relative pb-12 last:pb-0">
-              <span
-                aria-hidden="true"
-                className={`absolute -left-[calc(2rem+9px)] top-1.5 h-4 w-4 rounded-full border-2 border-ink sm:-left-[calc(2.5rem+9px)] ${
-                  i === 0 ? 'bg-pastel-butter' : 'bg-paper'
-                }`}
-              />
-              <p className="label">{e.period}</p>
-              <h3 className="mt-1 text-[clamp(1.2rem,2.4vw,1.5rem)] font-bold leading-snug">{e.school}</h3>
-              <p className="mt-0.5 text-sky">{e.degree}</p>
-              {e.detail && <p className="mt-2 max-w-[62ch]">{e.detail}</p>}
-              {e.thesis && (
-                <p className="mt-2 max-w-[62ch] text-muted">
-                  <span className="font-semibold text-ink">Thesis:</span> {e.thesis}
-                </p>
-              )}
-              {e.focus && (
-                <dl className="mt-6 grid max-w-3xl gap-5 sm:grid-cols-3">
-                  {e.focus.map((f) => (
-                    <div key={f.area}>
-                      <dt className="text-[15px] font-bold">{f.area}</dt>
-                      <dd className="mt-1 text-[15px] text-muted">{f.subjects}</dd>
-                    </div>
-                  ))}
-                </dl>
-              )}
-            </li>
-          ))}
-        </ol>
-      </section>
+function Credit({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div className="grid gap-x-6 gap-y-1 py-5 sm:grid-cols-[10rem_1fr]">
+      <dt className="credit pt-1">{label}</dt>
+      <dd className="text-[18px] leading-relaxed">{children}</dd>
     </div>
   );
 }

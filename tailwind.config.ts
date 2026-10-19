@@ -12,38 +12,28 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        paper: token('paper'),
-        raised: token('raised'),
+        bg: token('bg'),
+        surface: token('surface'),
         ink: token('ink'),
         muted: token('muted'),
         line: token('line'),
-        sage: { DEFAULT: token('sage'), soft: token('sage-soft') },
-        blush: { DEFAULT: token('blush'), soft: token('blush-soft') },
-        sky: { DEFAULT: token('sky'), soft: token('sky-soft') },
-        butter: { DEFAULT: token('butter'), soft: token('butter-soft') },
-        term: { DEFAULT: token('term'), ink: token('term-ink'), dim: token('term-dim'), line: token('term-line') },
-        // Pastels for text on the always-dark terminal surfaces.
-        pastel: {
-          sage: '#B8C5B3',
-          blush: '#F0BFBF',
-          sky: '#B8D0E8',
-          butter: '#F5DE8A',
-        },
+        // Changes with the musical key the visitor picks
+        accent: token('accent'),
+        glow: token('cover-b'),
+        cover: token('cover-a'),
       },
       fontFamily: {
-        sans: ['var(--font-sans)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        serif: ['var(--font-serif)', 'Georgia', 'serif'],
         mono: ['var(--font-mono)', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
       },
-      boxShadow: {
-        hard: '4px 4px 0 0 rgb(var(--shadow))',
-        'hard-sm': '2px 2px 0 0 rgb(var(--shadow))',
-        key: '0 4px 0 0 rgb(var(--shadow))',
-      },
       keyframes: {
-        blink: { '50%': { opacity: '0' } },
+        bar: {
+          '0%, 100%': { transform: 'scaleY(0.35)' },
+          '50%': { transform: 'scaleY(1)' },
+        },
       },
       animation: {
-        blink: 'blink 1.1s steps(1) infinite',
+        bar: 'bar 1.2s ease-in-out infinite',
       },
     },
   },

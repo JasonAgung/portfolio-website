@@ -1,5 +1,7 @@
 export interface Project {
   slug: string;
+  /** Side A: work and research. Side B: personal and class projects. */
+  side: 'a' | 'b';
   title: string;
   /** One line for lists and the home page */
   summary: string;
@@ -17,6 +19,7 @@ export interface Project {
 export const projects: Project[] = [
   {
     slug: 'ai-report-engine',
+    side: 'a',
     title: 'AI-Driven Personalized Reporting Engine',
     summary: 'Personality reports written by generative AI instead of templates.',
     description:
@@ -31,6 +34,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'tango-solver',
+    side: 'a',
     title: 'Tango Puzzle: Backtracking & Simulated Annealing Solver',
     summary: 'My thesis: comparing two algorithms that solve a logic puzzle.',
     description:
@@ -46,6 +50,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'bsf-predictor',
+    side: 'a',
     title: 'GenAI-Accelerated Machine Learning for BSF Farming',
     summary: 'Predicting Black Soldier Fly farming outcomes, with a live dashboard.',
     description:
@@ -61,6 +66,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'genai-workshops',
+    side: 'a',
     title: 'Generative AI & Prompt Engineering Workshop',
     summary: 'Teaching companies to use AI tools well, in Bahasa Indonesia.',
     description:
@@ -69,9 +75,23 @@ export const projects: Project[] = [
     status: 'ongoing',
     kind: 'Teaching',
     context: 'TalentSource, 2025 – now',
+    featured: true,
+  },
+  {
+    slug: 'talentsource-website',
+    side: 'a',
+    title: 'Overhauling and Updating TalentSource Website',
+    summary: 'A full company website refresh, built fast with AI tools.',
+    description:
+      'Accelerated web development lifecycle by leveraging Generative AI tools (v0, Bolt.new, Gemini CLI) to overhaul and modernize the company website and digital presence.',
+    technologies: ['v0', 'Bolt.new', 'Gemini CLI', 'GenAI Design Tools'],
+    status: 'done',
+    kind: 'Web',
+    context: 'TalentSource, 2025',
   },
   {
     slug: 'chord-transposer',
+    side: 'b',
     title: 'Chord Chart Maker & Transposer',
     summary: 'Change a song’s key mid-rehearsal without rewriting every chord.',
     description:
@@ -83,20 +103,11 @@ export const projects: Project[] = [
     link: 'https://chord-transposer-web.vercel.app/',
     image: '/chord-transposer.png',
     imageAlt: 'The chord chart maker with transpose, notation and export controls',
-  },
-  {
-    slug: 'talentsource-website',
-    title: 'Overhauling and Updating TalentSource Website',
-    summary: 'A full company website refresh, built fast with AI tools.',
-    description:
-      'Accelerated web development lifecycle by leveraging Generative AI tools (v0, Bolt.new, Gemini CLI) to overhaul and modernize the company website and digital presence.',
-    technologies: ['v0', 'Bolt.new', 'Gemini CLI', 'GenAI Design Tools'],
-    status: 'done',
-    kind: 'Web',
-    context: 'TalentSource, 2025',
+    featured: true,
   },
   {
     slug: 'wine-quality',
+    side: 'b',
     title: 'Machine Learning Wine Quality Analysis',
     summary: 'End-to-end ML on the UCI wine quality dataset.',
     description:
@@ -110,6 +121,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'information-retrieval',
+    side: 'b',
     title: 'Information Retrieval',
     summary: 'A search engine that ranks documents with TF-IDF.',
     description:
@@ -123,6 +135,7 @@ export const projects: Project[] = [
   },
   {
     slug: 'rainbow-attack',
+    side: 'b',
     title: 'Rainbow Attack',
     summary: 'Showing how rainbow tables crack password hashes.',
     description:
@@ -136,10 +149,11 @@ export const projects: Project[] = [
   },
   {
     slug: 'portfolio-website',
+    side: 'b',
     title: 'Portfolio Website',
     summary: 'The website you’re on right now.',
     description:
-      'The website you’re on right now, with a small terminal on the home page you can type into. Built with Next.js, TypeScript and Tailwind CSS.',
+      'The website you’re on right now, designed like a record sleeve. Pick a key in the footer to recolour it. Built with Next.js, TypeScript and Tailwind CSS.',
     technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'React'],
     status: 'ongoing',
     kind: 'Web',

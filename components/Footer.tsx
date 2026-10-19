@@ -1,34 +1,36 @@
+import KeyPicker from '@/components/KeyPicker';
 import { profile, socials } from '@/content/profile';
 
 export default function Footer() {
   return (
-    <footer className="mt-28 border-t border-line">
-      <div className="container-page grid gap-10 py-14 md:grid-cols-2 md:items-end">
+    <footer className="mt-32 border-t border-line pb-24 sm:pb-0">
+      <div className="container-page grid gap-12 py-16 md:grid-cols-2">
         <div>
-          <p className="label">Get in touch</p>
-          <p className="mt-3 font-mono text-[clamp(1.3rem,2.6vw,1.75rem)] font-extrabold leading-snug [font-stretch:112.5%]">
-            Thanks for visiting<span className="text-blush">.</span>
-          </p>
-          <p className="mt-2 text-[18px]">
+          <p className="font-serif text-[clamp(2rem,4.5vw,3rem)] italic leading-none">thanks for listening.</p>
+          <p className="mt-5 text-[18px]">
             Say hi at{' '}
             <a href={`mailto:${profile.email}`} className="link break-words">
               {profile.email}
             </a>
           </p>
-        </div>
-        <div className="md:text-right">
-          <ul className="flex flex-wrap gap-x-6 gap-y-2 md:justify-end">
+          <ul className="mt-4 flex flex-wrap gap-x-5 gap-y-1 font-mono text-[13px]">
             {socials
               .filter((s) => s.name !== 'Email')
               .map((s) => (
                 <li key={s.name}>
-                  <a href={s.href} target="_blank" rel="noopener noreferrer" className="link">
+                  <a href={s.href} target="_blank" rel="noopener noreferrer" className="link lowercase">
                     {s.name}
                   </a>
                 </li>
               ))}
           </ul>
-          <p className="label mt-6">© 2026 Jason Kelvin Agung</p>
+        </div>
+        <div className="md:justify-self-end">
+          <KeyPicker />
+          <p className="credit mt-3 max-w-[34ch]">
+            Pick a key to change this site’s colours, the same way my chord transposer changes a song’s key.
+          </p>
+          <p className="credit mt-8">© 2026 jason kelvin agung, bandung</p>
         </div>
       </div>
     </footer>

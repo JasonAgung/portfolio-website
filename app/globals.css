@@ -2,52 +2,37 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Colour tokens as RGB channels so Tailwind opacity modifiers work.
-   sage = system & prompts, sky = links & files, blush = "you are here" & highlights,
-   butter = hashes, tags & work in progress. */
+/* Light: "sunday morning". Dark (default): "late night". */
 :root {
-  --paper: 253 246 236;
-  --raised: 255 251 245;
-  --ink: 34 40 31;
-  --muted: 94 106 90;
-  --line: 222 215 201;
-  --dot: 232 224 209;
-  --sage: 88 103 83;
-  --sage-soft: 214 222 209;
-  --blush: 168 72 79;
-  --blush-soft: 247 219 219;
-  --sky: 47 94 140;
-  --sky-soft: 216 229 242;
-  --butter: 133 100 8;
-  --butter-soft: 250 234 170;
-  --term: 31 36 29;
-  --term-ink: 230 235 221;
-  --term-dim: 155 170 150;
-  --term-line: 54 63 50;
-  --shadow: 34 40 31;
+  --bg: 233 222 214;
+  --surface: 241 233 227;
+  --ink: 43 30 27;
+  --muted: 107 88 80;
+  --line: 207 190 180;
+  --accent: var(--accent-l);
   color-scheme: light;
 }
 
 .dark {
-  --paper: 20 24 18;
-  --raised: 28 33 26;
-  --ink: 232 236 226;
-  --muted: 163 174 158;
-  --line: 48 56 45;
-  --dot: 32 38 30;
-  --sage: 169 187 162;
-  --sage-soft: 44 56 41;
-  --blush: 240 191 191;
-  --blush-soft: 70 41 45;
-  --sky: 184 208 232;
-  --sky-soft: 31 46 62;
-  --butter: 245 222 138;
-  --butter-soft: 62 54 24;
-  --term: 11 14 10;
-  --term-line: 44 52 41;
-  --shadow: 62 74 58;
+  --bg: 23 17 15;
+  --surface: 33 25 22;
+  --ink: 237 227 214;
+  --muted: 170 154 138;
+  --line: 60 46 41;
+  --accent: var(--accent-d);
   color-scheme: dark;
 }
+
+/* Musical keys: each one re-colours the record sleeve and the accent.
+   accent-l / accent-d are text-safe on the light / dark background. */
+:root,
+[data-key='C'] { --cover-a: 110 31 42;  --cover-b: 224 169 106; --accent-l: 122 36 48;  --accent-d: 232 153 140; }
+[data-key='D'] { --cover-a: 112 66 18;  --cover-b: 240 201 135; --accent-l: 128 80 14;  --accent-d: 235 194 122; }
+[data-key='E'] { --cover-a: 60 70 38;   --cover-b: 206 196 140; --accent-l: 74 86 44;   --accent-d: 199 204 142; }
+[data-key='F'] { --cover-a: 67 33 63;   --cover-b: 217 160 184; --accent-l: 106 46 99;  --accent-d: 220 166 208; }
+[data-key='G'] { --cover-a: 23 60 63;   --cover-b: 156 199 185; --accent-l: 31 90 94;   --accent-d: 143 207 196; }
+[data-key='A'] { --cover-a: 138 59 74;  --cover-b: 242 193 181; --accent-l: 140 52 70;  --accent-d: 240 169 180; }
+[data-key='B'] { --cover-a: 30 36 80;   --cover-b: 169 166 224; --accent-l: 53 61 140;  --accent-d: 173 178 240; }
 
 @layer base {
   html {
@@ -55,20 +40,33 @@
   }
 
   body {
-    @apply bg-paper text-ink font-sans antialiased;
-    font-size: 17px;
+    @apply bg-bg font-serif text-ink antialiased;
+    font-size: 19px;
     line-height: 1.6;
-    /* Notebook dot grid */
-    background-image: radial-gradient(rgb(var(--dot)) 1px, transparent 1.2px);
-    background-size: 22px 22px;
+    transition: background-color 0.4s ease, color 0.4s ease;
+  }
+
+  /* Film grain over everything */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    pointer-events: none;
+    opacity: 0.07;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .dark body::after {
+    opacity: 0.09;
   }
 
   ::selection {
-    @apply bg-blush-soft text-ink;
+    background: rgb(var(--accent) / 0.3);
   }
 
   :focus-visible {
-    outline: 2px solid rgb(var(--sky));
+    outline: 2px solid rgb(var(--accent));
     outline-offset: 3px;
     border-radius: 2px;
   }
@@ -80,29 +78,24 @@
 
 @layer components {
   .container-page {
-    @apply mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8;
+    @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
   }
 
-  /* Small monospace label: the quiet IT accent used across the site */
-  .label {
-    @apply font-mono text-[12px] font-medium text-muted [font-stretch:87.5%];
+  /* Small mono "credits" text: menus, labels, metadata */
+  .credit {
+    @apply font-mono text-[12.5px] lowercase leading-relaxed tracking-wide text-muted;
   }
 
   .link {
-    @apply text-sky underline decoration-sky/40 underline-offset-4 transition-colors hover:decoration-sky;
+    @apply underline decoration-accent/40 decoration-1 underline-offset-[5px] transition-colors hover:text-accent hover:decoration-accent;
   }
 
-  /* Keyboard-key button: presses down when clicked */
-  .keycap {
-    @apply inline-flex min-h-[48px] items-center justify-center gap-2 rounded-md border-2 border-ink bg-raised px-5 font-mono text-[14px] font-semibold text-ink shadow-key [font-stretch:87.5%] transition-[transform,box-shadow] duration-100 hover:-translate-y-0.5 hover:shadow-[0_6px_0_0_rgb(var(--shadow))] active:translate-y-1 active:shadow-none;
+  .btn {
+    @apply inline-flex min-h-[46px] items-center justify-center rounded-full border border-ink/25 px-6 font-mono text-[13px] lowercase tracking-wide transition-colors hover:border-ink;
   }
 
-  .keycap-primary {
-    @apply bg-blush-soft;
-  }
-
-  .cursor-block {
-    @apply inline-block h-[0.9em] w-[0.5em] translate-y-[0.1em] animate-blink bg-blush;
+  .btn-solid {
+    @apply border-accent bg-accent text-bg hover:border-ink hover:bg-ink;
   }
 }
 

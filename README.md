@@ -4,11 +4,10 @@ A modern, responsive portfolio website built with Next.js, TypeScript, and Tailw
 
 ## Features
 
-- A small terminal on the home page that visitors can type into, with buttons for people who would rather click
-- Experience as a two-line timeline (work and organisations), with filters
-- About page with a profile summary, skills, interests and education
-- Projects list with a details panel, direct links (`/projects#tango-solver`) and screenshot zoom
-- Light and dark mode that follows the system setting, with no flash on load
+- Designed like a record: the home page is an album sleeve, projects are a tracklist (side A: work, side B: personal), experience reads like tour dates, and the about page is the liner notes
+- Pick a musical key (C to B) to recolour the whole site, a nod to the chord transposer project; the choice is remembered
+- Late-night dark mode by default, with a light "morning" mode, and no flash on load
+- Direct links to any track (`/projects#tango-solver`) and screenshot zoom
 - Respects reduced-motion settings, keyboard friendly, responsive down to phones
 
 ## Editing content
@@ -60,7 +59,7 @@ No environment variables are required for this portfolio website.
 ```
 portfolio-website/
 ├── app/                 # Pages: home, about, experience, projects, 404
-├── components/          # Terminal, Nav, Footer, PageHeader
+├── components/          # Cover, KeyPicker, TrackRow, Nav, Footer, PageHeader
 ├── content/             # All site text and data
 ├── contexts/            # Theme provider
 ├── lib/                 # Server helpers (CV detection)
