@@ -14,23 +14,23 @@ export default function Home() {
     <div className="container-page">
       {/* The sleeve — fills most of the first screen, content centred, so only the
           "tracklist" heading below peeks as a scroll cue (100svh − nav − peek). */}
-      <section className="grid items-center gap-12 pt-6 sm:pt-10 lg:grid-cols-12 lg:gap-16 lg:min-h-[calc(100svh-13rem)] lg:pt-0">
-        <div className="mx-auto w-full max-w-[460px] lg:col-span-5 lg:max-w-none">
+      <section className="grid items-center gap-6 pt-4 sm:gap-10 sm:pt-10 lg:grid-cols-12 lg:gap-16 lg:min-h-[calc(100svh-13rem)] lg:pt-0">
+        <div className="mx-auto w-full max-w-[min(15rem,58vw)] sm:max-w-[20rem] lg:col-span-5 lg:max-w-none">
           <Cover title="jka" topRight={<KeyLabel />} bottomLeft="ai, code & music" bottomRight="bandung, 2026" intro interactive />
           <div className="enter" style={{ '--d': '470ms' } as React.CSSProperties}>
-            <KeyPicker className="mt-5 flex justify-center lg:justify-start" />
-            <p className="credit mt-1 text-center lg:text-left">change the key, change the colours</p>
+            <KeyPicker className="mt-4 flex justify-center sm:mt-5 lg:justify-start" />
+            <p className="credit mt-1 hidden text-center sm:block lg:text-left">change the key, change the colours</p>
           </div>
         </div>
 
         <div className="lg:col-span-7">
-          <h1 className="enter font-serif text-[clamp(2.4rem,13vw,3.4rem)] font-light italic leading-[0.95] tracking-tight lg:text-[clamp(3rem,6.2vw,5.4rem)]" style={{ '--d': '120ms' } as React.CSSProperties}>
+          <h1 className="enter font-serif text-[clamp(1.9rem,8.5vw,3.4rem)] font-light italic leading-[0.95] tracking-tight lg:text-[clamp(3rem,6.2vw,5.4rem)]" style={{ '--d': '120ms' } as React.CSSProperties}>
             jason kelvin agung
           </h1>
-          <p className="enter mt-7 max-w-[34ch] text-[clamp(1.25rem,2.2vw,1.5rem)] leading-snug" style={{ '--d': '190ms' } as React.CSSProperties}>
+          <p className="enter mt-5 max-w-[34ch] text-[clamp(1.2rem,2.2vw,1.5rem)] leading-snug sm:mt-7" style={{ '--d': '190ms' } as React.CSSProperties}>
             I turn generative AI into things people actually use, and make music for the hours in between.
           </p>
-          <div className="enter mt-9 flex flex-wrap gap-3" style={{ '--d': '300ms' } as React.CSSProperties}>
+          <div className="enter mt-6 flex flex-wrap gap-3 sm:mt-9" style={{ '--d': '300ms' } as React.CSSProperties}>
             {cv ? (
               <a href={profile.cvPath} className="btn btn-solid" download>
                 download cv
@@ -45,7 +45,7 @@ export default function Home() {
             </Link>
           </div>
 
-          <p className="enter mt-10 flex items-center gap-3" style={{ '--d': '400ms' } as React.CSSProperties}>
+          <p className="enter mt-6 flex items-center gap-3 sm:mt-10" style={{ '--d': '400ms' } as React.CSSProperties}>
             <span aria-hidden="true" className="flex h-3.5 items-end gap-[3px]">
               {[0, 0.3, 0.15].map((d) => (
                 <span key={d} className="h-full w-[3px] origin-bottom animate-bar rounded-full bg-accent" style={{ animationDelay: `${d}s` }} />
