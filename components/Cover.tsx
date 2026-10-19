@@ -54,12 +54,16 @@ export default function Cover({
     >
       {/* The lamp */}
       <div aria-hidden="true" className={`absolute inset-0 ${intro ? 'lamp-on' : ''}`}>
+        {/* A square centred on the lamp's resting spot (28%, 22%). The glow fades to fully
+            transparent at the square's edge, so no seam shows however far it drifts. */}
         <div
           ref={lampRef}
-          className="absolute -inset-[15%]"
+          className="absolute h-full w-full"
           style={{
+            left: '-22%',
+            top: '-28%',
             background:
-              'radial-gradient(60% 50% at 38% 34%, rgb(var(--cover-b) / 0.85) 0%, rgb(var(--cover-b) / 0.25) 45%, transparent 75%)',
+              'radial-gradient(closest-side, rgb(var(--cover-b) / 0.85) 0%, rgb(var(--cover-b) / 0.3) 50%, rgb(var(--cover-b) / 0.08) 78%, transparent 100%)',
             transition: 'transform 1.2s var(--ease-out)',
           }}
         />
