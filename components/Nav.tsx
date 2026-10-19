@@ -4,12 +4,6 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useTheme } from '@/contexts/ThemeContext';
 
-const links = [
-  { href: '/about', label: 'about' },
-  { href: '/experience', label: 'experience' },
-  { href: '/projects', label: 'projects' },
-];
-
 export default function Nav() {
   const pathname = usePathname();
   const { theme, toggleTheme } = useTheme();
@@ -19,25 +13,7 @@ export default function Nav() {
       <Link href="/" className="font-serif text-[19px] italic" aria-current={pathname === '/' ? 'page' : undefined}>
         jason kelvin agung
       </Link>
-      <nav aria-label="Main" className="flex items-center gap-1 sm:gap-3">
-        <ul className="hidden items-center gap-5 sm:flex">
-          {links.map((l) => {
-            const active = pathname.startsWith(l.href);
-            return (
-              <li key={l.href}>
-                <Link
-                  href={l.href}
-                  aria-current={active ? 'page' : undefined}
-                  className={`relative font-mono text-[13px] tracking-wide transition-colors after:absolute after:-bottom-1.5 after:left-0 after:h-[2px] after:w-full after:origin-left after:rounded-full after:bg-accent after:transition-transform after:duration-300 after:[transition-timing-function:var(--ease-out)] ${
-                    active ? 'text-ink after:scale-x-100' : 'text-muted after:scale-x-0 hover:text-ink hover:after:scale-x-100'
-                  }`}
-                >
-                  {l.label}
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
+      <div className="flex items-center">
         <button
           type="button"
           onClick={toggleTheme}
@@ -55,7 +31,7 @@ export default function Nav() {
             </svg>
           )}
         </button>
-      </nav>
+      </div>
     </header>
   );
 }

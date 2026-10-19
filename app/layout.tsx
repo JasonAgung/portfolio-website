@@ -4,7 +4,6 @@ import "./globals.css";
 import { ThemeProvider, themeScript } from "@/contexts/ThemeContext";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
-import ScrollTrack from "@/components/ScrollTrack";
 import MiniPlayer from "@/components/MiniPlayer";
 
 const serif = Newsreader({
@@ -50,7 +49,6 @@ export default function RootLayout({
           Skip to content
         </a>
         <ThemeProvider>
-          <ScrollTrack />
           <Nav />
           <main id="main">{children}</main>
           <Footer />

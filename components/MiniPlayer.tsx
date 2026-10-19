@@ -12,23 +12,74 @@ const queue = [
   { href: '/projects', label: 'projects' },
 ];
 
+const WORDS_PER_MINUTE = 200;
+
+function clock(seconds: number) {
+  const s = Math.max(0, Math.round(seconds));
+  return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
+}
+
 function indexOf(pathname: string) {
   if (pathname === '/') return 0;
   return queue.findIndex((q, i) => i > 0 && pathname.startsWith(q.href));
 }
 
-// A small floating player: previous / next page, and the page "now playing".
-// Tapping the title opens the queue. ← and → also skip.
+// A small floating player and the site's navigation: previous / next page, the page
+// "now playing", and the queue of all pages when you tap the title. ← and → also skip.
+// Scrolling "plays" the page: progress along the player's bottom edge and a
+// "0:54 / 2:12" clock, where the length is the page's reading time.
+// Scroll updates write to the DOM directly, no React re-render per frame.
 export default function MiniPlayer() {
   const pathname = usePathname();
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
+  const barRef = useRef<HTMLSpanElement>(null);
+  const elapsedRef = useRef<HTMLSpanElement>(null);
+  const totalRef = useRef<HTMLSpanElement>(null);
+  const playerRef = useRef<HTMLElement>(null);
   const index = indexOf(pathname);
   const prev = index > 0 ? queue[index - 1] : null;
   const next = index >= 0 && index < queue.length - 1 ? queue[index + 1] : null;
 
   useEffect(() => setOpen(false), [pathname]);
+
+  // Scroll progress for the current page
+  useEffect(() => {
+    const main = document.getElementById('main');
+    const words = main?.innerText.split(/\s+/).filter(Boolean).length ?? 0;
+    const duration = Math.max(30, Math.round((words / WORDS_PER_MINUTE) * 60));
+    let frame = 0;
+    let idle: ReturnType<typeof setTimeout> | undefined;
+
+    const update = () => {
+      frame = 0;
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+      if (barRef.current) barRef.current.style.transform = `scaleX(${progress})`;
+      if (elapsedRef.current) elapsedRef.current.textContent = clock(progress * duration);
+      if (totalRef.current) totalRef.current.textContent = ` / ${clock(duration)}`;
+    };
+
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+      if (playerRef.current) playerRef.current.dataset.playing = 'true';
+      clearTimeout(idle);
+      idle = setTimeout(() => {
+        if (playerRef.current) playerRef.current.dataset.playing = 'false';
+      }, 900);
+    };
+
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+      cancelAnimationFrame(frame);
+      clearTimeout(idle);
+    };
+  }, [pathname]);
 
   // Close the queue on outside click or Escape
   useEffect(() => {
@@ -94,9 +145,15 @@ export default function MiniPlayer() {
         )}
 
         <nav
-          aria-label="Player"
-          className="flex items-center gap-0.5 rounded-full border border-line bg-surface/85 p-1 shadow-[0_16px_40px_-18px_rgba(0,0,0,0.6)] backdrop-blur-md"
+          ref={playerRef}
+          data-playing="false"
+          aria-label="Main"
+          className="group/player relative flex items-center gap-0.5 overflow-hidden rounded-full border border-line bg-surface/85 p-1 shadow-[0_16px_40px_-18px_rgba(0,0,0,0.6)] backdrop-blur-md"
         >
+          {/* progress through the page */}
+          <span aria-hidden="true" className="pointer-events-none absolute inset-x-5 bottom-0 h-[2px] rounded-full bg-line">
+            <span ref={barRef} className="block h-full origin-left rounded-full bg-accent" style={{ transform: 'scaleX(0)' }} />
+          </span>
           <Skip direction="prev" target={prev} />
           <button
             type="button"
@@ -108,11 +165,22 @@ export default function MiniPlayer() {
           >
             <span aria-hidden="true" className="flex h-3 items-end gap-[2px]">
               {[0, 0.3, 0.15].map((d) => (
-                <span key={d} className="h-full w-[2.5px] origin-bottom animate-bar rounded-full bg-accent" style={{ animationDelay: `${d}s` }} />
+                <span
+                  key={d}
+                  className="h-full w-[2.5px] origin-bottom animate-bar rounded-full bg-accent [animation-play-state:paused] group-data-[playing=true]/player:[animation-play-state:running]"
+                  style={{ animationDelay: `${d}s` }}
+                />
               ))}
             </span>
             <span className="credit hidden sm:inline">now playing</span>
             <span className="font-serif text-[17px] italic">{current}</span>
+            <span aria-hidden="true" className="whitespace-nowrap font-mono text-[11.5px] tabular-nums text-muted">
+              <span ref={elapsedRef}>0:00</span>
+              {/* the total is dropped on very narrow phones */}
+              <span ref={totalRef} className="max-[379px]:hidden">
+                {' / 0:30'}
+              </span>
+            </span>
           </button>
           <Skip direction="next" target={next} />
         </nav>
