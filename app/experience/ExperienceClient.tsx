@@ -49,7 +49,7 @@ export default function ExperienceClient() {
                       {(e.location ?? 'bandung').toLowerCase()}
                       <span
                         aria-hidden="true"
-                        className={`inline-block text-[16px] leading-none transition-transform duration-300 [transition-timing-function:var(--ease-out)] ${open === e.id ? 'rotate-45 text-accent' : ''}`}
+                        className={`inline-block text-[16px] leading-none transition-transform duration-[250ms] [transition-timing-function:var(--ease-in-out)] ${open === e.id ? 'rotate-45 text-accent' : ''}`}
                       >
                         +
                       </span>
@@ -71,7 +71,7 @@ export default function ExperienceClient() {
 
 function Stop({ entry: e }: { entry: Entry }) {
   return (
-    <div id={`stop-${e.id}`} className="pb-8 sm:pl-[calc(11rem+1.5rem)]">
+    <div id={`stop-${e.id}`} className="stagger pb-8 sm:pl-[calc(11rem+1.5rem)]">
       <ul className="max-w-[64ch] space-y-2.5">
         {e.bullets.map((b) => (
           <li key={b} className="flex gap-3 text-[18px] leading-relaxed">

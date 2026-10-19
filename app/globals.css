@@ -46,7 +46,6 @@
     @apply bg-bg font-serif text-ink antialiased;
     font-size: 19px;
     line-height: 1.6;
-    transition: background-color 0.4s ease, color 0.4s ease;
   }
 
   /* Film grain over everything */
@@ -142,12 +141,21 @@
 
 /* Staggered entrance: set --d for the delay */
 .enter {
-  animation: rise 0.9s var(--ease-out) both;
+  animation: rise 0.7s var(--ease-out) both;
   animation-delay: var(--d, 0ms);
 }
 
 .page-in {
-  animation: page-in 0.45s var(--ease-out) both;
+  animation: fade-in 0.22s ease-out both;
+}
+
+/* Home intro: the sleeve settles, then its lamp switches on */
+.sleeve-in {
+  animation: sleeve 0.8s var(--ease-out) both;
+}
+
+.lamp-on {
+  animation: lamp 1.6s ease-out 0.3s both;
 }
 
 /* Screenshot zoom */
@@ -162,21 +170,37 @@ dialog[open]::backdrop {
 /* Colour key and theme changes cross-fade the whole page */
 ::view-transition-old(root),
 ::view-transition-new(root) {
-  animation-duration: 0.5s;
-  animation-timing-function: var(--ease-in-out);
+  animation-duration: 0.3s;
+  animation-timing-function: ease;
 }
 
 /* Open/close panels by animating the grid row from 0fr to 1fr */
+/* Animating grid rows triggers layout; accepted here because panel heights are dynamic
+   and each panel is small. Closing is quicker than opening. */
 .reveal {
   display: grid;
   grid-template-rows: 0fr;
   opacity: 0;
-  transition: grid-template-rows 0.4s var(--ease-out), opacity 0.3s var(--ease-out);
+  transition: grid-template-rows 0.2s var(--ease-out), opacity 0.15s var(--ease-out);
 }
 
 .reveal[data-open='true'] {
   grid-template-rows: 1fr;
   opacity: 1;
+  transition: grid-template-rows 0.28s var(--ease-out), opacity 0.28s var(--ease-out);
+}
+
+/* Contents of an opened panel arrive in a short stagger */
+.reveal[data-open='true'] .stagger > * {
+  animation: page-in 0.35s var(--ease-out) both;
+}
+
+.reveal[data-open='true'] .stagger > *:nth-child(2) {
+  animation-delay: 50ms;
+}
+
+.reveal[data-open='true'] .stagger > *:nth-child(3) {
+  animation-delay: 100ms;
 }
 
 .reveal > * {
@@ -184,6 +208,7 @@ dialog[open]::backdrop {
   overflow: hidden;
 }
 
+/* Reduced motion: no movement or blur, but keep short fades that explain what changed */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -195,8 +220,20 @@ dialog[open]::backdrop {
     scroll-behavior: auto !important;
   }
 
+  .enter,
+  .page-in,
+  .sleeve-in,
+  .lamp-on {
+    animation: fade-in 0.3s ease both !important;
+  }
+
+  .reveal,
+  .reveal[data-open='true'] {
+    transition: opacity 0.2s ease !important;
+  }
+
   ::view-transition-old(root),
   ::view-transition-new(root) {
-    animation: none !important;
+    animation-duration: 0.2s !important;
   }
 }

@@ -30,7 +30,7 @@ function save(name: string, value: string) {
 // Cross-fade the whole page when colours change, where the browser supports it.
 function withTransition(update: () => void) {
   const doc = document as Document & { startViewTransition?: (cb: () => void) => unknown };
-  if (!doc.startViewTransition || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  if (!doc.startViewTransition) {
     update();
     return;
   }

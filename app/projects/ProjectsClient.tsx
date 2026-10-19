@@ -113,7 +113,7 @@ export default function ProjectsClient() {
 
 function Details({ project: p, onZoom }: { project: Project; onZoom: (p: Project) => void }) {
   return (
-    <div id={`details-${p.slug}`} className="grid gap-8 pb-10 sm:pl-[4rem] md:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] md:gap-12">
+    <div id={`details-${p.slug}`} className="stagger grid gap-8 pb-10 sm:pl-[4rem] md:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] md:gap-12">
       {p.image ? (
         <button
           type="button"
@@ -121,7 +121,7 @@ function Details({ project: p, onZoom }: { project: Project; onZoom: (p: Project
           className="group relative block aspect-[16/10] w-full self-start overflow-hidden rounded-[3px] bg-surface shadow-[0_24px_50px_-28px_rgba(0,0,0,0.6)]"
           aria-label={`Enlarge screenshot of ${p.title}`}
         >
-          <Image src={p.image} alt={p.imageAlt ?? ''} fill sizes="(min-width: 768px) 480px, 100vw" className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]" />
+          <Image src={p.image} alt={p.imageAlt ?? ''} fill sizes="(min-width: 768px) 480px, 100vw" className="object-cover object-top transition-transform duration-300 [transition-timing-function:var(--ease-out)] group-hover:scale-[1.02]" />
         </button>
       ) : (
         <div className="max-w-[320px] self-start">

@@ -41,7 +41,7 @@ export default function Nav() {
         <button
           type="button"
           onClick={toggleTheme}
-          className="inline-flex h-10 w-10 items-center justify-center rounded-full text-muted transition-[color,background-color,transform] duration-150 hover:bg-ink/10 hover:text-ink active:scale-90"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-full text-muted transition-[color,background-color,transform] duration-150 hover:bg-ink/10 hover:text-ink active:scale-[0.95]"
           aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
         >
           {theme === 'dark' ? (

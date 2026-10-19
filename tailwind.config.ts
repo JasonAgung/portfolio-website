@@ -9,6 +9,8 @@ const config: Config = {
     "./content/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   darkMode: 'class',
+  // Hover styles only on devices with a real hover, so taps on phones don't leave them stuck
+  future: { hoverOnlyWhenSupported: true },
   theme: {
     extend: {
       colors: {

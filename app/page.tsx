@@ -16,27 +16,27 @@ export default function Home() {
       <section className="grid items-center gap-12 pt-6 sm:pt-10 lg:grid-cols-12 lg:gap-16">
         <div className="mx-auto w-full max-w-[460px] lg:col-span-5 lg:max-w-none">
           <Cover title="jka" topRight={<KeyLabel />} bottomLeft="ai, code & music" bottomRight="bandung, 2026" intro interactive />
-          <div className="enter" style={{ '--d': '900ms' } as React.CSSProperties}>
+          <div className="enter" style={{ '--d': '470ms' } as React.CSSProperties}>
             <KeyPicker className="mt-5 flex justify-center lg:justify-start" />
             <p className="credit mt-1 text-center lg:text-left">change the key, change the colours</p>
           </div>
         </div>
 
         <div className="lg:col-span-7">
-          <h1 className="enter font-serif text-[clamp(2.4rem,13vw,3.4rem)] font-light italic leading-[0.95] tracking-tight lg:text-[clamp(3rem,6.2vw,5.4rem)]" style={{ '--d': '250ms' } as React.CSSProperties}>
+          <h1 className="enter font-serif text-[clamp(2.4rem,13vw,3.4rem)] font-light italic leading-[0.95] tracking-tight lg:text-[clamp(3rem,6.2vw,5.4rem)]" style={{ '--d': '120ms' } as React.CSSProperties}>
             jason kelvin agung
           </h1>
-          <p className="enter mt-7 max-w-[34ch] text-[clamp(1.25rem,2.2vw,1.5rem)] leading-snug" style={{ '--d': '400ms' } as React.CSSProperties}>
+          <p className="enter mt-7 max-w-[34ch] text-[clamp(1.25rem,2.2vw,1.5rem)] leading-snug" style={{ '--d': '190ms' } as React.CSSProperties}>
             AI Implementation Specialist at{' '}
             <a href="https://deushcs.com/" target="_blank" rel="noopener noreferrer" className="link">
               DEUS Human Capital Services
             </a>{' '}
             in Bandung. I turn generative AI into things people actually use, and play music when I’m not coding.
           </p>
-          <p className="enter mt-4 max-w-[46ch] text-muted" style={{ '--d': '500ms' } as React.CSSProperties}>
+          <p className="enter mt-4 max-w-[46ch] text-muted" style={{ '--d': '260ms' } as React.CSSProperties}>
             Hiii 👋, sooo this is the page where you’ll find everything about me (kinda).
           </p>
-          <div className="enter mt-9 flex flex-wrap gap-3" style={{ '--d': '600ms' } as React.CSSProperties}>
+          <div className="enter mt-9 flex flex-wrap gap-3" style={{ '--d': '330ms' } as React.CSSProperties}>
             {cv ? (
               <a href={profile.cvPath} className="btn btn-solid" download>
                 download cv
@@ -51,7 +51,7 @@ export default function Home() {
             </Link>
           </div>
 
-          <p className="enter mt-10 flex items-center gap-3" style={{ '--d': '720ms' } as React.CSSProperties}>
+          <p className="enter mt-10 flex items-center gap-3" style={{ '--d': '400ms' } as React.CSSProperties}>
             <span aria-hidden="true" className="flex h-3.5 items-end gap-[3px]">
               {[0, 0.3, 0.15].map((d) => (
                 <span key={d} className="h-full w-[3px] origin-bottom animate-bar rounded-full bg-accent" style={{ animationDelay: `${d}s` }} />

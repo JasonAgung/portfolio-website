@@ -29,7 +29,7 @@ export default function TrackRow({ project: p, number, showPeek = false }: { pro
       {showPeek && p.image && (
         <span
           aria-hidden="true"
-          className="pointer-events-none absolute right-44 top-1/2 hidden w-44 -translate-y-[45%] rotate-[4deg] scale-95 overflow-hidden rounded-[3px] opacity-0 shadow-[0_20px_40px_-20px_rgba(0,0,0,0.6)] transition-[opacity,transform] duration-500 [transition-timing-function:var(--ease-out)] group-hover:-translate-y-1/2 group-hover:rotate-2 group-hover:scale-100 group-hover:opacity-100 lg:block"
+          className="pointer-events-none absolute right-44 top-1/2 hidden w-44 -translate-y-[45%] rotate-[4deg] scale-95 overflow-hidden rounded-[3px] opacity-0 shadow-[0_20px_40px_-20px_rgba(0,0,0,0.6)] transition-[opacity,transform] duration-[250ms] [transition-timing-function:var(--ease-out)] group-hover:-translate-y-1/2 group-hover:rotate-2 group-hover:scale-100 group-hover:opacity-100 lg:block"
         >
           <Image src={p.image} alt="" width={176} height={110} className="aspect-[16/10] object-cover object-top" />
         </span>

@@ -29,6 +29,7 @@ export default function Cover({
 
   const follow = (e: React.PointerEvent<HTMLDivElement>) => {
     if (!interactive || e.pointerType !== 'mouse' || !lampRef.current) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const box = e.currentTarget.getBoundingClientRect();
     // Pointer position relative to the lamp's resting spot (28%, 22%), damped
     const dx = ((e.clientX - box.left) / box.width - 0.28) * 0.35;
@@ -44,16 +45,15 @@ export default function Cover({
     <div
       onPointerMove={follow}
       onPointerLeave={rest}
-      className={`relative aspect-square w-full overflow-hidden rounded-[3px] text-[#F3E9DD] shadow-[0_30px_60px_-30px_rgba(0,0,0,0.6)] ${className}`}
+      className={`relative aspect-square w-full overflow-hidden rounded-[3px] text-[#F3E9DD] shadow-[0_30px_60px_-30px_rgba(0,0,0,0.6)] ${intro ? 'sleeve-in' : ''} ${className}`}
       style={{
         background:
           'radial-gradient(90% 70% at 85% 95%, rgba(10, 6, 5, 0.75) 0%, transparent 70%),' +
           'linear-gradient(165deg, rgb(var(--cover-a)) 0%, rgb(var(--cover-a) / 0.92) 55%, #120c0a 100%)',
-        animation: intro ? 'sleeve 1s var(--ease-out) both' : undefined,
       }}
     >
       {/* The lamp */}
-      <div aria-hidden="true" className="absolute inset-0" style={intro ? { animation: 'lamp 1.8s ease-out 0.35s both' } : undefined}>
+      <div aria-hidden="true" className={`absolute inset-0 ${intro ? 'lamp-on' : ''}`}>
         <div
           ref={lampRef}
           className="absolute -inset-[15%]"
