@@ -13,7 +13,7 @@ A modern, responsive portfolio website built with Next.js, TypeScript, and Tailw
 ## Editing content
 
 All text lives in `content/`: `profile.ts` (bio, skills, education, now), `projects.ts` and `experience.ts`.
-To enable the CV download, put the PDF at `public/cv.pdf`; the buttons and the `open cv` command appear automatically.
+To enable the CV download, put the PDF at `public/cv.pdf`; the "download cv" button appears automatically.
 
 ## Getting Started
 
