@@ -18,7 +18,7 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 // Page background per theme, also used for the browser chrome (iOS Safari tints its
 // toolbars with theme-color; matching it removes the darker band at the screen edges).
-const BG = { dark: '#17110F', light: '#E9DED6' };
+const BG = { dark: '#27211F', light: '#E0D5CD' };
 
 // Runs in <head> before paint: dark by default (it's a late-night record), the saved
 // colour key, and the theme-color meta so Safari's bars match the page.
