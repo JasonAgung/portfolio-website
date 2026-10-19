@@ -21,6 +21,7 @@ const mono = DM_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://jasonagung.vercel.app"),
   title: {
     default: "Jason Kelvin Agung",
     template: "%s | Jason Kelvin Agung",

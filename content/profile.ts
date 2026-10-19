@@ -40,6 +40,8 @@ export const skills = [
   },
 ];
 
+export const languages = ['Indonesian', 'English', 'Chinese'];
+
 export const interests = [
   { name: 'Artificial intelligence' },
   { name: 'Performance optimisation' },

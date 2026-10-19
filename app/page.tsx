@@ -31,7 +31,7 @@ export default function Home() {
             <a href="https://deushcs.com/" target="_blank" rel="noopener noreferrer" className="link">
               DEUS Human Capital Services
             </a>{' '}
-            in Bandung. I turn generative AI into things people actually use, and play music when I’m not coding.
+            in Tangerang. I turn generative AI into things people actually use, and play music when I’m not coding.
           </p>
           <p className="enter mt-4 max-w-[46ch] text-muted" style={{ '--d': '260ms' } as React.CSSProperties}>
             Hiii 👋, sooo this is the page where you’ll find everything about me (kinda).

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Cover from '@/components/Cover';
 import PageHeader from '@/components/PageHeader';
-import { education, interests, profile, skills } from '@/content/profile';
+import { education, interests, languages, profile, skills } from '@/content/profile';
 
 export const metadata: Metadata = {
   title: 'About',
@@ -51,6 +51,7 @@ export default function AboutPage() {
                   {s.items.join(', ')}
                 </Credit>
               ))}
+              <Credit label="languages">{languages.join(', ')}</Credit>
               <Credit label="on repeat">
                 {interests.map((i, idx) => (
                   <span key={i.name}>

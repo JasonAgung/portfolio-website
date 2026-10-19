@@ -35,7 +35,7 @@ export default function OpengraphImage() {
         <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
           <div style={{ fontSize: 64, lineHeight: 1.05, letterSpacing: -1 }}>jason kelvin agung</div>
           <div style={{ marginTop: 28, fontSize: 30, color: '#AA9A8A', lineHeight: 1.35 }}>
-            AI Implementation Specialist at DEUS Human Capital Services, Bandung
+            AI Implementation Specialist at DEUS Human Capital Services
           </div>
         </div>
       </div>

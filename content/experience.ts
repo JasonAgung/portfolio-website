@@ -11,11 +11,12 @@ export interface Entry {
   current?: boolean;
   bullets: string[];
   initiatives?: { name: string; role: string }[];
-  /** A milestone rather than a job, drawn as a hollow dot */
+  /** A milestone rather than a job */
   milestone?: boolean;
   more?: { label: string; href: string };
 }
 
+// Titles, employers, dates and locations follow LinkedIn (linkedin.com/in/j-agung).
 // Most recent activity first: ongoing roles, then the rest by end date.
 export const experience: Entry[] = [
   {
@@ -25,19 +26,20 @@ export const experience: Entry[] = [
     org: 'DEUS Human Capital Services',
     orgLink: 'https://deushcs.com/',
     period: 'Jan 2026 – now',
-    location: 'Bandung',
+    location: 'Tangerang',
     current: true,
     bullets: [
-      'Moving a gamified personality assessment from fixed templates to reports written by generative AI.',
+      'Led the move of a gamified personality assessment from fixed templates to reports written by generative AI.',
       'Built the pipeline that turns 32 personality subtraits into a report that reads like it was written for one person.',
-      'Design the prompts that turn raw psychometric data into insights that feel human, not generic.',
+      'Design the prompt frameworks that turn raw psychometric data into insights that feel human, not generic.',
+      'Replaced generic template statements with personal narratives about each candidate’s strengths and development areas.',
     ],
   },
   {
     id: 'talentsource',
     lane: 'work',
-    role: 'Applied AI & Research Intern',
-    org: 'TalentSource Bandung',
+    role: 'Applied AI & Research Team',
+    org: 'Bandung TalentSource',
     orgLink: 'https://www.bandungtalentsource.com/',
     period: 'Aug 2025 – now',
     location: 'Bandung',
@@ -54,7 +56,8 @@ export const experience: Entry[] = [
     role: 'Youth Ministry Team',
     org: 'Departemen Remaja GII Hok Im Tong',
     orgLink: 'https://www.instagram.com/arisegeneration.gii/',
-    period: '2024 – now',
+    period: '2023 – now',
+    location: 'Bandung',
     current: true,
     bullets: ['Organising events and worship for the church youth ministry.'],
     initiatives: [
@@ -63,6 +66,16 @@ export const experience: Entry[] = [
       { name: 'Arise Teens Camp 2024', role: 'Event team' },
       { name: 'Retrouvailles 2024', role: 'Event and worship team' },
     ],
+  },
+  {
+    id: 'porcafe',
+    lane: 'work',
+    role: 'Social Media Manager',
+    org: 'Porcafe Bandung',
+    orgLink: 'https://www.instagram.com/porcafe.bandung/',
+    period: 'Dec 2020 – Jan 2026',
+    location: 'Bandung',
+    bullets: ['Designed Instagram feed posts, stories and promotional banners, keeping one consistent visual identity across the café’s social media for five years.'],
   },
   {
     id: 'graduated',
@@ -77,21 +90,22 @@ export const experience: Entry[] = [
   {
     id: 'hmpsif',
     lane: 'org',
-    role: 'Academic Division Staff',
+    role: 'Public Relations & Events',
     org: 'HMPSIF, UNPAR Informatics Student Association',
     orgLink: 'https://www.instagram.com/hmpsif_unpar/',
-    period: 'Aug 2023 – Aug 2024',
+    period: 'Jan – Dec 2023',
     location: 'Bandung',
     bullets: [
-      'Ran tutorials and peer mentoring for core computer science courses like Algorithms and Logic.',
-      'Worked between students and faculty to improve academic resources.',
-      'Organised charity events and IT classes for underprivileged people.',
+      'Led the PR division’s peer tutoring program in programming for junior students: matching tutors, scheduling sessions and using feedback to improve them.',
+      'Co-led I-CARE 2023 at Panti Asuhan Putera Maranatha: coding workshops that teach children computational thinking, plus charity and fundraising for the orphanage.',
+      'Led the event team for WOMTICS 2023, a “Web Design Using Figma” workshop with a guest speaker from BTS.id.',
     ],
     initiatives: [
-      { name: 'I-CARE 2023', role: 'Vice Chief Executive' },
-      { name: 'SIAP IF 2023', role: 'Vice Head of Event Team' },
+      { name: 'Peer tutoring 2023', role: 'Public Relations Coordinator' },
+      { name: 'SIAP Informatika 2023', role: 'Vice Events Coordinator' },
+      { name: 'I-CARE 2023', role: 'Events Vice Coordinator' },
       { name: 'THORMATICS 2023', role: 'Head of External Communication' },
-      { name: 'WOMTICS 2023', role: 'Head of Event Team' },
+      { name: 'WOMTICS 2023', role: 'Events Coordinator' },
     ],
   },
   {
@@ -100,25 +114,21 @@ export const experience: Entry[] = [
     role: 'Marketing Communications Intern',
     org: 'Glamify',
     orgLink: 'https://www.instagram.com/glamify.id/',
-    period: '2023',
-    bullets: ['Marketing campaigns and communication strategy for beauty and fashion products.'],
+    period: 'Jul – Sep 2023',
+    location: 'Jakarta',
+    bullets: ['Supported digital marketing campaigns to grow brand awareness and audience engagement.'],
   },
   {
-    id: 'executive',
+    id: 'delamibrands',
     lane: 'work',
     role: 'Marketing Communications Intern',
-    org: 'Executive',
-    orgLink: 'https://www.instagram.com/id_executive/',
-    period: '2022',
-    bullets: ['Helped make marketing materials and manage brand communication for retail stores.'],
-  },
-  {
-    id: 'porcafe',
-    lane: 'work',
-    role: 'Social Media Management Team',
-    org: 'Porcafe',
-    orgLink: 'https://www.instagram.com/porcafe.bandung/',
-    period: '2020',
-    bullets: ['Designed Instagram posts, stories and banners for food and drink campaigns.'],
+    org: 'Delamibrands (EXECUTIVE, Colorbox)',
+    period: 'Jul – Sep 2022',
+    location: 'Tangerang',
+    bullets: [
+      'Ran social media campaigns and content for Delamibrands’ fashion brands, including EXECUTIVE and Colorbox.',
+      'Helped set up EXECUTIVE’s installation at the “Pop Art Jakarta” exhibition.',
+      'Tracked social media metrics and engagement to evaluate campaigns.',
+    ],
   },
 ];
