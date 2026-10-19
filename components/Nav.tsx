@@ -11,7 +11,7 @@ export default function Nav() {
   return (
     <header className="container-page flex h-20 items-center justify-between gap-4">
       <Link href="/" className="font-serif text-[19px] italic" aria-current={pathname === '/' ? 'page' : undefined}>
-        jason kelvin agung
+        jason
       </Link>
       <div className="flex items-center">
         <button
