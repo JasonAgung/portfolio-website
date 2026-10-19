@@ -10,6 +10,9 @@
   --muted: 107 88 80;
   --line: 207 190 180;
   --accent: var(--accent-l);
+  /* Motion: a strong ease-out for things entering or responding, ease-in-out for things moving on screen */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
   color-scheme: light;
 }
 
@@ -91,12 +94,94 @@
   }
 
   .btn {
-    @apply inline-flex min-h-[46px] items-center justify-center rounded-full border border-ink/25 px-6 font-mono text-[13px] lowercase tracking-wide transition-colors hover:border-ink;
+    @apply inline-flex min-h-[46px] items-center justify-center rounded-full border border-ink/25 px-6 font-mono text-[13px] lowercase tracking-wide hover:border-ink active:scale-[0.97];
+    transition: color 0.2s, background-color 0.2s, border-color 0.2s, transform 0.15s var(--ease-out);
   }
 
   .btn-solid {
     @apply border-accent bg-accent text-bg hover:border-ink hover:bg-ink;
   }
+}
+
+/* ---------- Motion ---------- */
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(12px); filter: blur(6px); }
+  to { opacity: 1; transform: none; filter: blur(0); }
+}
+
+@keyframes sleeve {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes lamp {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes page-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes pop-in {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes icon-in {
+  from { opacity: 0; transform: rotate(-60deg) scale(0.7); }
+  to { opacity: 1; transform: none; }
+}
+
+/* Staggered entrance: set --d for the delay */
+.enter {
+  animation: rise 0.9s var(--ease-out) both;
+  animation-delay: var(--d, 0ms);
+}
+
+.page-in {
+  animation: page-in 0.45s var(--ease-out) both;
+}
+
+/* Screenshot zoom */
+dialog[open] {
+  animation: pop-in 0.3s var(--ease-out);
+}
+
+dialog[open]::backdrop {
+  animation: fade-in 0.3s ease-out;
+}
+
+/* Colour key and theme changes cross-fade the whole page */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.5s;
+  animation-timing-function: var(--ease-in-out);
+}
+
+/* Open/close panels by animating the grid row from 0fr to 1fr */
+.reveal {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows 0.4s var(--ease-out), opacity 0.3s var(--ease-out);
+}
+
+.reveal[data-open='true'] {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.reveal > * {
+  min-height: 0;
+  overflow: hidden;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -105,7 +190,13 @@
   *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
   }
 }

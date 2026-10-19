@@ -45,9 +45,21 @@ export default function ExperienceClient() {
                       </span>
                       <span className="block text-[17px] text-muted">{e.org}</span>
                     </span>
-                    <span className="credit">{(e.location ?? 'bandung').toLowerCase()}</span>
+                    <span className="credit flex items-center gap-3">
+                      {(e.location ?? 'bandung').toLowerCase()}
+                      <span
+                        aria-hidden="true"
+                        className={`inline-block text-[16px] leading-none transition-transform duration-300 [transition-timing-function:var(--ease-out)] ${open === e.id ? 'rotate-45 text-accent' : ''}`}
+                      >
+                        +
+                      </span>
+                    </span>
                   </button>
-                  {open === e.id && <Stop entry={e} />}
+                  <div className="reveal" data-open={open === e.id} inert={open !== e.id}>
+                    <div>
+                      <Stop entry={e} />
+                    </div>
+                  </div>
                 </li>
               ))}
           </ol>

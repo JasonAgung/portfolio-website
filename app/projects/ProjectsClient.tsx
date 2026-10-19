@@ -72,7 +72,11 @@ export default function ProjectsClient() {
                   >
                     <TrackRow project={p} number={i + 1} />
                   </button>
-                  {open === p.slug && <Details project={p} onZoom={setZoomed} />}
+                  <div className="reveal" data-open={open === p.slug} inert={open !== p.slug}>
+                    <div>
+                      <Details project={p} onZoom={setZoomed} />
+                    </div>
+                  </div>
                 </li>
               ),
             )}

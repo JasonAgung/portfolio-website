@@ -1,6 +1,7 @@
 'use client';
 
 import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
+import { flushSync } from 'react-dom';
 
 type Theme = 'light' | 'dark';
 export const KEYS = ['C', 'D', 'E', 'F', 'G', 'A', 'B'] as const;
@@ -26,6 +27,16 @@ function save(name: string, value: string) {
   }
 }
 
+// Cross-fade the whole page when colours change, where the browser supports it.
+function withTransition(update: () => void) {
+  const doc = document as Document & { startViewTransition?: (cb: () => void) => unknown };
+  if (!doc.startViewTransition || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    update();
+    return;
+  }
+  doc.startViewTransition(() => flushSync(update));
+}
+
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<Theme>('dark');
   const [musicalKey, setKeyState] = useState<MusicalKey>('C');
@@ -39,14 +50,18 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   const toggleTheme = useCallback(() => {
     const next: Theme = document.documentElement.classList.contains('dark') ? 'light' : 'dark';
-    document.documentElement.classList.toggle('dark', next === 'dark');
-    setTheme(next);
+    withTransition(() => {
+      document.documentElement.classList.toggle('dark', next === 'dark');
+      setTheme(next);
+    });
     save('theme', next);
   }, []);
 
   const setMusicalKey = useCallback((key: MusicalKey) => {
-    document.documentElement.dataset.key = key;
-    setKeyState(key);
+    withTransition(() => {
+      document.documentElement.dataset.key = key;
+      setKeyState(key);
+    });
     save('key', key);
   }, []);
 

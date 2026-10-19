@@ -2,31 +2,49 @@
 
 import { KEYS, useTheme } from '@/contexts/ThemeContext';
 
+const SIZE = 36; // button size in px
+const GAP = 4;
+
 // Transposes the whole site's colours, a nod to the chord transposer project.
+// The filled circle slides to the chosen key.
 export default function KeyPicker({ className = '' }: { className?: string }) {
   const { musicalKey, setMusicalKey } = useTheme();
+  const index = KEYS.indexOf(musicalKey);
 
   return (
     <div className={className}>
-      <div role="group" aria-label="Change the colour key" className="flex items-center gap-1">
-        <span className="credit mr-2">key</span>
-        {KEYS.map((k) => {
-          const active = k === musicalKey;
-          return (
-            <button
-              key={k}
-              type="button"
-              aria-pressed={active}
-              aria-label={`Key of ${k}`}
-              onClick={() => setMusicalKey(k)}
-              className={`h-9 w-9 rounded-full font-mono text-[13px] transition-colors ${
-                active ? 'bg-accent text-bg' : 'text-muted hover:bg-ink/10 hover:text-ink'
-              }`}
-            >
-              {k}
-            </button>
-          );
-        })}
+      <div className="flex items-center">
+        <span className="credit mr-3">key</span>
+        <div role="group" aria-label="Change the colour key" className="relative flex" style={{ gap: GAP }}>
+          <span
+            aria-hidden="true"
+            className="absolute left-0 top-0 rounded-full bg-accent"
+            style={{
+              width: SIZE,
+              height: SIZE,
+              transform: `translateX(${index * (SIZE + GAP)}px)`,
+              transition: 'transform 0.45s var(--ease-out)',
+            }}
+          />
+          {KEYS.map((k) => {
+            const active = k === musicalKey;
+            return (
+              <button
+                key={k}
+                type="button"
+                aria-pressed={active}
+                aria-label={`Key of ${k}`}
+                onClick={() => setMusicalKey(k)}
+                className={`relative rounded-full font-mono text-[13px] transition-[color,transform] duration-200 active:scale-90 ${
+                  active ? 'text-bg' : 'text-muted hover:text-ink'
+                }`}
+                style={{ width: SIZE, height: SIZE }}
+              >
+                {k}
+              </button>
+            );
+          })}
+        </div>
       </div>
     </div>
   );
