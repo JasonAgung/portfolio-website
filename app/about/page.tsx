@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Cover from '@/components/Cover';
+import Lyrics from '@/components/Lyrics';
 import PageHeader from '@/components/PageHeader';
 import { education, interests, languages, profile, skills } from '@/content/profile';
 
@@ -8,6 +9,19 @@ export const metadata: Metadata = {
   description:
     'Jason Kelvin Agung: computer science graduate from UNPAR and AI Implementation Specialist in Bandung. Skills, interests, education and how to get in touch.',
 };
+
+// The intro, one lyric line at a time
+const bio = [
+  'I’m a computer science graduate from UNPAR.',
+  'I get excited about artificial intelligence, making code fast, and building software properly.',
+  'These days I’m putting generative AI to work at DEUS,',
+  'turning personality data into reports that feel written for one person.',
+  'I also like the people side of tech.',
+  'I’ve organised workshops and mentored students,',
+  'and I enjoy explaining complicated things until they make sense to anyone in the room.',
+  'Outside of work, you’ll usually find me playing music,',
+  'or stuck on a logic puzzle.',
+];
 
 export default function AboutPage() {
   return (
@@ -26,19 +40,10 @@ export default function AboutPage() {
             <h2 id="hello" className="font-serif text-[clamp(1.8rem,3.5vw,2.5rem)] italic leading-tight">
               Hi, I’m Jason.
             </h2>
-            <div className="mt-6 max-w-[58ch] space-y-5 text-[20px] leading-[1.7]">
-              <p>
-                I’m a computer science graduate from UNPAR who gets excited about artificial intelligence, making code
-                fast, and building software properly. These days I’m putting generative AI to work at DEUS, turning
-                personality data into reports that feel written for one person.
-              </p>
-              <p>
-                I also like the people side of tech. I’ve organised workshops, mentored students, and I enjoy explaining
-                complicated things until they make sense to anyone in the room. Outside of work you’ll usually find me
-                playing music, or stuck on a logic puzzle.
-              </p>
+            <div className="mt-8">
+              <Lyrics lines={bio} />
             </div>
-            <p className="mt-6 font-serif text-[22px] italic text-accent">jason</p>
+            <p className="mt-8 font-serif text-[22px] italic text-accent">jason</p>
           </section>
 
           <section className="mt-20" aria-labelledby="credits">
