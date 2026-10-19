@@ -32,12 +32,19 @@ export default function ProjectsClient() {
   }, []);
 
   const toggle = useCallback((slug: string) => {
-    setOpen((cur) => {
-      const next = cur === slug ? null : slug;
-      history.replaceState(null, '', next ? `#${next}` : window.location.pathname);
-      return next;
-    });
+    setOpen((cur) => (cur === slug ? null : slug));
   }, []);
+
+  // Keep the URL hash in sync after the state settles (not during render).
+  const firstSync = useRef(true);
+  useEffect(() => {
+    if (firstSync.current) {
+      firstSync.current = false;
+      return;
+    }
+    const url = open ? `#${open}` : window.location.pathname + window.location.search;
+    history.replaceState(null, '', url);
+  }, [open]);
 
   useEffect(() => {
     const d = dialogRef.current;

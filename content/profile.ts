@@ -15,8 +15,6 @@ export const socials = [
   { name: 'Email', handle: 'email', href: `mailto:${profile.email}` },
   { name: 'LinkedIn', handle: 'linkedin', href: 'https://www.linkedin.com/in/j-agung' },
   { name: 'GitHub', handle: 'github', href: 'https://github.com/JasonAgung' },
-  { name: 'Instagram', handle: 'instagram', href: 'https://www.instagram.com/jason_kelvin/' },
-  { name: 'Spotify', handle: 'spotify', href: 'https://open.spotify.com/user/jason.kelvin.agung' },
 ];
 
 export const now = [
@@ -42,11 +40,11 @@ export const skills = [
 
 export const languages = ['Indonesian', 'English', 'Chinese'];
 
-export const interests = [
+export const interests: { name: string; href?: string }[] = [
   { name: 'Artificial intelligence' },
   { name: 'Performance optimisation' },
   { name: 'Software engineering' },
-  { name: 'Music', href: 'https://open.spotify.com/user/jason.kelvin.agung' },
+  { name: 'Music' },
   { name: 'Technology & gadgets' },
   { name: 'Logic puzzles' },
 ];
